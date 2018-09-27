@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://chankin026.github.io/categories/index.html</loc>
+    
+    <lastmod>2018-09-27T17:28:58.117Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://chankin026.github.io/tags/index.html</loc>
+    
+    <lastmod>2018-09-27T17:28:44.696Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://chankin026.github.io/2018/09/28/%E8%A7%A3%E6%9E%90Tomcat%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84%E5%92%8C%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/</loc>
     
     <lastmod>2018-09-27T17:07:14.745Z</lastmod>
@@ -16,23 +30,9 @@
   </url>
   
   <url>
-    <loc>https://chankin026.github.io/tags/index.html</loc>
-    
-    <lastmod>2018-09-27T12:31:49.998Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://chankin026.github.io/About/index.html</loc>
     
     <lastmod>2018-09-27T12:18:22.958Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://chankin026.github.io/categories/index.html</loc>
-    
-    <lastmod>2018-09-27T12:18:08.456Z</lastmod>
     
   </url>
   
