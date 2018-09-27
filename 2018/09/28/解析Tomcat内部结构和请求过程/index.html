@@ -288,7 +288,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/28/1/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">1</h4>
+      </a>
+    </div>
   
 
   
@@ -320,10 +327,10 @@
       var gitalk = new Gitalk({
         clientID: '739c72719c8bea0193fd',
         clientSecret: 'ff70319471636fd74b595c28a5b9787c18980f9a',
-        id: window.location.pathname,
         repo: 'Chankin026.github.io',
         owner: 'Chankin026',
         admin: 'Chankin026'
+        id: location.pathname,
         distractionFreeMode: 'true'
       })
         gitalk.render('comments')
