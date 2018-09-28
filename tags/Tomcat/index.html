@@ -175,11 +175,27 @@
             ">全部</a>
         
 
+            <a href="/tags/markdown/" style="-webkit-order:4;order:4" class="tags-list-item waves-effect waves-button waves-light">markdown</a>
+
+        
+
+            <a href="/tags/typora/" style="-webkit-order:5;order:5" class="tags-list-item waves-effect waves-button waves-light">typora</a>
+
+        
+
             <a href="/tags/HTML/" style="-webkit-order:0;order:0" class="tags-list-item waves-effect waves-button waves-light">HTML</a>
 
         
 
             <a href="/tags/Tomcat/" style="-webkit-order:1;order:1" class="tags-list-item waves-effect waves-button waves-light active">Tomcat</a>
+
+        
+
+            <a href="/tags/算法/" style="-webkit-order:2;order:2" class="tags-list-item waves-effect waves-button waves-light">算法</a>
+
+        
+
+            <a href="/tags/数据结构/" style="-webkit-order:3;order:3" class="tags-list-item waves-effect waves-button waves-light">数据结构</a>
 
         
     </nav>
@@ -316,6 +332,7 @@
 
 
 
+
     <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
@@ -346,6 +363,27 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 <script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 

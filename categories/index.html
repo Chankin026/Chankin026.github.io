@@ -201,7 +201,7 @@
                 <div class="waterfall-item">
   <article class="article-card archive-article">
     <div class="post-meta">
-      <time class="post-time" title="2018-09-27 14:21:00" datetime="2018-09-27T06:21:00.168Z"  itemprop="datePublished">2018-09-27</time>
+      <time class="post-time" title="2018-09-01 01:00:00" datetime="2018-08-31T17:00:00.000Z"  itemprop="datePublished">2018-09-01</time>
 
       
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Hexo/">Hexo</a></li></ul>
@@ -214,7 +214,7 @@
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/09/27/hello-world/">Hello World</a>
+      <a class="post-title-link" href="/2018/09/01/hello-world/">Hello World</a>
     </h3>
   
 
@@ -317,6 +317,7 @@
 
 
 
+
     <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
 var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
@@ -347,6 +348,27 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 <script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 
