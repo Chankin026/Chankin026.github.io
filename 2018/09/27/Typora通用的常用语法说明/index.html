@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Chankin&#39;s Blogs">
 <meta property="og:description" content="Typora是一款超简洁的markdown编辑器，具有如下特点：  完全免费，目前已支持中文 跨平台，支持windows,mac,linux 支持数学公式输入，图片插入 极其简洁，无多余功能 界面所见即所得    区域元素YAML FONT Matters在文章最上方输入---，按换行键产生，输入内容即可 菜单输入+换行键，产生标题，自动更新 1[toc] + 回车键 段落按换行键建立新的一行可在">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.v2ex.com/favicon.ico">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/e/ed/V2ex.png">
 <meta property="og:image" content="https://cdn2.iconfinder.com/data/icons/black-white-social-media/64/social_media_logo_github-128.png">
-<meta property="og:updated_time" content="2018-09-28T09:26:13.870Z">
+<meta property="og:updated_time" content="2018-09-28T09:35:19.356Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Typora的简单使用">
 <meta name="twitter:description" content="Typora是一款超简洁的markdown编辑器，具有如下特点：  完全免费，目前已支持中文 跨平台，支持windows,mac,linux 支持数学公式输入，图片插入 极其简洁，无多余功能 界面所见即所得    区域元素YAML FONT Matters在文章最上方输入---，按换行键产生，输入内容即可 菜单输入+换行键，产生标题，自动更新 1[toc] + 回车键 段落按换行键建立新的一行可在">
-<meta name="twitter:image" content="https://www.v2ex.com/favicon.ico">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/e/ed/V2ex.png">
     
         <link rel="alternate" type="application/atom+xml" title="Chankin&#39;s Blogs" href="/atom.xml">
     
@@ -260,7 +260,7 @@
 <p>$$<br>\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}<br>\mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \<br>\frac{\partial X}{\partial u} &amp; \frac{\partial Y}{\partial u} &amp; 0 \<br>\frac{\partial X}{\partial v} &amp; \frac{\partial Y}{\partial v} &amp; 0 \<br>\end{vmatrix}<br>$$</p>
 <h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>开头|  列名  |  列名  |   换行键，创建一个2*2表格</p>
 <p>将鼠标放置其上，弹出编辑尺寸，个数，文字等</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|first|second|third| + 回车</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">|第一列|第二列| 第三列|</span><br><span class="line">|:----|:----:|----:|</span><br><span class="line">|左对齐|居中|右对齐|</span><br></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
@@ -300,18 +300,18 @@
 <p><a href="http://google.com/" target="_blank" rel="noopener">Google</a><br>And then define the link:</p>
 <h2 id="URLs"><a href="#URLs" class="headerlink" title="URLs"></a>URLs</h2><p>用&lt;&gt;括住url，可手动设置url</p>
 <p>对于标准URLs，可自动识别</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;i@163.com&gt;</span><br><span class="line">www.baidu.com</span><br></pre></td></tr></table></figure>
-<p><a href="mailto:i@163.com" target="_blank" rel="noopener">i@163.com</a></p>
-<p><strong><a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;chanjian1261@gmail.com&gt;</span><br><span class="line">www.baidu.com</span><br></pre></td></tr></table></figure>
+<p><a href="mailto:chanjian1261@gmail.com" target="_blank" rel="noopener">chanjian1261@gmail.com</a></p>
+<p><strong><a href="http://www.google.com" target="_blank" rel="noopener">www.google.com</a></strong></p>
 <h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a><strong>图片</strong></h2><ol>
 <li>手动添加：类似链接，前面需加！</li>
 <li>用鼠标拖图片进入，然后鼠标放置其上修改</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg)</span><br><span class="line"></span><br><span class="line">![Alt text](/path/to/img.jpg &quot;Optional title&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">Alt text</span>](<span class="link">/path/to/img.jpg</span>)</span><br><span class="line"></span><br><span class="line">![<span class="string">Alt text</span>](<span class="link">/path/to/img.jpg "Optional title"</span>)</span><br></pre></td></tr></table></figure>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="https://www.v2ex.com/favicon.ico" alt="V2EX" title="">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/V2ex.png" alt="V2EX" title="">
                 </div>
                 <div class="image-caption">V2EX</div>
             </figure>
@@ -358,7 +358,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-09-28T09:26:13.870Z" itemprop="dateUpdated">2018-09-28 17:26:13</time>
+    最后更新时间：<time datetime="2018-09-28T09:35:19.356Z" itemprop="dateUpdated">2018-09-28 17:35:19</time>
 </span><br>
 
 
