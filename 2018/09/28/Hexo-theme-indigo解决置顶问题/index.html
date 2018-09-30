@@ -14,25 +14,25 @@
     
     
     
-    <title>Hexo-theme-indigo解决置顶问题 | Chankin&#39;s Blogs | -记录学习和总结过程-</title>
+    <title>Hexo-theme-indigo解决置顶问题 | Chankin&#39;s Blogs | 以梦为马，莫负韶华。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="">
-    <meta name="description" content="Hexo-theme-indigo解决置顶问题将node_modules/hexo-generator-index/lib/generator.js的文件内容替换成一下内容 12345678910111213141516171819202122232425262728&amp;apos;use strict&amp;apos;;var pagination = require(&amp;apos;hexo-paginat">
+    <meta name="description" content="将node_modules/hexo-generator-index/lib/generator.js的文件内容替换成一下内容 12345678910111213141516171819202122232425262728&amp;apos;use strict&amp;apos;;var pagination = require(&amp;apos;hexo-pagination&amp;apos;);module.expor">
 <meta name="keywords" content="java spring algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo-theme-indigo解决置顶问题">
 <meta property="og:url" content="https://chankin026.github.io/2018/09/28/Hexo-theme-indigo解决置顶问题/index.html">
 <meta property="og:site_name" content="Chankin&#39;s Blogs">
-<meta property="og:description" content="Hexo-theme-indigo解决置顶问题将node_modules/hexo-generator-index/lib/generator.js的文件内容替换成一下内容 12345678910111213141516171819202122232425262728&amp;apos;use strict&amp;apos;;var pagination = require(&amp;apos;hexo-paginat">
+<meta property="og:description" content="将node_modules/hexo-generator-index/lib/generator.js的文件内容替换成一下内容 12345678910111213141516171819202122232425262728&amp;apos;use strict&amp;apos;;var pagination = require(&amp;apos;hexo-pagination&amp;apos;);module.expor">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-28T16:00:04.364Z">
+<meta property="og:updated_time" content="2018-09-28T16:13:26.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo-theme-indigo解决置顶问题">
-<meta name="twitter:description" content="Hexo-theme-indigo解决置顶问题将node_modules/hexo-generator-index/lib/generator.js的文件内容替换成一下内容 12345678910111213141516171819202122232425262728&amp;apos;use strict&amp;apos;;var pagination = require(&amp;apos;hexo-paginat">
+<meta name="twitter:description" content="将node_modules/hexo-generator-index/lib/generator.js的文件内容替换成一下内容 12345678910111213141516171819202122232425262728&amp;apos;use strict&amp;apos;;var pagination = require(&amp;apos;hexo-pagination&amp;apos;);module.expor">
     
         <link rel="alternate" type="application/atom+xml" title="Chankin&#39;s Blogs" href="/atom.xml">
     
@@ -183,13 +183,6 @@
 
 <div class="container body-wrap">
     
-    <aside class="post-widget">
-        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Hexo-theme-indigo解决置顶问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">Hexo-theme-indigo解决置顶问题</span></a></li></ol>
-        </nav>
-    </aside>
-
 
 <article id="post-Hexo-theme-indigo解决置顶问题"
   class="post-article article-type-post fade" itemprop="blogPost">
@@ -211,7 +204,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="Hexo-theme-indigo解决置顶问题"><a href="#Hexo-theme-indigo解决置顶问题" class="headerlink" title="Hexo-theme-indigo解决置顶问题"></a>Hexo-theme-indigo解决置顶问题</h1><p>将node_modules/hexo-generator-index/lib/generator.js的文件内容替换成一下内容</p>
+            <p>将<code>node_modules/hexo-generator-index/lib/generator.js</code>的文件内容替换成一下内容</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line">var pagination = require(&apos;hexo-pagination&apos;);</span><br><span class="line">module.exports = function(locals)&#123;</span><br><span class="line">  var config = this.config;</span><br><span class="line">  var posts = locals.posts;</span><br><span class="line">    posts.data = posts.data.sort(function(a, b) &#123;</span><br><span class="line">        if(a.top &amp;&amp; b.top) &#123; // 两篇文章top都有定义</span><br><span class="line">            if(a.top == b.top) return b.date - a.date; // 若top值一样则按照文章日期降序排</span><br><span class="line">            else return b.top - a.top; // 否则按照top值降序排</span><br><span class="line">        &#125;</span><br><span class="line">        else if(a.top &amp;&amp; !b.top) &#123; // 以下是只有一篇文章top有定义，那么将有top的排在前面（这里用异或操作居然不行233）</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">        else if(!a.top &amp;&amp; b.top) &#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        else return b.date - a.date; // 都没定义按照文章日期降序排</span><br><span class="line">    &#125;);</span><br><span class="line">  var paginationDir = config.pagination_dir || &apos;page&apos;;</span><br><span class="line">  return pagination(&apos;&apos;, posts, &#123;</span><br><span class="line">    perPage: config.index_generator.per_page,</span><br><span class="line">    layout: [&apos;index&apos;, &apos;archive&apos;],</span><br><span class="line">    format: paginationDir + &apos;/%d/&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">      __index: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>在新建的md日志文件种加入top初始化命令<br>比如说：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: Hexo置顶文章</span><br><span class="line">date: 2016-11-11 23:26:22</span><br><span class="line">tags:</span><br><span class="line">categories: Hexo</span><br><span class="line">top: 0  #0或者1</span><br></pre></td></tr></table></figure>
@@ -225,7 +218,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-09-28T16:00:04.364Z" itemprop="dateUpdated">2018-09-29 00:00:04</time>
+    最后更新时间：<time datetime="2018-09-28T16:13:26.740Z" itemprop="dateUpdated">2018-09-29 00:13:26</time>
 </span><br>
 
 
