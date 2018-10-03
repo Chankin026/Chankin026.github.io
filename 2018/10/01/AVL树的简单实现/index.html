@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>AVL树的简单实现 | Chankin&#39;s Blogs | 以梦为马不负韶华</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="数据结构">
+    <meta name="description" content="AVL树是一种自平衡的二叉搜索树（BST），两者之间的区别在于AVL树的左右子树高度之间的差异(平和因子)不能超过1。(树的高度约定为：空结点（空子树）的高度为-1，叶子结点的高度为0)高度和深度有区别,详细了解请看下一下链接 AVL的详细定义:java数据结构与算法之平衡二叉树(AVL树)的设计与实现(其实现和以下代码有点区别,但本质是一样的通过旋转来实现平衡) 实现代码:  123456789">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AVL树的简单实现">
+<meta property="og:url" content="http://chankin.tech/2018/10/01/AVL树的简单实现/index.html">
+<meta property="og:site_name" content="Chankin&#39;s Blogs">
+<meta property="og:description" content="AVL树是一种自平衡的二叉搜索树（BST），两者之间的区别在于AVL树的左右子树高度之间的差异(平和因子)不能超过1。(树的高度约定为：空结点（空子树）的高度为-1，叶子结点的高度为0)高度和深度有区别,详细了解请看下一下链接 AVL的详细定义:java数据结构与算法之平衡二叉树(AVL树)的设计与实现(其实现和以下代码有点区别,但本质是一样的通过旋转来实现平衡) 实现代码:  123456789">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-01T14:37:06.360Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AVL树的简单实现">
+<meta name="twitter:description" content="AVL树是一种自平衡的二叉搜索树（BST），两者之间的区别在于AVL树的左右子树高度之间的差异(平和因子)不能超过1。(树的高度约定为：空结点（空子树）的高度为-1，叶子结点的高度为0)高度和深度有区别,详细了解请看下一下链接 AVL的详细定义:java数据结构与算法之平衡二叉树(AVL树)的设计与实现(其实现和以下代码有点区别,但本质是一样的通过旋转来实现平衡) 实现代码:  123456789">
+    
+        <link rel="alternate" type="application/atom+xml" title="Chankin&#39;s Blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Chankin</h5>
+          <a href="mailto:chenjian1261@gmail.com" title="chenjian1261@gmail.com" class="mail">chenjian1261@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-bookmark"></i>
+                Bookmark
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                Movies
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Chankin026" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/350508392" target="_blank" >
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://t.me/chankin026" target="_blank" >
+                <i class="icon icon-lg icon-telegram"></i>
+                Telegram
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/About"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">AVL树的简单实现</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">AVL树的简单实现</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-10-01T14:15:16.000Z" itemprop="datePublished" class="page-time">
+  2018-10-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数据结构/">数据结构</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-AVL树的简单实现"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">AVL树的简单实现</h1>
+        <div class="post-meta">
+            
+            <time class="post-time" title="2018-10-01 22:15:16" datetime="2018-10-01T14:15:16.000Z"  itemprop="datePublished">2018-10-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数据结构/">数据结构</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>AVL树是一种自平衡的二叉搜索树（BST），两者之间的区别在于AVL树的左右子树高度之间的差异(平和因子)不能超过1。(树的高度约定为：空结点（空子树）的高度为-1，叶子结点的高度为0)<em>高度和深度有区别,详细了解请看下一下链接</em></p>
+<p>AVL的详细定义:<a href="https://blog.csdn.net/javazejian/article/details/53892797" target="_blank" rel="noopener">java数据结构与算法之平衡二叉树(AVL树)的设计与实现</a>(其实现和以下代码有点区别,但本质是一样的通过旋转来实现平衡)<br></p>
+<p>实现代码:</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AVLTree</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;&gt;</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">AVLNode</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> AVLNode&lt;T&gt; left;</span><br><span class="line">        <span class="keyword">public</span> AVLNode&lt;T&gt; right;</span><br><span class="line">        <span class="keyword">public</span> T data;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> height;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">AVLNode</span><span class="params">(AVLNode&lt;T&gt; left, AVLNode&lt;T&gt; right, T data)</span></span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.left = left;</span><br><span class="line">            <span class="keyword">this</span>.right = right;</span><br><span class="line">            <span class="keyword">this</span>.data = data;</span><br><span class="line">            <span class="keyword">this</span>.height = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span>  AVLNode&lt;T&gt; root;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AVLTree</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        root = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * @param x 失衡点</span></span><br><span class="line"><span class="comment">     * @ return w 根节点</span></span><br><span class="line"><span class="comment">     * */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> AVLNode&lt;T&gt; <span class="title">leftRotation</span><span class="params">(AVLNode&lt;T&gt; x)</span></span>&#123;</span><br><span class="line">        AVLNode&lt;T&gt; w = x.left;</span><br><span class="line">        x.left = w.right;</span><br><span class="line">        w.right = x;</span><br><span class="line">        w.height = Math.max(height(w.left), height(w.right))+ <span class="number">1</span>;</span><br><span class="line">        x.height = Math.max(height(x.left), x.height)+ <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> w;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> AVLNode&lt;T&gt; <span class="title">rightRotation</span><span class="params">(AVLNode&lt;T&gt; w)</span></span>&#123;</span><br><span class="line">        AVLNode&lt;T&gt; x = w.right;</span><br><span class="line">        w.right = x.left;</span><br><span class="line">        x.left = w;</span><br><span class="line">        w.height = Math.max(height(w.left), height(w.right))+ <span class="number">1</span>;</span><br><span class="line">        x.height = Math.max(height(x.left), height(x.right))+ <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> AVLNode&lt;T&gt; <span class="title">leftRightRotation</span><span class="params">(AVLNode&lt;T&gt; x)</span></span>&#123;</span><br><span class="line">        x.left = rightRotation(x.left);</span><br><span class="line">        <span class="keyword">return</span>  leftRotation(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> AVLNode&lt;T&gt; <span class="title">rightLeftRotation</span><span class="params">(AVLNode&lt;T&gt; x)</span></span>&#123;</span><br><span class="line">        x.right = leftRotation(x.right);</span><br><span class="line">        <span class="keyword">return</span> rightRotation(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(T data)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            root = <span class="keyword">new</span> AVLNode&lt;T&gt;(<span class="keyword">null</span>,<span class="keyword">null</span>,data);</span><br><span class="line">            <span class="keyword">if</span> (data == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"data can\'t be null"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        root = insert(root,data);<span class="comment">//返回根节点</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> AVLNode&lt;T&gt; <span class="title">insert</span><span class="params">(AVLNode&lt;T&gt; node, T data)</span></span>&#123;<span class="comment">// node 为根节点</span></span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 新建节点</span></span><br><span class="line">            node = <span class="keyword">new</span> AVLNode&lt;T&gt;(<span class="keyword">null</span>,<span class="keyword">null</span>,data);</span><br><span class="line">            <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">                System.out.println(<span class="string">"ERROR: create avltree node failed!"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(data.compareTo(node.data) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            node.left =  insert(node.left, data);</span><br><span class="line">            <span class="keyword">if</span>(height(node.left) - height(node.right) == <span class="number">2</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(data.compareTo(node.left.data) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">                    node = leftRotation(node);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    node = leftRightRotation(node);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>( data.compareTo(node.data) &gt; <span class="number">0</span> )&#123;</span><br><span class="line">            node.right = insert(node.right, data);</span><br><span class="line">            <span class="keyword">if</span>(height(node.right) - height(node.left) == <span class="number">2</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(data.compareTo(node.right.data) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                    node = rightRotation(node);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    node = rightLeftRotation(node);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            node.height =Math.max(height(node.left), height(node.right)) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">height</span><span class="params">(AVLNode&lt;T&gt; tree)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (tree != <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> tree.height;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 删除操作</span></span><br><span class="line"><span class="comment">     * @param  data</span></span><br><span class="line"><span class="comment">     * @param  node</span></span><br><span class="line"><span class="comment">     * @param return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AVLNode&lt;T&gt; <span class="title">remove</span><span class="params">(T data)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(data == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"data can't be null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root = remove(root, data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> AVLNode&lt;T&gt; <span class="title">remove</span><span class="params">(AVLNode&lt;T&gt; node, T data)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span>( data.compareTo(node.data) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> remove(node.right, data);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(data.compareTo(node.data) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> remove(node.left, data);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (node.left == <span class="keyword">null</span> || node.right == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((node.left == <span class="keyword">null</span>) &amp;&amp; (node.right == <span class="keyword">null</span>)) &#123;</span><br><span class="line">                node = <span class="keyword">null</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((node.left != <span class="keyword">null</span>) &amp;&amp; (node.right == <span class="keyword">null</span>)) &#123;</span><br><span class="line">                node = node.left;</span><br><span class="line">                <span class="keyword">if</span>(node.height - node.height == <span class="number">2</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (data.compareTo(node.left.data) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                        node = leftRotation(node);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        node = leftRightRotation(node);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((node.left == <span class="keyword">null</span>) &amp;&amp; (node.right != <span class="keyword">null</span>)) &#123;</span><br><span class="line">                node = node.right;</span><br><span class="line">                <span class="keyword">if</span>(node.right.height - node.left.height == <span class="number">2</span>)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(data.compareTo(node.data) &lt; <span class="number">0</span>)&#123;</span><br><span class="line">                        node = rightLeftRotation(node);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        node = rightRotation(node);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (node.left.height &gt;node.right.height) &#123;</span><br><span class="line">                node.data = findMax();</span><br><span class="line">                node.left = remove(node.left, node.data);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                node.data = findMin();</span><br><span class="line">                node.right = remove(node.right, node.data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        node.height = Math.max(node.left.height, node.right.height);</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">findMin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AVLNode&lt;T&gt; node = findMin(root);</span><br><span class="line">        <span class="keyword">if</span>(node != <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> node.data;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">findMax</span><span class="params">()</span></span>&#123;</span><br><span class="line">        AVLNode&lt;T&gt; node = findMax(root);</span><br><span class="line">        <span class="keyword">if</span>(node != <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> node.data;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 查找最小值结点</span></span><br><span class="line"><span class="comment">     * @param node</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> AVLNode&lt;T&gt; <span class="title">findMin</span><span class="params">(AVLNode&lt;T&gt; node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>)<span class="comment">//结束条件</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span> (node.left !=<span class="keyword">null</span>)<span class="comment">//如果没有左结点,那么t就是最小的</span></span><br><span class="line">            node = node.left;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 查找最小值结点</span></span><br><span class="line"><span class="comment">     * @param node</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> AVLNode&lt;T&gt; <span class="title">findMax</span><span class="params">(AVLNode&lt;T&gt; node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>)<span class="comment">//结束条件</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span> (node.right !=<span class="keyword">null</span>)<span class="comment">//如果没有左结点,那么t就是最小的</span></span><br><span class="line">            node = node.right;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AVLTreeTest</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        AVLTree&lt;Integer&gt; avlTree = <span class="keyword">new</span> AVLTree&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;<span class="number">18</span> ; i++) &#123;</span><br><span class="line">            avlTree.insert(i);</span><br><span class="line">            System.out.println(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-01T14:37:06.360Z" itemprop="dateUpdated">2018-10-01 22:37:06</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://chankin.tech">
+            <img src="/img/avatar.jpg" alt="Chankin">
+            Chankin
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://chankin.tech/2018/10/01/AVL树的简单实现/&title=《AVL树的简单实现》 — Chankin's Blogs&pic=http://chankin.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://chankin.tech/2018/10/01/AVL树的简单实现/&title=《AVL树的简单实现》 — Chankin's Blogs&source=Grasp All,Lose All." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://chankin.tech/2018/10/01/AVL树的简单实现/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AVL树的简单实现》 — Chankin's Blogs&url=http://chankin.tech/2018/10/01/AVL树的简单实现/&via=http://chankin.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://chankin.tech/2018/10/01/AVL树的简单实现/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/10/03/寻找两座城市之间的最小飞行次数的问题/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">寻找两座城市之间的最小飞行次数的问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/10/01/二叉树的简单实现/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">二叉树的简单实现</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '7e30ed479633a3eb1360',
+        clientSecret: 'c7a8906a07abbf61b999bdc6ccc7da0187f00577',
+        repo: 'Chankin026.github.io',
+        owner: 'Chankin026',
+        admin: 'Chankin026'
+        id: location.pathname,
+        distractionFreeMode: true,
+      })
+        gitalk.render('comments')
+    </script>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Chankin &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://chankin.tech/2018/10/01/AVL树的简单实现/&title=《AVL树的简单实现》 — Chankin's Blogs&pic=http://chankin.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://chankin.tech/2018/10/01/AVL树的简单实现/&title=《AVL树的简单实现》 — Chankin's Blogs&source=Grasp All,Lose All." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://chankin.tech/2018/10/01/AVL树的简单实现/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《AVL树的简单实现》 — Chankin's Blogs&url=http://chankin.tech/2018/10/01/AVL树的简单实现/&via=http://chankin.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://chankin.tech/2018/10/01/AVL树的简单实现/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://chankin.tech/2018/10/01/AVL树的简单实现/" alt="微信分享二维码">
+</div>
+
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Chankin's Blogs';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Chankin's Blogs';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
