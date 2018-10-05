@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Chankin&#39;s Blogs">
 <meta property="og:description" content="原博地址:https://www.cnblogs.com/dolphin0520/p/3916526.html 　　也许很多朋友在学习NIO的时候都会感觉有点吃力，对里面的很多概念都感觉不是那么明朗。在进入Java NIO编程之前，我们今天先来讨论一些比较基础的知识：I/O模型。下面本文先从同步和异步的概念 说起，然后接着阐述了阻塞和非阻塞的区别，接着介绍了阻塞IO和非阻塞IO的区别，然后介绍了同">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://images0.cnblogs.com/i/288799/201408/172148504055625.jpg">
-<meta property="og:image" content="https://images0.cnblogs.com/i/288799/201408/180940159566985.jpg">
-<meta property="og:updated_time" content="2018-10-05T01:39:00.853Z">
+<meta property="og:image" content="https://chankin026.github.io/images/172148504055625.jpg">
+<meta property="og:image" content="https://chankin026.github.io/images/180940159566985.jpg">
+<meta property="og:updated_time" content="2018-10-05T04:16:25.584Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java NIO:浅析I&#x2F;O模型(转载)">
 <meta name="twitter:description" content="原博地址:https://www.cnblogs.com/dolphin0520/p/3916526.html 　　也许很多朋友在学习NIO的时候都会感觉有点吃力，对里面的很多概念都感觉不是那么明朗。在进入Java NIO编程之前，我们今天先来讨论一些比较基础的知识：I/O模型。下面本文先从同步和异步的概念 说起，然后接着阐述了阻塞和非阻塞的区别，接着介绍了阻塞IO和非阻塞IO的区别，然后介绍了同">
-<meta name="twitter:image" content="https://images0.cnblogs.com/i/288799/201408/172148504055625.jpg">
+<meta name="twitter:image" content="https://chankin026.github.io/images/172148504055625.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Chankin&#39;s Blogs" href="/atom.xml">
     
@@ -307,9 +307,9 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="https://images0.cnblogs.com/i/288799/201408/172148504055625.jpg" alt="img" title="">
+                    <img src="/images/172148504055625.jpg" alt="" title="">
                 </div>
-                <div class="image-caption">img</div>
+                <div class="image-caption"></div>
             </figure>
 <p>　　这种模式虽然处理起来简单方便，但是由于服务器为每个client的连接都采用一个线程去处理，使得资源占用非常大。因此，当连接数量达到上限时，再有用户请求连接，直接会导致资源瓶颈，严重的可能会直接导致服务器崩溃。</p>
 <p>　　因此，为了解决这种一个线程对应一个客户端模式带来的问题，提出了采用线程池的方式，也就说<font size="3" color="red">创建一个固定大小的线程池，来一个客户端，就从线程池取一个空闲线程来处理，当客户端处理完读写操作之后，就交出对线程的占用。因此这样就避免为每一个客户端都要创建线程带来的资源浪费，使得线程可以重用</font>。</p>
@@ -319,9 +319,9 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="https://images0.cnblogs.com/i/288799/201408/180940159566985.jpg" alt="img" title="">
+                    <img src="/images/180940159566985.jpg" alt="" title="">
                 </div>
-                <div class="image-caption">img</div>
+                <div class="image-caption"></div>
             </figure>
 <p>　　从这里可以看出，上面的五种IO模型中的多路复用IO就是采用Reactor模式。注意，上面的图中展示的 是顺序处理每个事件，当然为了<font size="3" color="red">提高事件处理速度，可以通过多线程或者线程池的方式来处理事件</font>。</p>
 <p>　　在Proactor模式中，当检测到有事件发生时，会新起一个异步操作，然后交由内核线程去处理，当内核线程完成IO操作之后，发送一个通知告知操作已完成，可以得知，<font size="3" color="red">异步IO模型采用的就是Proactor模式</font>。</p>
@@ -345,7 +345,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-05T01:39:00.853Z" itemprop="dateUpdated">2018-10-05 09:39:00</time>
+    最后更新时间：<time datetime="2018-10-05T04:16:25.584Z" itemprop="dateUpdated">2018-10-05 12:16:25</time>
 </span><br>
 
 
