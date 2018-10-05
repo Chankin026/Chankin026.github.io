@@ -20,9 +20,9 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
+    <meta name="keywords" content="io">
     <meta name="description" content="原博地址:https://www.cnblogs.com/dolphin0520/p/3916526.html 　　也许很多朋友在学习NIO的时候都会感觉有点吃力，对里面的很多概念都感觉不是那么明朗。在进入Java NIO编程之前，我们今天先来讨论一些比较基础的知识：I/O模型。下面本文先从同步和异步的概念 说起，然后接着阐述了阻塞和非阻塞的区别，接着介绍了阻塞IO和非阻塞IO的区别，然后介绍了同">
-<meta name="keywords" content="java spring algorithm">
+<meta name="keywords" content="io">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java NIO:浅析I&#x2F;O模型(转载)">
 <meta property="og:url" content="https://Chankin026.github.io/2018/10/03/Java-NIO-浅析I-O模型/index.html">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://chankin026.github.io/images/172148504055625.jpg">
 <meta property="og:image" content="https://chankin026.github.io/images/180940159566985.jpg">
-<meta property="og:updated_time" content="2018-10-05T04:16:25.584Z">
+<meta property="og:updated_time" content="2018-10-05T04:25:33.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java NIO:浅析I&#x2F;O模型(转载)">
 <meta name="twitter:description" content="原博地址:https://www.cnblogs.com/dolphin0520/p/3916526.html 　　也许很多朋友在学习NIO的时候都会感觉有点吃力，对里面的很多概念都感觉不是那么明朗。在进入Java NIO编程之前，我们今天先来讨论一些比较基础的知识：I/O模型。下面本文先从同步和异步的概念 说起，然后接着阐述了阻塞和非阻塞的区别，接着介绍了阻塞IO和非阻塞IO的区别，然后介绍了同">
@@ -228,7 +228,8 @@
 <p>　　五.五种IO模型</p>
 <p>　　六.两种高性能IO设计模式</p>
 <p>　　若有不正之处，请多多谅解并欢迎批评指正。</p>
-<h2 id="一-什么是同步？什么是异步？"><a href="#一-什么是同步？什么是异步？" class="headerlink" title="一.什么是同步？什么是异步？"></a>一.什么是同步？什么是异步？</h2><p>　　同步和异步的概念出来已经很久了，网上有关同步和异步的说法也有很多。以下是我个人的理解：</p>
+<h2 id="一-什么是同步？什么是异步？"><a href="#一-什么是同步？什么是异步？" class="headerlink" title="一.什么是同步？什么是异步？"></a>一.什么是同步？什么是异步？</h2><hr>
+<p>　　同步和异步的概念出来已经很久了，网上有关同步和异步的说法也有很多。以下是我个人的理解：</p>
 <p>　　同步就是：如果有多个任务或者事件要发生，这些任务或者事件必须逐个地进行，一个事件或者任务的执行会导致整个流程的暂时等待，这些事件没有办法并发地执行；</p>
 <p>　　异步就是：如果有多个任务或者事件发生，这些事件可以并发地执行，一个事件或者任务的执行不会导致整个流程的暂时等待。</p>
 <p>　　这就是同步和异步。举个简单的例子，假如有一个任务包括两个子任务A和B，对于同步来说，当A在执行的过程中，B只有等待，直至A执行完毕，B才能执行；而对于异步就是A和B可以并发地执行，B不必等待A执行完毕之后再执行，这样就不会由于A的执行导致整个任务的暂时等待。</p>
@@ -240,7 +241,8 @@
 <p> 　　这段代码是一种典型的异步，fun1的执行不会影响到fun2的执行，并且fun1和fun2的执行不会导致其后续的执行过程处于暂时的等待。</p>
 <p>　　事实上，同步和异步是一个非常广的概念，它们的重点在于<font size="3" color="red">多个任务和事件发生时，一个事件的发生或执行是否会导致整个流程的暂时等待</font>。我觉得可以将同步和异步与Java中的synchronized关键字联系起来进行类比。当多个线程同时访问一个变量时，每个线程访问该变量就是一个事件，对于同步来说，就是这些线程必须逐个地来访问该变量，一个线程在访问该变量的过程中，其他线程必须等待；而对于异步来说，就是多个线程不必逐个地访问该变量，可以同时进行访问。</p>
 <p>　　因此，个人觉得同步和异步可以表现在很多方面，但是记住其关键在于多个任务和事件发生时，一个事件的发生或执行是否会导致整个流程的暂时等待。一般来说，可以通过多线程的方式来实现异步，但是千万记住不要将多线程和异步画上等号，异步只是宏观上的一个模式，采用多线程来实现异步只是一种手段，并且通过多进程的方式也可以实现异步。</p>
-<h2 id="二-什么是阻塞？什么是非阻塞？"><a href="#二-什么是阻塞？什么是非阻塞？" class="headerlink" title="二.什么是阻塞？什么是非阻塞？"></a>二.什么是阻塞？什么是非阻塞？</h2><p>　　在前面介绍了同步和异步的区别，这一节来看一下阻塞和非阻塞的区别。</p>
+<h2 id="二-什么是阻塞？什么是非阻塞？"><a href="#二-什么是阻塞？什么是非阻塞？" class="headerlink" title="二.什么是阻塞？什么是非阻塞？"></a>二.什么是阻塞？什么是非阻塞？</h2><hr>
+<p>　　在前面介绍了同步和异步的区别，这一节来看一下阻塞和非阻塞的区别。</p>
 <p>　　阻塞就是：当某个事件或者任务在执行过程中，它发出一个请求操作，但是由于该请求操作需要的条件不满足，那么就会一直在那等待，直至条件满足；</p>
 <p>　　非阻塞就是：当某个事件或者任务在执行过程中，它发出一个请求操作，如果该请求操作需要的条件不满足，会立即返回一个标志信息告知条件不满足，不会一直在那等待。</p>
 <p>　　这就是阻塞和非阻塞的区别。也就是说<font size="3" color="red">阻塞和非阻塞的区别关键在于当发出请求一个操作时，如果条件不满足，是会一直等待还是返回一个标志信息</font>。</p>
@@ -250,14 +252,16 @@
 <p>　　同步和异步着重点在于多个任务的执行过程中，一个任务的执行是否会导致整个流程的暂时等待；</p>
 <p>　　而阻塞和非阻塞着重点在于发出一个请求操作时，如果进行操作的条件不满足是否会返会一个标志信息告知条件不满足。</p>
 <p>　　理解阻塞和非阻塞可以同线程阻塞类比地理解，当一个线程进行一个请求操作时，如果条件不满足，则会被阻塞，即在那等待条件满足。</p>
-<h2 id="三-什么是阻塞IO？什么是非阻塞IO？"><a href="#三-什么是阻塞IO？什么是非阻塞IO？" class="headerlink" title="三.什么是阻塞IO？什么是非阻塞IO？"></a>三.什么是阻塞IO？什么是非阻塞IO？</h2><p>　　在了解阻塞IO和非阻塞IO之前，先看下一个具体的IO操作过程是怎么进行的。</p>
+<h2 id="三-什么是阻塞IO？什么是非阻塞IO？"><a href="#三-什么是阻塞IO？什么是非阻塞IO？" class="headerlink" title="三.什么是阻塞IO？什么是非阻塞IO？"></a>三.什么是阻塞IO？什么是非阻塞IO？</h2><hr>
+<p>　　在了解阻塞IO和非阻塞IO之前，先看下一个具体的IO操作过程是怎么进行的。</p>
 <p>　　通常来说，IO操作包括：对硬盘的读写、对socket的读写以及外设的读写。</p>
 <p>　　当用户线程发起一个IO请求操作（本文以读请求操作为例），内核会去查看要读取的数据是否就绪，对于阻塞IO来说，如果数据没有就绪，则会一直在那等待，直到数据就绪；对于非阻塞IO来说，如果数据没有就绪，则会返回一个标志信息告知用户线程当前要读的数据没有就绪。当数据就绪之后，便将数据拷贝到用户线程，这样才完成了一个完整的IO读请求操作，也就是说一个完整的IO读请求操作包括两个阶段：</p>
 <p>　　1）查看数据是否就绪；</p>
 <p>　　2）进行数据拷贝（内核将数据拷贝到用户线程）。</p>
 <p>　　那么阻塞（blocking IO）和非阻塞（non-blocking IO）的区别就在于第一个阶段，如果数据没有就绪，在查看数据是否就绪的过程中是一直等待，还是直接返回一个标志信息。</p>
 <p>　　Java中传统的IO都是阻塞IO，比如通过socket来读数据，调用read()方法之后，如果数据没有就绪，当前线程就会一直阻塞在read方法调用那里，直到有数据才返回；而如果是非阻塞IO的话，当数据没有就绪，read()方法应该返回一个标志信息，告知当前线程数据没有就绪，而不是一直在那里等待。</p>
-<h2 id="四-什么是同步IO？什么是异步IO？"><a href="#四-什么是同步IO？什么是异步IO？" class="headerlink" title="四.什么是同步IO？什么是异步IO？"></a>四.什么是同步IO？什么是异步IO？</h2><p>　　我们先来看一下同步IO和异步IO的定义，在《Unix网络编程》一书中对同步IO和异步IO的定义是这样的：</p>
+<h2 id="四-什么是同步IO？什么是异步IO？"><a href="#四-什么是同步IO？什么是异步IO？" class="headerlink" title="四.什么是同步IO？什么是异步IO？"></a>四.什么是同步IO？什么是异步IO？</h2><hr>
+<p>　　我们先来看一下同步IO和异步IO的定义，在《Unix网络编程》一书中对同步IO和异步IO的定义是这样的：</p>
 <font size="3" color="red"><strong>A synchronous I/O operation causes the requesting process to be blocked until that I/O operation completes.</strong></font>
 
 <font size="3" color="red"><strong>An asynchronous I/O operation does not cause the requesting process to be blocked.</strong></font>
@@ -272,7 +276,8 @@
 <p>　　这是同步IO和异步IO<font size="3" color="red">关键区别所在，同步IO和异步IO的关键区别反映在数据拷贝阶段是由用户线程完成还是内核完成</font>。所以说异步IO必须要有操作系统的底层支持。</p>
 <p>　　注意同步IO和异步IO与阻塞IO和非阻塞IO是不同的两组概念。</p>
 <p>　　阻塞IO和非阻塞IO是反映在当用户请求IO操作时，如果数据没有就绪，是用户线程一直等待数据就绪，还是会收到一个标志信息这一点上面的。也就是说，<font size="3" color="red">阻塞IO和非阻塞IO是反映在IO操作的第一个阶段</font>，在查看数据是否就绪时是如何处理的。</p>
-<h2 id="五-五种IO模型"><a href="#五-五种IO模型" class="headerlink" title="五.五种IO模型"></a>五.五种IO模型</h2><p>　　在《Unix网络编程》一书中提到了五种IO模型，分别是：阻塞IO、非阻塞IO、多路复用IO、信号驱动IO以及异步IO。</p>
+<h2 id="五-五种IO模型"><a href="#五-五种IO模型" class="headerlink" title="五.五种IO模型"></a>五.五种IO模型</h2><hr>
+<p>　　在《Unix网络编程》一书中提到了五种IO模型，分别是：阻塞IO、非阻塞IO、多路复用IO、信号驱动IO以及异步IO。</p>
 <p>　　下面就分别来介绍一下这5种IO模型的异同。</p>
 <p>1.阻塞IO模型</p>
 <p>　　最传统的一种IO模型，即在读写数据过程中会发生阻塞现象。</p>
@@ -301,7 +306,8 @@
 <p>　　也就说在<font size="3" color="red">异步IO模型中，IO操作的两个阶段都不会阻塞用户线程</font>，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成。用户线程中不需要再次调用IO函数进行具体的读写。这点是和信号驱动模型有所不同的，在信号驱动模型中，当用户线程接收到信号表示数据已经就绪，然后需要用户线程调用IO函数进行实际的读写操作；而在异步IO模型中，收到信号表示IO操作已经完成，不需要再在用户线程中调用IO函数进行实际的读写操作。</p>
 <p>　　注意，异步IO是需要操作系统的底层支持，在Java 7中，提供了Asynchronous IO。</p>
 <p>　　前面四种IO模型实际上都属于同步IO，只有最后一种是真正的异步IO，因为无论是多路复用IO还是信号驱动模型，IO操作的第2个阶段都会引起用户线程阻塞，也就是内核进行数据拷贝的过程都会让用户线程阻塞。</p>
-<h2 id="六-两种高性能IO设计模式"><a href="#六-两种高性能IO设计模式" class="headerlink" title="六.两种高性能IO设计模式"></a>六.两种高性能IO设计模式</h2><p>　　在传统的网络服务设计模式中，有两种比较经典的模式：</p>
+<h2 id="六-两种高性能IO设计模式"><a href="#六-两种高性能IO设计模式" class="headerlink" title="六.两种高性能IO设计模式"></a>六.两种高性能IO设计模式</h2><hr>
+<p>　　在传统的网络服务设计模式中，有两种比较经典的模式：</p>
 <p>　　一种是 多线程，一种是线程池。</p>
 <p>　　对于多线程模式，也就说来了client，服务器就会新建一个线程来处理该client的读写事件，如下图所示：</p>
 <figure class="image-bubble">
@@ -345,7 +351,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-05T04:16:25.584Z" itemprop="dateUpdated">2018-10-05 12:16:25</time>
+    最后更新时间：<time datetime="2018-10-05T04:25:33.896Z" itemprop="dateUpdated">2018-10-05 12:25:33</time>
 </span><br>
 
 
@@ -365,6 +371,8 @@
 
         <div class="post-footer">
             
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/io/">io</a></li></ul>
+
 
             
 <div class="page-share-wrap">
