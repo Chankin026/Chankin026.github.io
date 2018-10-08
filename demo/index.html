@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Archives</title>
+    <title>Demo</title>
     <meta name="description" content="">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/archive/">
+    <link rel="canonical" href="http://localhost:4000/demo/">
     <link rel="alternate" type="application/rss+xml" title="Chankin's Blog" href="http://localhost:4000/feed.xml ">
 
 
@@ -68,8 +68,8 @@
                     
                     <li>
                         
-                        <a class="active" href="/archive/">
-                            
+                        <a href="/archive/">
+                        
                             <i class="fa fa-archive"></i>Archives
                         </a>
                     </li>
@@ -118,8 +118,8 @@
                     
                     <li>
                         
-                        <a href="/demo/">
-                        
+                        <a class="active" href="/demo/">
+                            
                             <i class="fa fa-play"></i>Demo
                         </a>
                     </li>
@@ -157,37 +157,61 @@
 </header>
 
 
-        <!-- <h1>Archive of posts with page 'Archives'</h1> -->
-
-
-<div class="page clearfix">
+        <div class="page clearfix" demo>
     <div class="left">
-        <h1>Archives</h1>
+        <h1>Demo</h1>
         <hr>
-        <ul>
-          
-        </ul>
-    </div>
-    <button class="anchor"><i class="fa fa-anchor"></i></button>
-    <div class="right">
-        <div class="wrap">
+        <div class="grid">
+    <!-- <div class="grid-item">
+        <a href="http://gaohaoyang.github.io/ghost-button-css3/">
+            <img src="http://7q5cdt.com1.z0.glb.clouddn.com/DemoGhost-Button.png">
+        </a>
+        <h3 class="demo-title">
+            <a href="http://gaohaoyang.github.io/ghost-button-css3/">Ghost Button 幽灵按钮</a>
+        </h3>
+        <p>主要技术：CSS3</p>
+        <p>使用 CSS3 中的旋转、缩放、过渡、动画等效果，制作出很酷的按钮效果。
+            <a href="https://github.com/Gaohaoyang/ghost-button-css3">源代码 <i class="fa fa-code" aria-hidden="true"></i></a>
+        </p>
+    </div> -->
+</div>
 
-            <!-- Content -->
-            <div class="side content">
-                <div>
-                    Content
-                </div>
-                <ul id="content-side" class="content-ul">
-                    
-                        
-                </ul>
-            </div>
-            <!-- 其他div框放到这里 -->
-            <!-- <div class="side">bbbb</div> -->
-        </div>
+<script src=" /js/masonry.pkgd.min.js " charset="utf-8"></script>
+<script src=" /js/waterfall.js " charset="utf-8"></script>
+
+
+<!-- <h2 id="comments">Comments</h2> -->
+
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function() {
+        this.page.url = 'http://localhost:4000/demo/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://localhost:4000/demo/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = '//gaohaoyang.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
     </div>
 </div>
-<script src="/js/pageContent.js " charset="utf-8"></script>
 
 
     <footer class="site-footer">
