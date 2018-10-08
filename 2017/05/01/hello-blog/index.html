@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Categories</title>
-    <meta name="description" content="">
+    <title>hello, blog</title>
+    <meta name="description" content="从今天开始，我会在这里分享一些我的工作和学习总结。">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="https://Chankin026.github.io/category/">
+    <link rel="canonical" href="https://Chankin026.github.io/2017/05/01/hello-blog/">
     <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
 
 
@@ -77,8 +77,8 @@
                     
                     <li>
                         
-                        <a class="active" href="/category/">
-                            
+                        <a href="/category/">
+                        
                             <i class="fa fa-th-list"></i>Categories
                         </a>
                     </li>
@@ -136,27 +136,26 @@
 </header>
 
 
-        <div class="page clearfix">
+        <div class="page clearfix" post>
     <div class="left">
-        <h1>Categories</h1>
-        <hr>
-        <ul>
-            
-            <h2 id="Tools">Tools</h2>
-                
-                    
-                        
-                    
-                
-                    
-                        
-                        <li>
-                            <time>
-                            2017-05-01 Mon.
-                            </time>
-                            <a class="title" href="/2017/05/01/hello-blog/">hello, blog</a>
+        <h1>hello, blog</h1>
+        <div class="label">
 
-                            
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-05-01
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>zch
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
 
 
 <!-- <span class="point">•</span> -->
@@ -172,24 +171,78 @@
 </span>
 
 
-                            
+            </div>
+
+            <div class="label-card">
+            
 <!-- <span class="point">•</span> -->
 <span class="pageTag">
   <i class="fa fa-tags"></i>
   
     
+        <!--a href="/tag/#blog" title="Tag: blog" rel="tag">blog</a-->
         <a href="/tag/#blog" title="Tag: blog" rel="tag">blog</a>
     
   
 
 </span>
 
-                        </li>
-                        
-                    
-                
-            
-        </ul>
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
+<p>从今天开始，我会在这里分享一些我的工作和学习总结。</p>
+
+
+        </article>
+        <hr>
+
+       
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+    </div>
+    <div class="nex">
+
+        
+    </div>
+</div>
+
+
+        <!-- <h2 id="comments">Comments</h2> -->
+        
+
+
+
+
+  
+    
+      <link rel='stylesheet' href="https://unpkg.com/gitalk/dist/gitalk.css">
+      <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+      <div id="gitalk-container"></div>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID: '7e30ed479633a3eb1360', 
+            clientSecret: 'c7a8906a07abbf61b999bdc6ccc7da0187f00577',
+            repo: 'Chankin026.github.io', 
+            owner: 'Chankin026', 
+            admin: ['Chankin026'], 
+            distractionFreeMode: 'true',
+            id: '/2017/05/01/hello-blog/',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+
+
+
+
     </div>
     <button class="anchor"><i class="fa fa-anchor"></i></button>
     <div class="right">
@@ -201,13 +254,8 @@
                     Content
                 </div>
                 <ul id="content-side" class="content-ul">
-                    
-                        <li>
-                            <a data-scroll href="#Tools">
-                                Tools (1)
-                            </a>
-                        </li>
-                    
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <!--<li><a href="#comments">Comments</a></li>-->
                 </ul>
             </div>
             <!-- 其他div框放到这里 -->
@@ -215,6 +263,17 @@
         </div>
     </div>
 </div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
 <script src="/js/pageContent.js " charset="utf-8"></script>
 
 
