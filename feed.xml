@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Chankin's Blog</title>
+    <title>chankin's Blog</title>
     <description></description>
-    <link>https://chankin026.github.io/</link>
-    <atom:link href="https://chankin026.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 08 Oct 2018 17:28:35 +0800</pubDate>
-    <lastBuildDate>Mon, 08 Oct 2018 17:28:35 +0800</lastBuildDate>
+    <link>https://Chankin026.github.io/</link>
+    <atom:link href="https://Chankin026.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 08 Oct 2018 17:32:52 +0800</pubDate>
+    <lastBuildDate>Mon, 08 Oct 2018 17:32:52 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
+    
+      <item>
+        <title>hello, blog</title>
+        <description>
+从今天开始，我会在这里分享一些我的工作和学习总结。
+
+</description>
+        <pubDate>Mon, 01 May 2017 00:00:00 +0800</pubDate>
+        <link>https://Chankin026.github.io/2017/05/01/hello-blog/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2017/05/01/hello-blog/</guid>
+        
+        <category>blog</category>
+        
+        
+        <category>Tools</category>
+        
+      </item>
     
   </channel>
 </rss>
