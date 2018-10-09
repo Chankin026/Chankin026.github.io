@@ -782,7 +782,7 @@ pre {
       padding: 0 3px;
       border-radius: 5px; }
       .page[index] .right .wrap .side .tags-cloud a:hover {
-        background-color: #f0e7ce; }
+        background-color: rgba(192, 192, 192, 0.3); }
 
 @media screen and (max-width: 770px) {
   .page[index] .left > ul li h2 {
