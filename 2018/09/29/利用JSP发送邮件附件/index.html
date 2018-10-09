@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>利用JSP发送邮件附件 | Chankin&#39;s Blogs | 以梦为马不负韶华</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JSP">
+    <meta name="description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;简单实现一个发送邮件正文和附件的例子,其中利用Java Mail jar包和JAF的activation jar包.下面的例子实现了从163邮箱发送邮件到qq邮箱, 其中 message.setSubject( &amp;quot;邮件主题&amp;quot; )设置邮件主题 messageBodyPart.setText(&amp;quot;邮件正文&amp;quot;)设置邮件">
+<meta name="keywords" content="JSP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用JSP发送邮件附件">
+<meta property="og:url" content="https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/index.html">
+<meta property="og:site_name" content="Chankin&#39;s Blogs">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;简单实现一个发送邮件正文和附件的例子,其中利用Java Mail jar包和JAF的activation jar包.下面的例子实现了从163邮箱发送邮件到qq邮箱, 其中 message.setSubject( &amp;quot;邮件主题&amp;quot; )设置邮件主题 messageBodyPart.setText(&amp;quot;邮件正文&amp;quot;)设置邮件">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-05T01:22:32.716Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用JSP发送邮件附件">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;简单实现一个发送邮件正文和附件的例子,其中利用Java Mail jar包和JAF的activation jar包.下面的例子实现了从163邮箱发送邮件到qq邮箱, 其中 message.setSubject( &amp;quot;邮件主题&amp;quot; )设置邮件主题 messageBodyPart.setText(&amp;quot;邮件正文&amp;quot;)设置邮件">
+    
+        <link rel="alternate" type="application/atom+xml" title="Chankin&#39;s Blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Chankin</h5>
+          <a href="mailto:chenjian1261@gmail.com" title="chenjian1261@gmail.com" class="mail">chenjian1261@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-bookmark"></i>
+                Bookmark
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                Movies
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Chankin026" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/350508392" target="_blank" >
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://t.me/chankin026" target="_blank" >
+                <i class="icon icon-lg icon-telegram"></i>
+                Telegram
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/About"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">利用JSP发送邮件附件</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">利用JSP发送邮件附件</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-09-29T01:21:44.000Z" itemprop="datePublished" class="page-time">
+  2018-09-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JSP/">JSP</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-利用JSP发送邮件附件"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">利用JSP发送邮件附件</h1>
+        <div class="post-meta">
+            
+            <time class="post-time" title="2018-09-29 09:21:44" datetime="2018-09-29T01:21:44.000Z"  itemprop="datePublished">2018-09-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JSP/">JSP</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>&ensp;&ensp;&ensp;&ensp;简单实现一个发送邮件正文和附件的例子,其中利用Java Mail jar包和JAF的activation jar包.<br>下面的例子实现了从163邮箱发送邮件到qq邮箱, 其中</p>
+<p><code>message.setSubject( &quot;邮件主题&quot; )</code>设置邮件主题<br></p>
+<p><code>messageBodyPart.setText(&quot;邮件正文&quot;)</code>设置邮件正文内容<br></p>
+<p><code>String filename = &quot;C:\\apache-tomcat-7.0.90\\webapps\\ROOT\\file.txt&quot;</code>设置 邮件附件绝对路径, 分隔符<code>\</code>需要转义</p>
+<p>当然如果想换个邮箱进行发送,只需改一下邮箱服务器<code>smtp.163.com</code>,默认端口<code>25</code>采用SMTP协议</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//SMTP邮件服务器</span><br><span class="line">properties.setProperty( &quot;mail.smtp.host&quot;, &quot;smtp.163.com&quot; );</span><br><span class="line"> //SMTP邮件服务器默认端口</span><br><span class="line">properties.setProperty( &quot;mail.smtp.port&quot;, &quot;25&quot; );</span><br></pre></td></tr></table></figure>
+<p>常见的邮箱STMP服务器:<a href="https://blog.csdn.net/ning521513/article/details/79217203" target="_blank" rel="noopener">https://blog.csdn.net/ning521513/article/details/79217203</a></p>
+<p>所需jar下载地址:  <a href="https://maven.java.net/content/repositories/releases/com/sun/mail/javax.mail/1.6.0/javax.mail-1.6.0.jar" target="_blank" rel="noopener">Java Mail</a>   <a href="http://central.maven.org/maven2/javax/activation/activation/1.1/activation-1.1.jar" target="_blank" rel="noopener">Activation</a></p>
+<p>其他信息备注都写的很详细</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- <span class="number">163</span>邮箱发送带有附件的邮件到qq邮箱 --&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"java.util.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"javax.mail.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"javax.mail.internet.*"</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">"javax.activation.*"</span> %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    String result;</span><br><span class="line">    <span class="comment">// 收件人的电子邮件</span></span><br><span class="line">    String to = <span class="string">"abc@qq.com"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发件人的电子邮件名和密碼</span></span><br><span class="line">    String from = <span class="string">"abcd@163.com"</span>;</span><br><span class="line">    String psd = <span class="string">"abcd"</span>;</span><br><span class="line">    <span class="comment">//设置邮箱用户名</span></span><br><span class="line">    String user = <span class="string">"abcd"</span>;</span><br><span class="line"></span><br><span class="line">    Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 设置用户的认证方式</span></span><br><span class="line">        properties.setProperty( <span class="string">"mail.smtp.auth"</span>, <span class="string">"true"</span> );</span><br><span class="line">        <span class="comment">//设置传输协议</span></span><br><span class="line">        properties.setProperty( <span class="string">"mail.transport.protocol"</span>, <span class="string">"smtp"</span> );</span><br><span class="line">        <span class="comment">//SMTP邮件服务器</span></span><br><span class="line">        properties.setProperty( <span class="string">"mail.smtp.host"</span>, <span class="string">"smtp.163.com"</span> );</span><br><span class="line">        <span class="comment">//SMTP邮件服务器默认端口</span></span><br><span class="line">        properties.setProperty( <span class="string">"mail.smtp.port"</span>, <span class="string">"25"</span> );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取默认的Session对象。</span></span><br><span class="line">        Session mailSession = Session.getDefaultInstance( properties );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建一个默认的MimeMessage对象。</span></span><br><span class="line">        Message message = <span class="keyword">new</span> MimeMessage( mailSession );</span><br><span class="line">        <span class="comment">// 根据session对象获取邮件传输对象Transport</span></span><br><span class="line">        Transport transport = mailSession.getTransport();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 From: 头部的header字段</span></span><br><span class="line">        message.setFrom( <span class="keyword">new</span> InternetAddress( from ) );</span><br><span class="line">        <span class="comment">// 设置 To: 头部的header字段</span></span><br><span class="line">        message.addRecipient( Message.RecipientType.TO, <span class="keyword">new</span> InternetAddress( to ) );</span><br><span class="line">        <span class="comment">// 设置 Subject: header字段</span></span><br><span class="line">        message.setSubject( <span class="string">"This is the Subject Line!"</span> );</span><br><span class="line">        <span class="comment">// 现在设置的实际消息</span></span><br><span class="line">        BodyPart messageBodyPart = <span class="keyword">new</span> MimeBodyPart();</span><br><span class="line">        <span class="comment">//发送邮件的正文内容</span></span><br><span class="line">        messageBodyPart.setText(<span class="string">"This is message body"</span>);</span><br><span class="line"></span><br><span class="line">        Multipart multipart = <span class="keyword">new</span> MimeMultipart();</span><br><span class="line"></span><br><span class="line">        multipart.addBodyPart(messageBodyPart);</span><br><span class="line"></span><br><span class="line">        messageBodyPart = <span class="keyword">new</span> MimeBodyPart();</span><br><span class="line">        <span class="comment">//使用绝对路径</span></span><br><span class="line">        String filename = <span class="string">"C:\\apache-tomcat-7.0.90\\webapps\\ROOT\\file.txt"</span>;</span><br><span class="line">        <span class="comment">//添加文件到message</span></span><br><span class="line">        DataSource source = <span class="keyword">new</span> FileDataSource(filename);</span><br><span class="line"></span><br><span class="line">        messageBodyPart.setDataHandler(<span class="keyword">new</span> DataHandler(source));</span><br><span class="line">        messageBodyPart.setFileName(filename);</span><br><span class="line"></span><br><span class="line">        multipart.addBodyPart(messageBodyPart);</span><br><span class="line">        message.setContent(multipart);</span><br><span class="line">        message.setSentDate(<span class="keyword">new</span> Date());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置发件人的账户名和密码</span></span><br><span class="line">        transport.connect(user,psd);</span><br><span class="line">        <span class="comment">// 发送邮件，并发送到所有收件人地址，message.getAllRecipients() 获取到的是在创建邮件对象时添加的所有收件人, 抄送人, 密送人</span></span><br><span class="line">        transport.sendMessage( message, message.getAllRecipients() );</span><br><span class="line"></span><br><span class="line">        result = <span class="string">"Sent message successfully...."</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        result = <span class="string">"Error: unable to send message...."</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;Send Email using JSP&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;center&gt;</span><br><span class="line">            &lt;h1&gt;Send Email using JSP&lt;/h1&gt;</span><br><span class="line">        &lt;/center&gt;</span><br><span class="line">        &lt;p align=<span class="string">"center"</span>&gt;</span><br><span class="line">            &lt;%</span><br><span class="line"></span><br><span class="line">                out.println(<span class="string">"Result: "</span> + result + <span class="string">"\n"</span>);</span><br><span class="line">            %&gt;</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-05T01:22:32.716Z" itemprop="dateUpdated">2018-10-05 09:22:32</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://Chankin026.github.io">
+            <img src="/img/avatar.jpg" alt="Chankin">
+            Chankin
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JSP/">JSP</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/&title=《利用JSP发送邮件附件》 — Chankin's Blogs&pic=https://Chankin026.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/&title=《利用JSP发送邮件附件》 — Chankin's Blogs&source=Grasp All,Lose All." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《利用JSP发送邮件附件》 — Chankin's Blogs&url=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/&via=https://Chankin026.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/10/01/剑指Offer-根据前序遍历和中序遍历重建二叉树/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">剑指Offer--根据前序遍历和中序遍历重建二叉树</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/09/28/Hexo-theme-indigo解决置顶问题/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hexo-theme-indigo解决置顶问题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '7e30ed479633a3eb1360',
+        clientSecret: 'c7a8906a07abbf61b999bdc6ccc7da0187f00577',
+        repo: 'Chankin026.github.io',
+        owner: 'Chankin026',
+        admin: 'Chankin026'
+        id: location.pathname,
+        distractionFreeMode: true,
+      })
+        gitalk.render('comments')
+    </script>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Chankin &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/&title=《利用JSP发送邮件附件》 — Chankin's Blogs&pic=https://Chankin026.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/&title=《利用JSP发送邮件附件》 — Chankin's Blogs&source=Grasp All,Lose All." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《利用JSP发送邮件附件》 — Chankin's Blogs&url=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/&via=https://Chankin026.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://Chankin026.github.io/2018/09/29/利用JSP发送邮件附件/" alt="微信分享二维码">
+</div>
+
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Chankin's Blogs';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Chankin's Blogs';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
