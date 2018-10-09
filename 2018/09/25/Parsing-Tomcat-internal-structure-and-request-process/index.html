@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>About</title>
+    <title>解析Tomcat内部结构和请求过程</title>
     <meta name="description" content="">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="https://Chankin026.github.io/About/">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/09/25/Parsing-Tomcat-internal-structure-and-request-process/">
     <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
 
 
@@ -117,8 +117,8 @@
                     
                     <li>
                         
-                        <a class="active" href="/About/">
-                            
+                        <a href="/About/">
+                        
                             <i class="fa fa-heart"></i>About
                         </a>
                     </li>
@@ -142,67 +142,213 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>About</h1>
+        <h1>解析Tomcat内部结构和请求过程</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-09-25
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>chankin
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Tomcat" title="Category: Tomcat" rel="category">Tomcat</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Web%E5%AE%B9%E5%99%A8" title="Tag: Web容器" rel="tag">Web容器</a-->
+        <a href="/tag/#Web容器" title="Tag: Web容器" rel="tag">Web容器</a>&nbsp;
+    
+        <!--a href="/tag/#Servlet" title="Tag: Servlet" rel="tag">Servlet</a-->
+        <a href="/tag/#Servlet" title="Tag: Servlet" rel="tag">Servlet</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
         <hr>
-        <ul id="markdown-toc">
-  <li><a href="#关于我" id="markdown-toc-关于我">关于我</a></li>
-  <li><a href="#联系我" id="markdown-toc-联系我">联系我</a></li>
-  <li><a href="#关于本站" id="markdown-toc-关于本站">关于本站</a></li>
-  <li><a href="#comments" id="markdown-toc-comments">Comments</a></li>
-</ul>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        
 
-<h2 id="关于我">关于我</h2>
+        </article>
+        <hr>
 
-<ul>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-</ul>
+       
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
 
-<h2 id="联系我">联系我</h2>
-
-<style type="text/css">
-.social_label:link,
-.social_label:visited {
-    background-color: #f9f9f9;
-    padding: 5px 15px 5px 6px;
-    font-size: 14px;
-    line-height: 100%;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 20px;
-    outline: 0;
-    margin: 5px
-}
-
-.social_label:hover {
-    background-color: #e9e9e9;
-    outline: 0
-}
-
-.social_label:active {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .2) inset;
-    outline: 0
+        <style>
+.demo {
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
 }
 </style>
-
-<div>
-    <a href="https://github.com/Chankin026" class="social_label" target="_blank" rel="nofollow"><img src="/images/social_github.png" width="24" alt="GitHub" align="absmiddle" /> &nbsp;Github: Chankin026</a><br />
-    <a href="mailto:chenjian1261@gmail.com" class="social_label" target="_blank" rel="nofollow"><img src="/images/email.jpg" width="24" alt="GitHub" align="absmiddle" /> &nbsp;Email: chenjian1261@gmail.com</a><br />
-    <a href="https://t.me/chankin026" class="social_label" target="_blank" rel="nofollow"><img src="/images/social_telegram.png" width="24" alt="Telegram" align="absmiddle" /> &nbsp;Telegram</a><br />
-    <a href="http://weibo.com/p/1005051630904971" class="social_label" target="_blank" rel="nofollow"><img src="/images/weibo.png" width="24" alt="Weibo" align="absmiddle" /> &nbsp;Weibo</a><br />
-    <a href="https://twitter.com/350508392" class="social_label" target="_blank" rel="nofollow"><img src="/images/social_twitter.png" width="24" alt="Twitter" align="absmiddle" /> &nbsp;Twitter</a><br />
+<div class="post-recent">
+    <div class="demo" >
+        
+        <p><strong>上一篇</strong> <a href="/2018/09/22/Simple-use-of-Typora/">Markdown的简单使用</a>
+        
+        
+        <p><strong>下一篇</strong> <a href="/2018/09/26/Solve-sticky-post-sticky-problem-of-hexo-theme-indigo/" style="text-align:right;">解决Hexo-theme-indigo的置顶问题</a></p>
+        
+    </div>
 </div>
 
-<h2 id="关于本站">关于本站</h2>
+        <!-- <h2 id="comments">Comments</h2> -->
+        
 
-<p>本站所有内容均代表个人观点,欢迎指导与交流。<br /></p>
 
-<p><strong>若您想使用这个 jekyll 博客主题，请访问：<a href="https://github.com/Gaohaoyang/gaohaoyang.github.io">https://github.com/Gaohaoyang/gaohaoyang.github.io</a></strong></p>
 
-<h2 id="comments">Comments</h2>
+
+  
+    
     <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
     <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
       <div id="gitalk-container"></div>
@@ -214,10 +360,14 @@
             owner: 'Chankin026', 
             admin: ['Chankin026'], 
             distractionFreeMode: 'true',
-            id: '/About/',
+            id: '/2018/09/25/Parsing-Tomcat-internal-structure-and-request-process/',
           })
           gitalk.render('gitalk-container')
       </script>
+    
+
+
+
 
 
     </div>
@@ -231,6 +381,8 @@
                     Content
                 </div>
                 <ul id="content-side" class="content-ul">
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <!--<li><a href="#comments">Comments</a></li>-->
                 </ul>
             </div>
             <!-- 其他div框放到这里 -->
@@ -238,6 +390,17 @@
         </div>
     </div>
 </div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
 <script src="/js/pageContent.js " charset="utf-8"></script>
 
 

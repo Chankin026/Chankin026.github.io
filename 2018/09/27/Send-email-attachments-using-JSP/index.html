@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>利用JSP发送邮件附件</title>
+    <meta name="description" content="简单实现一个发送邮件正文和附件的例子,其中利用Java Mail jar包和JAF的activation jar包.下面的例子实现了从163邮箱发送邮件到qq邮箱, 其中message.setSubject( "邮件主题" )设置邮件主题messageBodyPart.setText("邮件正文")设置邮件正文内...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/09/27/Send-email-attachments-using-JSP/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?82a92032c29be4b2b72ac18628047724";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-127191064-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+</head>
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <!-- <a href="/" class="brand">chankin's Blog</a> -->
+        <small>每一步成长都想与你分享</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li><!--home-->
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/booklist/">
+                        
+                            <i class="fa fa-bookmark"></i>Booklist
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/movies/">
+                        
+                            <i class="fa fa-film"></i>Movies
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/About/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>利用JSP发送邮件附件</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-09-27
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>chankin
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Tomcat" title="Category: Tomcat" rel="category">Tomcat</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#JSP" title="Tag: JSP" rel="tag">JSP</a-->
+        <a href="/tag/#JSP" title="Tag: JSP" rel="tag">JSP</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <p>简单实现一个发送邮件正文和附件的例子,其中利用Java Mail jar包和JAF的activation jar包.
+下面的例子实现了从163邮箱发送邮件到qq邮箱, 其中</p>
+
+<p><code class="highlighter-rouge">message.setSubject( "邮件主题" )</code>设置邮件主题<br /></p>
+
+<p><code class="highlighter-rouge">messageBodyPart.setText("邮件正文")</code>设置邮件正文内容<br /></p>
+
+<p><code class="highlighter-rouge">String filename = "C:\\apache-tomcat-7.0.90\\webapps\\ROOT\\file.txt"</code>设置 邮件附件绝对路径, 分隔符<code class="highlighter-rouge">\</code>需要转义</p>
+
+<p>当然如果想换个邮箱进行发送,只需改一下邮箱服务器<code class="highlighter-rouge">smtp.163.com</code>,默认端口<code class="highlighter-rouge">25</code>采用SMTP协议</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//SMTP邮件服务器
+properties.setProperty( "mail.smtp.host", "smtp.163.com" );
+ //SMTP邮件服务器默认端口
+properties.setProperty( "mail.smtp.port", "25" );
+</code></pre></div></div>
+
+<p>常见的邮箱STMP服务器:https://blog.csdn.net/ning521513/article/details/79217203</p>
+
+<p>所需jar下载地址:  <a href="https://maven.java.net/content/repositories/releases/com/sun/mail/javax.mail/1.6.0/javax.mail-1.6.0.jar">Java Mail</a>   <a href="http://central.maven.org/maven2/javax/activation/activation/1.1/activation-1.1.jar">Activation</a></p>
+
+<p>其他信息备注都写的很详细</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;!--</span> <span class="mi">163</span><span class="err">邮箱发送带有附件的邮件到</span><span class="n">qq</span><span class="err">邮箱</span> <span class="o">--&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="kn">import</span><span class="err">="</span><span class="nn">java.util.*</span><span class="s">" %&gt;
+&lt;%@ page import="</span><span class="n">javax</span><span class="o">.</span><span class="na">mail</span><span class="o">.*</span><span class="s">" %&gt;
+&lt;%@ page import="</span><span class="n">javax</span><span class="o">.</span><span class="na">mail</span><span class="o">.</span><span class="na">internet</span><span class="o">.*</span><span class="s">" %&gt;
+&lt;%@ page import="</span><span class="n">javax</span><span class="o">.</span><span class="na">activation</span><span class="o">.*</span><span class="s">" %&gt;
+&lt;%
+    String result;
+    // 收件人的电子邮件
+    String to = "</span><span class="n">abc</span><span class="nd">@qq</span><span class="o">.</span><span class="na">com</span><span class="s">";
+
+    // 发件人的电子邮件名和密碼
+    String from = "</span><span class="n">abcd</span><span class="err">@</span><span class="mi">163</span><span class="o">.</span><span class="na">com</span><span class="s">";
+    String psd = "</span><span class="n">abcd</span><span class="s">";
+    //设置邮箱用户名
+    String user = "</span><span class="n">abcd</span><span class="s">";
+
+    Properties properties = new Properties();
+
+    try {
+        // 设置用户的认证方式
+        properties.setProperty( "</span><span class="n">mail</span><span class="o">.</span><span class="na">smtp</span><span class="o">.</span><span class="na">auth</span><span class="s">", "</span><span class="kc">true</span><span class="s">" );
+        //设置传输协议
+        properties.setProperty( "</span><span class="n">mail</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">protocol</span><span class="s">", "</span><span class="n">smtp</span><span class="s">" );
+        //SMTP邮件服务器
+        properties.setProperty( "</span><span class="n">mail</span><span class="o">.</span><span class="na">smtp</span><span class="o">.</span><span class="na">host</span><span class="s">", "</span><span class="n">smtp</span><span class="o">.</span><span class="mi">163</span><span class="o">.</span><span class="na">com</span><span class="s">" );
+        //SMTP邮件服务器默认端口
+        properties.setProperty( "</span><span class="n">mail</span><span class="o">.</span><span class="na">smtp</span><span class="o">.</span><span class="na">port</span><span class="s">", "</span><span class="mi">25</span><span class="s">" );
+
+        // 获取默认的Session对象。
+        Session mailSession = Session.getDefaultInstance( properties );
+
+        // 创建一个默认的MimeMessage对象。
+        Message message = new MimeMessage( mailSession );
+        // 根据session对象获取邮件传输对象Transport
+        Transport transport = mailSession.getTransport();
+
+        // 设置 From: 头部的header字段
+        message.setFrom( new InternetAddress( from ) );
+        // 设置 To: 头部的header字段
+        message.addRecipient( Message.RecipientType.TO, new InternetAddress( to ) );
+        // 设置 Subject: header字段
+        message.setSubject( "</span><span class="n">This</span> <span class="n">is</span> <span class="n">the</span> <span class="n">Subject</span> <span class="n">Line</span><span class="o">!</span><span class="s">" );
+        // 现在设置的实际消息
+        BodyPart messageBodyPart = new MimeBodyPart();
+        //发送邮件的正文内容
+        messageBodyPart.setText("</span><span class="n">This</span> <span class="n">is</span> <span class="n">message</span> <span class="n">body</span><span class="s">");
+
+        Multipart multipart = new MimeMultipart();
+
+        multipart.addBodyPart(messageBodyPart);
+
+        messageBodyPart = new MimeBodyPart();
+        //使用绝对路径
+        String filename = "</span><span class="nl">C:</span><span class="err">\\</span><span class="n">apache</span><span class="o">-</span><span class="n">tomcat</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">90</span><span class="err">\\</span><span class="n">webapps</span><span class="err">\\</span><span class="n">ROOT</span><span class="err">\\</span><span class="n">file</span><span class="o">.</span><span class="na">txt</span><span class="s">";
+        //添加文件到message
+        DataSource source = new FileDataSource(filename);
+
+        messageBodyPart.setDataHandler(new DataHandler(source));
+        messageBodyPart.setFileName(filename);
+
+        multipart.addBodyPart(messageBodyPart);
+        message.setContent(multipart);
+        message.setSentDate(new Date());
+
+        // 设置发件人的账户名和密码
+        transport.connect(user,psd);
+        // 发送邮件，并发送到所有收件人地址，message.getAllRecipients() 获取到的是在创建邮件对象时添加的所有收件人, 抄送人, 密送人
+        transport.sendMessage( message, message.getAllRecipients() );
+
+        result = "</span><span class="n">Sent</span> <span class="n">message</span> <span class="n">successfully</span><span class="o">....</span><span class="s">";
+    } catch (Exception e) {
+        e.printStackTrace();
+        result = "</span><span class="nl">Error:</span> <span class="n">unable</span> <span class="n">to</span> <span class="n">send</span> <span class="n">message</span><span class="o">....</span><span class="s">";
+    }
+
+%&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Send Email using JSP&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;center&gt;
+            &lt;h1&gt;Send Email using JSP&lt;/h1&gt;
+        &lt;/center&gt;
+        &lt;p align="</span><span class="n">center</span><span class="s">"&gt;
+            &lt;%
+
+                out.println("</span><span class="nl">Result:</span> <span class="s">" + result + "</span><span class="err">\</span><span class="n">n</span><span class="err">"</span><span class="o">);</span>
+            <span class="o">%&gt;</span>
+        <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+        </article>
+        <hr>
+
+       
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <style>
+.demo {
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+</style>
+<div class="post-recent">
+    <div class="demo" >
+        
+        <p><strong>上一篇</strong> <a href="/2018/09/26/Solve-sticky-post-sticky-problem-of-hexo-theme-indigo/">解决Hexo-theme-indigo的置顶问题</a>
+        
+        
+        <p><strong>下一篇</strong> <a href="/2018/09/27/Simple-implementation-of-Binary-tree/" style="text-align:right;">二叉树的简单实现</a></p>
+        
+    </div>
+</div>
+
+        <!-- <h2 id="comments">Comments</h2> -->
+        
+
+
+
+
+  
+    
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+      <div id="gitalk-container"></div>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID: 'b39a231392131dd275eb', 
+            clientSecret: '0a82311de71e2e78c26857ae7efc782dc3b60816',
+            repo: 'blog-comments', 
+            owner: 'Chankin026', 
+            admin: ['Chankin026'], 
+            distractionFreeMode: 'true',
+            id: '/2018/09/27/Send-email-attachments-using-JSP/',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <!--<li><a href="#comments">Comments</a></li>-->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p>
+            PV <span id="busuanzi_value_site_pv"></span>, 
+            UV <span id="busuanzi_value_site_uv"></span>
+            <!-- PV<span id="busuanzi_value_page_pv"></span> -->
+        </p>
+
+        <p class="contact">
+             Powered by Chankin 
+        </p>
+        <br/>
+        <!-- 备案号 -->
+        <!-- <p class="contact"> -->
+            <!-- <a href="http://www.miitbeian.gov.cn">粤ICP备17166463号</a>  -->
+        <!-- </p> -->
+         <!-- <p class="contact">
+            Contact me at: 
+            
+            <a href="https://github.com/Chankin026" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a> 
+             
+            
+            <a href="mailto:chanjian1261@gmail.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a> 
+              -->
+
+            <!--  
+             
+             
+               
+             -->
+        <!-- </p> -->
+        
+        <!-- <p class="power">
+            <span>
+                <a href="https://github.com/zchdjb"><i class="fa fa-github" aria-hidden="true"></i>GitHub</a>
+            </span>
+        </p> -->
+    </div>
+</footer>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
