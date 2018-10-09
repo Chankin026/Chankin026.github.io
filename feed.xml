@@ -5,8 +5,8 @@
     <description></description>
     <link>https://Chankin026.github.io/</link>
     <atom:link href="https://Chankin026.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 09 Oct 2018 16:38:56 +0800</pubDate>
-    <lastBuildDate>Tue, 09 Oct 2018 16:38:56 +0800</lastBuildDate>
+    <pubDate>Tue, 09 Oct 2018 16:50:31 +0800</pubDate>
+    <lastBuildDate>Tue, 09 Oct 2018 16:50:31 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -34,8 +34,8 @@
 
 </description>
         <pubDate>Sat, 06 Oct 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/10/06/Java-NIO-An-Analysis-of-the-IO-Model/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/10/06/Java-NIO-An-Analysis-of-the-IO-Model/</guid>
+        <link>https://Chankin026.github.io/2018/10/06/Java-NIO/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/10/06/Java-NIO/</guid>
         
         <category>并发</category>
         
@@ -452,8 +452,8 @@ More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot;&gt;Deploy
 
 </description>
         <pubDate>Mon, 01 Oct 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/10/01/Collect-some-learned-data-structures-and-algorithms-blog/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/10/01/Collect-some-learned-data-structures-and-algorithms-blog/</guid>
+        <link>https://Chankin026.github.io/2018/10/01/Collections1/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/10/01/Collections1/</guid>
         
         <category>数据结构</category>
         
@@ -463,37 +463,6 @@ More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot;&gt;Deploy
         <category>Algorithm</category>
         
         <category>DataStructure</category>
-        
-      </item>
-    
-      <item>
-        <title>剑指Offer--根据前序遍历和中序遍历重建二叉树</title>
-        <description>&lt;strong&gt;题目：&lt;/strong&gt;
-输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{1,2,4,7,3,5,6,8}，则重建二叉树并返回。
-
-&lt;img src=&quot;/images/360截图16400227446291.png&quot; alt=&quot;&quot; /&gt;
-
-二叉树前序遍历Preorder Traversal: 根-左-右&lt;code class=&quot;highlighter-rouge&quot;&gt;{1,2,4,7,3,5,6,8}&lt;/code&gt;&lt;br /&gt;
-
-二叉树中序遍历Inorder Traversal: 左-根-右&lt;code class=&quot;highlighter-rouge&quot;&gt;{1,2,4,7,3,5,6,8}&lt;/code&gt;&lt;br /&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;可以判断出&lt;strong&gt;前序遍历第一点&lt;/strong&gt;一定是根节点,然后在根据 利用while循环找出&lt;strong&gt;中序遍历的根节点&lt;/strong&gt;的&lt;code class=&quot;highlighter-rouge&quot;&gt;index&lt;/code&gt;;&lt;/li&gt;
-  &lt;li&gt;根据根节点判断出中序遍历左边部分是左子树,右边是右子树;&lt;/li&gt;
-  &lt;li&gt;根据中序遍历了第一点和根节点判断偏移量&lt;code class=&quot;highlighter-rouge&quot;&gt; index-startIn&lt;/code&gt;(循环第一次是index为3);&lt;/li&gt;
-  &lt;li&gt;中序遍历根节点左边第一点就是左子树最后一个节点(最大点)&lt;code class=&quot;highlighter-rouge&quot;&gt;index-startIn +startPre&lt;/code&gt; (前序第一点加偏移量);&lt;/li&gt;
-  &lt;li&gt;前序遍历左子树最后一个节点的后一点 &lt;code class=&quot;highlighter-rouge&quot;&gt;index-startIn+startPre+1&lt;/code&gt;就是右子树第一点,&lt;code class=&quot;highlighter-rouge&quot;&gt;index+1&lt;/code&gt;中序遍历右子树的第一点;&lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer-reconstructing-binary-tree-based-on-preorder-traversal-and-in-order-traversal/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer-reconstructing-binary-tree-based-on-preorder-traversal-and-in-order-traversal/</guid>
-        
-        <category>二叉树</category>
-        
-        
-        <category>Algorithm</category>
         
       </item>
     
@@ -904,12 +873,43 @@ More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot;&gt;Deploy
 
 </description>
         <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/09/30/Looking-for-the-minimum-number-of-flights-between-two-cities/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/Looking-for-the-minimum-number-of-flights-between-two-cities/</guid>
+        <link>https://Chankin026.github.io/2018/09/30/find-minimum-number/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/find-minimum-number/</guid>
         
         <category>dfs</category>
         
         <category>bfs</category>
+        
+        
+        <category>Algorithm</category>
+        
+      </item>
+    
+      <item>
+        <title>剑指Offer--根据前序遍历和中序遍历重建二叉树</title>
+        <description>&lt;strong&gt;题目：&lt;/strong&gt;
+输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{1,2,4,7,3,5,6,8}，则重建二叉树并返回。
+
+&lt;img src=&quot;/images/360截图16400227446291.png&quot; alt=&quot;&quot; /&gt;
+
+二叉树前序遍历Preorder Traversal: 根-左-右&lt;code class=&quot;highlighter-rouge&quot;&gt;{1,2,4,7,3,5,6,8}&lt;/code&gt;&lt;br /&gt;
+
+二叉树中序遍历Inorder Traversal: 左-根-右&lt;code class=&quot;highlighter-rouge&quot;&gt;{1,2,4,7,3,5,6,8}&lt;/code&gt;&lt;br /&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;可以判断出&lt;strong&gt;前序遍历第一点&lt;/strong&gt;一定是根节点,然后在根据 利用while循环找出&lt;strong&gt;中序遍历的根节点&lt;/strong&gt;的&lt;code class=&quot;highlighter-rouge&quot;&gt;index&lt;/code&gt;;&lt;/li&gt;
+  &lt;li&gt;根据根节点判断出中序遍历左边部分是左子树,右边是右子树;&lt;/li&gt;
+  &lt;li&gt;根据中序遍历了第一点和根节点判断偏移量&lt;code class=&quot;highlighter-rouge&quot;&gt; index-startIn&lt;/code&gt;(循环第一次是index为3);&lt;/li&gt;
+  &lt;li&gt;中序遍历根节点左边第一点就是左子树最后一个节点(最大点)&lt;code class=&quot;highlighter-rouge&quot;&gt;index-startIn +startPre&lt;/code&gt; (前序第一点加偏移量);&lt;/li&gt;
+  &lt;li&gt;前序遍历左子树最后一个节点的后一点 &lt;code class=&quot;highlighter-rouge&quot;&gt;index-startIn+startPre+1&lt;/code&gt;就是右子树第一点,&lt;code class=&quot;highlighter-rouge&quot;&gt;index+1&lt;/code&gt;中序遍历右子树的第一点;&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
+        <link>https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1/</guid>
+        
+        <category>二叉树</category>
         
         
         <category>Algorithm</category>
@@ -1885,8 +1885,8 @@ module.exports = function(locals){
 
 </description>
         <pubDate>Wed, 26 Sep 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/09/26/Solve-sticky-post-sticky-problem-of-hexo-theme-indigo/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/26/Solve-sticky-post-sticky-problem-of-hexo-theme-indigo/</guid>
+        <link>https://Chankin026.github.io/2018/09/26/sticky-post-sticky-problem/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/26/sticky-post-sticky-problem/</guid>
         
         <category>hexo</category>
         
