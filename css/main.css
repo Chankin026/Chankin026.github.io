@@ -260,7 +260,6 @@ header {
   transition: 0.5s ease; }
   .page[post] a:hover {
     color: #223253;
-    font-size: 101%;
     transition: 0.3s ease-in-out; }
 .page[post] .left ul > h2 {
   color: #333; }
@@ -792,7 +791,8 @@ pre {
       padding: 0 3px;
       border-radius: 5px; }
       .page[index] .right .wrap .side .tags-cloud a:hover {
-        background-color: rgba(192, 192, 192, 0.3); }
+        text-shadow: 1px 1px 1px #999;
+        transition: 0.3s ease-in-out; }
 
 @media screen and (max-width: 770px) {
   .page[index] .left > ul li h2 {
