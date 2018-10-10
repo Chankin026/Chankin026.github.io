@@ -260,8 +260,8 @@ header {
   transition: 0.5s ease; }
   .page[post] a:hover {
     color: #223253;
-    background-color: rgba(192, 192, 192, 0.2);
-    border-radius: 3px; }
+    font-size: 101%;
+    transition: 0.3s ease-in-out; }
 .page[post] .left ul > h2 {
   color: #333; }
 .page[post] .left ul li {
