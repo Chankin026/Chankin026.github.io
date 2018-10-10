@@ -260,7 +260,7 @@ header {
   transition: 0.5s ease; }
   .page[post] a:hover {
     color: #223253;
-    background-color: #ebf1fb;
+    background-color: rgba(192, 192, 192, 0.2);
     border-radius: 3px; }
 .page[post] .left ul > h2 {
   color: #333; }
@@ -320,7 +320,8 @@ header {
         color: #223253;
         transition: 0.3s ease; }
         .page .left ul li .title:hover {
-          color: #4d6dad; }
+          color: #4d6dad;
+          text-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.15); }
       .page .left ul li i {
         margin-right: 5px; }
       .page .left ul li .categories {
@@ -381,7 +382,8 @@ header {
         color: #4d6dad;
         transition: 0.5s ease; }
         .page .right .side a:hover {
-          color: #223253; }
+          color: #223253;
+          text-shadow: 0.1em 0.15em 0.3em rgba(0, 0, 0, 0.15); }
     .page .right .content-ul {
       overflow-y: auto;
       padding-right: 10px;
@@ -391,10 +393,7 @@ header {
         padding-left: 20px; }
         .page .right .content-ul ul a:hover {
           color: #223253;
-          -webkit-transform: scaleX(1.02);
-          transform: scaleX(1.02);
-          -webkit-transition: .1s ease-in-out;
-          transition: .2s ease-in-out; }
+          text-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.15); }
 
 @media screen and (max-width: 1200px) and (min-width: 770px) {
   .page {
@@ -691,8 +690,9 @@ pre {
   transition: 0.5s ease; }
   .page[index] a:hover {
     color: #223253;
-    -webkit-transform: scaleX(1.02);
-    transform: scaleX(1.02);
+    text-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.15);
+    -webkit-transform: scaleX(1.01);
+    transform: scaleX(1.01);
     -webkit-transition: .1s ease-in-out;
     transition: .2s ease-in-out; }
 .page[index] .left > ul {
