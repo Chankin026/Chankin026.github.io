@@ -474,7 +474,7 @@ code {
   color: #000;
   background-color: rgba(15, 25, 42, 0);
   border: 1px solid #d7d0d2;
-  font-family: Consolas, "Bitstream Vera Sans Mono", "Courier New", Courier, monospace; }
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; }
 
 pre {
   margin: 12px 0;
@@ -491,11 +491,12 @@ pre {
     font-size: 13px;
     color: #d1d1c9;
     border: none;
-    background-color: #0f192a; }
+    /* #0f192a */
+    background-color: #3a3c3e; }
 
 .highlight {
   border-radius: 3px;
-  background: #0f192a;
+  background: #3a3c3e;
   /* Comment */
   /* Error */
   /* Keyword */
@@ -559,18 +560,18 @@ pre {
   /* Generic.Deleted & Diff Deleted */
   /* Generic.Inserted & Diff Inserted */ }
   .highlight .hll {
-    background-color: #0f192a; }
+    background-color: #3a3c3e; }
   .highlight .c {
     color: #428bdd; }
   .highlight .err {
     color: #960050;
     background-color: #0f192a; }
   .highlight .k {
-    color: #b43d3d; }
+    color: #f8f8f2; }
   .highlight .l {
     color: #ae81ff; }
   .highlight .n {
-    color: #ffaa3e; }
+    color: #ffcb6b; }
   .highlight .o {
     color: #d0ecfe; }
   .highlight .p {
