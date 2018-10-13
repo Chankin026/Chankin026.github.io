@@ -9,10 +9,7 @@
     font-weight: normal;
     font-style: normal
 }
-@font-face {
-  font-family: 'dddd';
-  src:url('../fonts/d.woff') format('woff');
-}
+
 
 .fa {
     display: inline-block;
