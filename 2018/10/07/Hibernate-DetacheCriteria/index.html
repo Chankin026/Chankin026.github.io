@@ -427,21 +427,21 @@
 <table>
   <thead>
     <tr>
-      <th><strong>返回值类型</strong></th>
-      <th><strong>方法名称</strong></th>
-      <th><strong>描述</strong></th>
+      <th style="text-align: center"><strong>返回值类型</strong></th>
+      <th style="text-align: center"><strong>方法名称</strong></th>
+      <th style="text-align: center"><strong>描述</strong></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Order</td>
-      <td>Order.asc</td>
-      <td>升序</td>
+      <td style="text-align: center">Order</td>
+      <td style="text-align: center">Order.asc</td>
+      <td style="text-align: center">升序</td>
     </tr>
     <tr>
-      <td>Order</td>
-      <td>Order.desc</td>
-      <td>降序</td>
+      <td style="text-align: center">Order</td>
+      <td style="text-align: center">Order.desc</td>
+      <td style="text-align: center">降序</td>
     </tr>
   </tbody>
 </table>
@@ -517,7 +517,7 @@
 <span class="n">List</span><span class="o">&lt;</span><span class="n">Customer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">list</span><span class="o">();</span>
 
 <span class="c1">//条件查询:</span>
-<span class="n">c</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Restriction</span><span class="o">.</span><span class="na">eq</span><span class="o">(</span><span class="err">“</span><span class="n">cust_id</span><span class="err">”</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span><span class="c1">//eq是等于，gt是大于，lt是小于,or是或</span>
+<span class="n">c</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Restriction</span><span class="o">.</span><span class="na">eq</span><span class="o">(</span><span class="s">"cust_id"</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span><span class="c1">//eq是等于，gt是大于，lt是小于,or是或</span>
 <span class="n">Customer</span> <span class="n">customer</span> <span class="o">=</span> <span class="o">(</span><span class="n">Customer</span><span class="o">)</span><span class="n">c</span><span class="o">.</span><span class="na">uniqueResult</span><span class="o">();</span>
 
 <span class="c1">//分页查询(查询前10条):</span>
@@ -526,12 +526,12 @@
 <span class="n">List</span><span class="o">&lt;</span><span class="n">Customer</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">list</span><span class="o">();</span>
 
 <span class="c1">//排序查询</span>
-<span class="n">c</span><span class="o">.</span><span class="na">addOrder</span><span class="o">(</span><span class="n">Order</span><span class="o">.</span><span class="na">desc</span><span class="o">(</span><span class="err">“</span><span class="n">cust_level</span><span class="err">”</span><span class="o">));</span><span class="c1">//降序</span>
-<span class="c1">//c.addOrder(Order.asc(“cust_level”));//升序</span>
+<span class="n">c</span><span class="o">.</span><span class="na">addOrder</span><span class="o">(</span><span class="n">Order</span><span class="o">.</span><span class="na">desc</span><span class="o">(</span><span class="s">"cust_level"</span><span class="o">));</span><span class="c1">//降序</span>
+<span class="c1">//c.addOrder(Order.asc("cust_level"));//升序</span>
 <span class="n">List</span><span class="o">&lt;</span><span class="n">Customer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="na">list</span><span class="o">();</span>
 
 <span class="c1">//统计查询</span>
-<span class="n">c</span><span class="o">.</span><span class="na">setProjection</span><span class="o">(</span><span class="n">Projections</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="err">“</span><span class="n">cust_id</span><span class="err">”</span><span class="o">));</span>
+<span class="n">c</span><span class="o">.</span><span class="na">setProjection</span><span class="o">(</span><span class="n">Projections</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="s">"cust_id"</span><span class="o">));</span>
 <span class="n">Long</span> <span class="n">total</span> <span class="o">=</span> <span class="o">(</span><span class="n">Long</span><span class="o">)</span><span class="n">c</span><span class="o">.</span><span class="na">uniqueResult</span><span class="o">();</span>
 
 <span class="c1">//多个条件组合</span>
@@ -539,7 +539,7 @@
 <span class="n">c</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Restrictions</span><span class="o">.</span><span class="na">and</span><span class="o">(</span> <span class="n">Restrictions</span><span class="o">.</span><span class="na">eq</span><span class="o">(</span><span class="s">"cust_industry"</span><span class="o">,</span> <span class="s">"研发部"</span><span class="o">),</span> <span class="n">Restrictions</span><span class="o">.</span><span class="na">lt</span><span class="o">(</span><span class="s">"cust_level"</span><span class="o">,</span><span class="s">"7"</span><span class="o">)</span> <span class="o">));</span>
 
 
-<span class="c1">//复合查询 比如有Clazz班级，包含对象属性Student，那么我们希望查询 “包含学生姓名为Bob” 的班级，那么就可以使用复合查询：</span>
+<span class="c1">//复合查询 比如有Clazz班级，包含对象属性Student，那么我们希望查询 "包含学生姓名为Bob" 的班级，那么就可以使用复合查询：</span>
 <span class="n">Criteria</span> <span class="n">criteria</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">createCriteria</span><span class="o">(</span><span class="n">Clazz</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 <span class="n">Criteria</span> <span class="n">criteriaInner</span> <span class="o">=</span> <span class="n">criteria</span><span class="o">.</span><span class="na">createCriteria</span><span class="o">(</span><span class="n">Student</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 <span class="n">criteriaInner</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Restrictions</span><span class="o">.</span><span class="na">eq</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="s">"Bob"</span><span class="o">));</span>
