@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>整理一些学习过的数据结构和算法blog</title>
+    <meta name="description" content="  树形结构:  算法系列:          8大排序:      其他基础算法:        并发编程:          海子大神系列:      skywang大神系列:                  (一) 基础篇          (二) JUC原子类          (三) JUC锁    ...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="/css/awesome.min.css ">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/10/01/Collections1/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?82a92032c29be4b2b72ac18628047724";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-127191064-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+</head>
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <!-- <a href="/" class="brand">chankin's Blog</a> -->
+        <small>每一步成长都想与你分享</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li><!--home-->
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/booklist/">
+                        
+                            <i class="fa fa-bookmark"></i>Booklist
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/movies/">
+                        
+                            <i class="fa fa-film"></i>Movies
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/About/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>整理一些学习过的数据结构和算法blog</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-10-01
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>chankin
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Algorithm" title="Category: Algorithm" rel="category">Algorithm</a>&nbsp;
+    
+        <a href="/category/#DataStructure" title="Category: DataStructure" rel="category">DataStructure</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="Tag: 数据结构" rel="tag">数据结构</a-->
+        <a href="/tag/#数据结构" title="Tag: 数据结构" rel="tag">数据结构</a>&nbsp;
+    
+        <!--a href="/tag/#%E7%AE%97%E6%B3%95" title="Tag: 算法" rel="tag">算法</a-->
+        <a href="/tag/#算法" title="Tag: 算法" rel="tag">算法</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#树形结构" id="markdown-toc-树形结构">树形结构:</a></li>
+  <li><a href="#算法系列" id="markdown-toc-算法系列">算法系列:</a>    <ul>
+      <li><a href="#8大排序" id="markdown-toc-8大排序">8大排序:</a></li>
+      <li><a href="#其他基础算法" id="markdown-toc-其他基础算法">其他基础算法:</a></li>
+    </ul>
+  </li>
+  <li><a href="#并发编程" id="markdown-toc-并发编程">并发编程:</a>    <ul>
+      <li><a href="#海子大神系列" id="markdown-toc-海子大神系列">海子大神系列:</a></li>
+      <li><a href="#skywang大神系列" id="markdown-toc-skywang大神系列">skywang大神系列:</a>        <ul>
+          <li><a href="#一-基础篇" id="markdown-toc-一-基础篇">(一) 基础篇</a></li>
+          <li><a href="#二-juc原子类" id="markdown-toc-二-juc原子类">(二) JUC原子类</a></li>
+          <li><a href="#三-juc锁" id="markdown-toc-三-juc锁">(三) JUC锁</a></li>
+          <li><a href="#四-juc集合" id="markdown-toc-四-juc集合">(四) JUC集合</a></li>
+          <li><a href="#五-juc线程池" id="markdown-toc-五-juc线程池">(五) JUC线程池</a>            <ul>
+              <li><a href="#附加内容" id="markdown-toc-附加内容">附加内容</a></li>
+            </ul>
+          </li>
+          <li><a href="#面试集合" id="markdown-toc-面试集合">面试集合:</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#ioip-http-tcp" id="markdown-toc-ioip-http-tcp">IO/IP HTTP TCP:</a></li>
+  <li><a href="#书籍" id="markdown-toc-书籍">书籍:</a></li>
+</ul>
+<h2 id="树形结构">树形结构:</h2>
+
+<p><a href="http://www.cnblogs.com/skywang12345/p/3576452.html">二叉查找树</a></p>
+
+<p><a href="https://www.cnblogs.com/skywang12345/p/3576452.html">二叉查找树之 Java的实现</a></p>
+
+<p><a href="https://www.cnblogs.com/Michaelwjw/p/6384428.html">二叉搜索树Java实现（查找、插入、删除、遍历） - Michaelwjw - 博客园</a></p>
+
+<p><br /></p>
+
+<p><a href="https://blog.csdn.net/javazejian/article/details/53892797">AVL树的设计与实现 - CSDN博客</a></p>
+
+<p><a href="https://www.jianshu.com/p/65c90aa1236d">彻底搞懂AVL树 - 简书</a></p>
+
+<p><a href="https://www.cnblogs.com/skywang12345/p/3577479.html#a1">AVL树(三)之 Java的实现 - 如果天空不死 - 博客园</a></p>
+
+<p><br /></p>
+
+<p><a href="https://www.cnblogs.com/skywang12345/p/3245399.html">红黑树(一)之 原理和算法详细介绍</a></p>
+
+<p><a href="https://www.cnblogs.com/skywang12345/p/3624343.html">红黑树(五)之 Java的实现</a></p>
+
+<p><a href="https://blog.csdn.net/yang_yulei/article/details/26066409">查找（一）史上最简单清晰的红黑树讲解 - CSDN博客</a></p>
+
+<p><a href="https://blog.csdn.net/Sun_TTTT/article/details/65445754">!最容易懂得红黑树 - CSDN博客</a></p>
+
+<p><a href="https://blog.csdn.net/yang_yulei/article/details/26066409">查找（一）史上最简单清晰的红黑树讲解 - CSDN博客</a></p>
+
+<p><br /></p>
+
+<p><a href="http://www.cnblogs.com/gaochundong/p/balanced_search_tree.htm">查找树（2-3-4 树） - 匠心十年- 博客园</a></p>
+
+<p><a href="https://www.cnblogs.com/skywang12345/p/3711483.html">图的遍历之 深度优先搜索和广度优先搜索</a></p>
+
+<p><a href="https://www.cnblogs.com/skywang12345/p/3706833.html">哈夫曼树(三)之 Java详解</a></p>
+
+<p><a href="https://blog.csdn.net/v_JULY_v/article/details/6530142">从B树、B+树、B*树谈到R 树</a></p>
+
+<p><a href="http://blog.csdn.net/hackbuteer1/article/details/7964147">Trie树详解及其应用</a></p>
+
+<p><br /></p>
+
+<p><a href="https://www.zhihu.com/question/20176446">数据结构与算法中，树一般会应用在哪些方面？为什么？ - 知乎</a></p>
+
+<p><br /></p>
+
+<h2 id="算法系列">算法系列:</h2>
+
+<h4 id="8大排序">8大排序:</h4>
+
+<p><a href="http://www.cnblogs.com/skywang12345/p/3596232.html">冒泡排序</a>   <a href="http://www.cnblogs.com/skywang12345/p/3596746.html">快速排序</a>   <a href="http://www.cnblogs.com/skywang12345/p/3596881.html">直接插入排序</a>   <a href="http://www.cnblogs.com/skywang12345/p/3597597.html">希尔排序</a>  <a href="http://www.cnblogs.com/skywang12345/p/3597641.html">选择排序</a>   <a href="http://www.cnblogs.com/skywang12345/p/3602162.html">堆排序</a>   <a href="http://www.cnblogs.com/skywang12345/p/3602737.html">桶排序</a>   <a href="http://www.cnblogs.com/skywang12345/p/3603669.html">基数排序</a></p>
+
+<h4 id="其他基础算法">其他基础算法:</h4>
+
+<p><a href="https://blog.csdn.net/bruce_suxin/article/details/52937720">递归之斐波那契数列java的三种写法- CSDN博客</a></p>
+
+<p><a href="https://www.cnblogs.com/newflydd/p/5091646.html">8皇后以及N皇后算法探究，回溯算法的JAVA实现，递归方案</a></p>
+
+<p><a href="https://blog.csdn.net/m53931422/article/details/41788535">分治归并排序算法——Java实现- CSDN博客</a></p>
+
+<p><a href="https://www.cnblogs.com/xiaozhang2014/p/7783795.html">java-贪心算法</a></p>
+
+<p><a href="https://www.cnblogs.com/yanlingyin/archive/2011/11/16/greedy.html">【贪心法求解最小生成树之Kruskal算法详细分析】—Greedy Algorithm for MST</a></p>
+
+<p><a href="https://www.cnblogs.com/skywang12345/p/3711510.html">Prim算法(三)之 Java详解</a></p>
+
+<p><a href="https://www.cnblogs.com/skywang12345/p/3711516.html">Dijkstra算法(三)之Java详解- 如果天空不死- 博客园</a></p>
+
+<p><br /></p>
+
+<h2 id="并发编程">并发编程:</h2>
+
+<h3 id="海子大神系列"><a href="https://www.cnblogs.com/dolphin0520">海子大神系列</a>:</h3>
+
+<ol>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3910667.html">Java并发编程：进程和线程之由来</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3913517.html">Java并发编程：如何创建线程？</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3920357.html">Java并发编程：Thread类的使用</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3920385.html">Java并发编程：线程间协作的两种方式：wait、notify、notifyAll和Condition</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3923737.html">Java并发编程：synchronized</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3923167.html">Java并发编程：Lock</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3920373.html">Java并发编程：volatile关键字解析</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3920407.html">Java并发编程：深入剖析ThreadLocal</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3933404.html">Java并发编程：同步容器</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3933551.html">Java ConcurrentModificationException异常原因和解决方法</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3932905.html">Java并发编程：并发容器之ConcurrentHashMap（转载）</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3938914.html">Java并发编程：并发容器之CopyOnWriteArrayList（转载）</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3932906.html">Java并发编程：阻塞队列</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3932921.html">Java并发编程：线程池的使用</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3920397.html">Java并发编程：CountDownLatch、CyclicBarrier和Semaphore</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3949310.html">Java并发编程：Callable、Future和FutureTask</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.cnblogs.com/dolphin0520/p/3938991.html">Java并发编程：Timer和TimerTask（转载）</a></p>
+
+    <p><br /></p>
+  </li>
+</ol>
+
+<h3 id="skywang大神系列"><a href="https://www.cnblogs.com/skywang12345">skywang大神系列</a>:</h3>
+
+<h4 id="一-基础篇">(一) 基础篇</h4>
+
+<ol>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479024.html">Java多线程系列–“基础篇”01之 基本概念</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479063.html">Java多线程系列–“基础篇”02之 常用的实现多线程的两种方式</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479083.html">Java多线程系列–“基础篇”03之 Thread中start()和run()的区别</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479202.html">Java多线程系列–“基础篇”04之 synchronized关键字</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479224.html">Java多线程系列–“基础篇”05之 线程等待与唤醒</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479243.html">Java多线程系列–“基础篇”06之 线程让步</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479256.html">Java多线程系列–“基础篇”07之 线程休眠</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479275.html">Java多线程系列–“基础篇”08之 join()</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479949.html">Java多线程系列–“基础篇”09之 interrupt()和线程终止方式</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3479982.html">Java多线程系列–“基础篇”10之 线程优先级和守护线程</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3480016.html">Java多线程系列–“基础篇”11之 生产消费者问题</a></p>
+  </li>
+</ol>
+
+<h4 id="二-juc原子类">(二) JUC原子类</h4>
+
+<ol>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3514589.html">Java多线程系列–“JUC原子类”01之 框架</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3514593.html">Java多线程系列–“JUC原子类”02之 AtomicLong原子类</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3514604.html">Java多线程系列–“JUC原子类”03之 AtomicLongArray原子类</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3514623.html">Java多线程系列–“JUC原子类”04之 AtomicReference原子类</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3514635.html">Java多线程系列–“JUC原子类”05之 AtomicLongFieldUpdater原子类</a></p>
+  </li>
+</ol>
+
+<h4 id="三-juc锁">(三) JUC锁</h4>
+
+<ol>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3496098.html">Java多线程系列–“JUC锁”01之 框架</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3496101.html">Java多线程系列–“JUC锁”02之 互斥锁ReentrantLock</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3496147.html">Java多线程系列–“JUC锁”03之 公平锁(一)</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3496609.html">Java多线程系列–“JUC锁”04之 公平锁(二)</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3496651.html">Java多线程系列–“JUC锁”05之 非公平锁</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3496716.html">Java多线程系列–“JUC锁”06之 Condition条件</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3505784.html">Java多线程系列–“JUC锁”07之 LockSupport</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3505809.html">Java多线程系列–“JUC锁”08之 共享锁和ReentrantReadWriteLock</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3533887.html">Java多线程系列–“JUC锁”09之 CountDownLatch原理和示例</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3533995.html">Java多线程系列–“JUC锁”10之 CyclicBarrier原理和示例</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3534050.html">Java多线程系列–“JUC锁”11之 Semaphore信号量的原理和示例</a></p>
+  </li>
+</ol>
+
+<h4 id="四-juc集合">(四) JUC集合</h4>
+
+<ol>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3498454.html">Java多线程系列–“JUC集合”01之 框架</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3498483.html">Java多线程系列–“JUC集合”02之 CopyOnWriteArrayList</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3498497.html">Java多线程系列–“JUC集合”03之 CopyOnWriteArraySet</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3498537.html">Java多线程系列–“JUC集合”04之 ConcurrentHashMap</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3498556.html">Java多线程系列–“JUC集合”05之 ConcurrentSkipListMap</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3498634.html">Java多线程系列–“JUC集合”06之 ConcurrentSkipListSet</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3498652.html">Java多线程系列–“JUC集合”07之 ArrayBlockingQueue</a></p>
+  </li>
+  <li><a href="http://www.cnblogs.com/skywang12345/p/3503458.html">Java多线程系列–“JUC集合”08之 LinkedBlockingQueue</a></li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3503480.html">Java多线程系列–“JUC集合”09之 LinkedBlockingDeque</a></p>
+  </li>
+  <li><a href="http://www.cnblogs.com/skywang12345/p/3498995.html">Java多线程系列–“JUC集合”10之 ConcurrentLinkedQueue</a></li>
+</ol>
+
+<h4 id="五-juc线程池">(五) JUC线程池</h4>
+
+<ol>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3509903.html">Java多线程系列–“JUC线程池”01之 线程池架构</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3509941.html">Java多线程系列–“JUC线程池”02之 线程池原理(一)</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3509954.html">Java多线程系列–“JUC线程池”03之 线程池原理(二)</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3509960.html">Java多线程系列–“JUC线程池”04之 线程池原理(三)</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3512947.html">Java多线程系列–“JUC线程池”05之 线程池原理(四)</a></p>
+  </li>
+  <li>
+    <p><a href="http://www.cnblogs.com/skywang12345/p/3544116.html">Java多线程系列–“JUC线程池”06之 Callable和Future</a></p>
+  </li>
+</ol>
+
+<h5 id="附加内容">附加内容</h5>
+
+<p><a href="http://www.cnblogs.com/skywang12345/p/3447546.html">《深入理解Java内存模型》读书总结</a></p>
+
+<hr />
+
+<p><a href="http://www.iteye.com/topic/757478">深入浅出ThreadLocal - Java综合 - Java - ITeye论坛</a></p>
+
+<p><a href="https://www.jianshu.com/p/98b68c97df9b">ThreadLocal-面试必问深度解析 - 简书</a></p>
+
+<h4 id="面试集合">面试集合:</h4>
+
+<p><a href="https://www.cnblogs.com/dolphin0520/p/3958019.html">Java线程面试题 Top 50 （转载）</a></p>
+
+<p><a href="https://www.cnblogs.com/dolphin0520/p/3932934.html">JAVA多线程和并发基础面试问答（转载）</a>
+<br /></p>
+
+<h2 id="ioip-http-tcp">IO/IP HTTP TCP:</h2>
+
+<p><a href="https://juejin.im/post/5b5ef5a25188251af86bfebf">HTTP2和HTTPS来不来了解一下？ - 掘金</a></p>
+
+<p><a href="https://blog.csdn.net/anxpp/article/details/51512200">Java 网络IO编程总结（BIO、NIO、AIO均含完整实例代码） - CSDN博客</a></p>
+
+<p><a href="https://www.cnblogs.com/red-code/p/8394892.html">TCP协议详解 - Red_Code - 博客园</a></p>
+
+<p><a href="https://www.cnblogs.com/ImBit/p/5513401.html">基础笔记（三）：网络协议之Tcp、Http - 老真 - 博客园</a></p>
+
+<p><a href="https://blog.csdn.net/baiye_xing/article/details/73123753">【NIO引入】BIO、AIO与NIO的区别 - CSDN博客</a></p>
+
+<p><a href="https://www.cnblogs.com/dolphin0520/p/3916526.html">Java NIO：浅析I/O模型</a></p>
+
+<h2 id="书籍">书籍:</h2>
+
+<ul>
+  <li><a href="http://web.jobbole.com/86734/">如果有人让你推荐前端技术书，请让他看这个列表 - WEB前端 - 伯乐在线</a></li>
+  <li><a href="https://blog.csdn.net/xiaopang1122/article/details/54909636">JAVA程序员必看的15本书-JAVA自学书籍推荐 （转） - CSDN博客</a></li>
+  <li><a href="https://baijiahao.baidu.com/s?id=1600336783016516283&amp;wfr=spider&amp;for=pc">干货 ｜ 推荐五本国外最受欢迎的Spring教程书</a></li>
+</ul>
+
+
+        </article>
+        <hr>
+
+       
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+        
+
+        <style>
+.demo {
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+</style>
+<div class="post-recent">
+    <div class="demo" >
+        
+        <p><strong>上一篇</strong> <a href="/2018/09/30/find-minimum-number-Copy/">寻找两座城市之间的最小飞行次数的问题</a>
+        
+        
+        <p><strong>下一篇</strong> <a href="/2018/10/02/B-Tree/" style="text-align:right;">B树、B+树、B*树结构的理解</a></p>
+        
+    </div>
+</div>
+
+        <!-- <h2 id="comments">Comments</h2> -->
+        
+
+
+
+
+  
+    
+    <link rel="stylesheet" href="/css/gitalk.css">
+    <script src="/js/gitalk.min.js"></script>
+      <div id="gitalk-container"></div>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID: 'b39a231392131dd275eb', 
+            clientSecret: '0a82311de71e2e78c26857ae7efc782dc3b60816',
+            repo: 'blog-comments', 
+            owner: 'Chankin026', 
+            admin: ['Chankin026'], 
+            distractionFreeMode: 'true',
+            id: '/2018/10/01/Collections1/',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <!--<li><a href="#comments">Comments</a></li>-->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p>
+            PV <span id="busuanzi_value_site_pv"></span>, 
+            UV <span id="busuanzi_value_site_uv"></span>
+            <!-- PV<span id="busuanzi_value_page_pv"></span> -->
+        </p>
+
+        <p class="contact">
+             Powered by Chankin 
+        </p>
+        <br/>
+        <!-- 备案号 -->
+        <!-- <p class="contact"> -->
+            <!-- <a href="http://www.miitbeian.gov.cn">粤ICP备17166463号</a>  -->
+        <!-- </p> -->
+         <!-- <p class="contact">
+            Contact me at: 
+            
+            <a href="https://github.com/Chankin026" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a> 
+             
+            
+            <a href="mailto:chanjian1261@gmail.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a> 
+              -->
+
+            <!--  
+             
+             
+               
+             -->
+        <!-- </p> -->
+        
+        <!-- <p class="power">
+            <span>
+                <a href="https://github.com/zchdjb"><i class="fa fa-github" aria-hidden="true"></i>GitHub</a>
+            </span>
+        </p> -->
+    </div>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
