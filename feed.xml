@@ -5,8 +5,8 @@
     <description></description>
     <link>https://Chankin026.github.io/</link>
     <atom:link href="https://Chankin026.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Oct 2018 22:38:06 +0800</pubDate>
-    <lastBuildDate>Mon, 15 Oct 2018 22:38:06 +0800</lastBuildDate>
+    <pubDate>Mon, 15 Oct 2018 23:36:04 +0800</pubDate>
+    <lastBuildDate>Mon, 15 Oct 2018 23:36:04 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -590,6 +590,89 @@ Hibernate总的来说共有三种查询方式：HQL、QBC和SQL三种
       </item>
     
       <item>
+        <title>MySQL索引背后的数据结构及算法原理(转载)</title>
+        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#数据结构及算法基础&quot; id=&quot;markdown-toc-数据结构及算法基础&quot;&gt;数据结构及算法基础&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#索引的本质&quot; id=&quot;markdown-toc-索引的本质&quot;&gt;索引的本质&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#b-tree和btree&quot; id=&quot;markdown-toc-b-tree和btree&quot;&gt;B-Tree和B+Tree&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#b-tree&quot; id=&quot;markdown-toc-b-tree&quot;&gt;B-Tree&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+原文链接:&lt;a href=&quot;http://blog.codinglabs.org/articles/theory-of-mysql-index.html&quot;&gt;MySQL索引背后的数据结构及算法原理&lt;/a&gt;
+
+文章主要内容分为三个部分。
+
+第一部分主要从数据结构及算法理论层面讨论MySQL数据库索引的数理基础。
+
+第二部分结合MySQL数据库中MyISAM和InnoDB数据存储引擎中索引的架构实现讨论聚集索引、非聚集索引及覆盖索引等话题。
+
+第三部分根据上面的理论基础，讨论MySQL中高性能使用索引的策略。
+
+&lt;h2 id=&quot;数据结构及算法基础&quot;&gt;数据结构及算法基础&lt;/h2&gt;
+
+&lt;h3 id=&quot;索引的本质&quot;&gt;索引的本质&lt;/h3&gt;
+
+MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是一种数据结构。
+
+数据库查询是数据库的主要功能之一，最基本的查询算法是顺序查找（linear search）时间复杂度为O(n)，显然在数据量很大时效率很低。优化的查找算法如二分查找（binary search）、二叉树查找（binary tree search）等，虽然查找效率提高了。但是各自对检索的数据都有要求：二分查找要求被检索数据有序，而二叉树查找只能应用于二叉查找树上，但是数据本身的组织结构不可能完全满足各种数据结构（例如，理论上不可能同时将两列都按顺序进行组织）。所以，在数据之外，数据库系统还维护着满足特定查找算法的数据结构。这些数据结构以某种方式引用（指向）数据，这样就可以在这些数据结构上实现高级查找算法。这种数据结构就是索引。
+
+看一个例子：
+
+&lt;img src=&quot;http://img.blog.csdn.net/20140328183811312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast&quot; alt=&quot;img&quot; /&gt;
+
+图1
+
+图1展示了一种可能的索引方式。左边是数据表，一共有两列七条记录，最左边的是数据记录的物理地址（注意逻辑上相邻的记录在磁盘上也并不是一定物理相邻的）。为了加快Col2的查找，可以维护一个右边所示的二叉查找树，每个节点分别包含索引键值和一个指向对应数据记录物理地址的指针，这样就可以运用二叉查找在O(log2n)的复杂度内获取到相应数据。
+
+虽然这是一个货真价实的索引，但是实际的数据库系统几乎没有使用二叉查找树或其进化品种红黑树（red-black tree）实现的，原因会在下文介绍。
+
+&lt;h3 id=&quot;b-tree和btree&quot;&gt;B-Tree和B+Tree&lt;/h3&gt;
+
+关于B树和B+树请参考&lt;a href=&quot;http://www.cnblogs.com/tgycoder/p/5077017.html&quot;&gt;关于B树的一些总结&lt;/a&gt;，这篇文章介绍的比较详细，同时容易理解。
+
+目前大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构，在本文的下一节会结合存储器原理及计算机存取原理讨论为什么B-Tree和B+Tree在被如此广泛用于索引，这一节先单纯从数据结构角度描述它们。
+
+&lt;h4 id=&quot;b-tree&quot;&gt;B-Tree&lt;/h4&gt;
+
+为了描述B-Tree，首先定义一条数据记录为一个二元组[key, data]，key为记录的键值，对于不同数据记录，key是互不相同的；data为数据记录除key外的数据。那么B-Tree是满足下列条件的数据结构：
+
+&lt;ol&gt;
+  &lt;li&gt;d&amp;gt;=2，即B-Tree的度；&lt;/li&gt;
+  &lt;li&gt;h为B-Tree的高；&lt;/li&gt;
+  &lt;li&gt;每个非叶子结点由n-1个key和n个指针组成，其中d&amp;lt;=n&amp;lt;=2d；&lt;/li&gt;
+  &lt;li&gt;每个叶子结点至少包含一个key和两个指针，最多包含2d-1个key和2d个指针，叶结点的指针均为NULL；&lt;/li&gt;
+  &lt;li&gt;所有叶结点都在同一层，深度等于树高h；&lt;/li&gt;
+  &lt;li&gt;key和指针相互间隔，结点两端是指针；&lt;/li&gt;
+  &lt;li&gt;一个结点中的key从左至右非递减排列；&lt;/li&gt;
+  &lt;li&gt;如果某个指针在结点node最左边且不为null，则其指向结点的所有key小于v(key1)，其中v(key1)为node的第一个key的值。&lt;/li&gt;
+  &lt;li&gt;如果某个指针在结点node最右边且不为null，则其指向结点的所有key大于v(keym)，其中v(keym)为node的最后一个key的值。&lt;/li&gt;
+  &lt;li&gt;如果某个指针在结点node的左右相邻key分别是keyi和keyi+1且不为null，则其指向结点的所有key小于v(keyi+1)且大于v(keyi)。&lt;/li&gt;
+&lt;/ol&gt;
+
+图2是一个d=2的B-Tree示意图。
+
+&lt;img src=&quot;http://img.blog.csdn.net/20140328183838656?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast&quot; alt=&quot;img&quot; /&gt;
+
+图2
+
+由于B-Tree的特性，在B-Tree中按key检索数据的算法非常直观：首先从根节点进行二分查找，如果找到则返回对应节点的data，否则对相应区间的指针指向的节点递归进行查找，直到找到节点或找到null指针，前者查找成功，后者查找失败。B-Tree上查找算法的伪代码如下：
+
+</description>
+        <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
+        <link>https://Chankin026.github.io/2018/09/30/mysql/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/mysql/</guid>
+        
+        <category>Algorithm</category>
+        
+        
+        <category>Mysql</category>
+        
+      </item>
+    
+      <item>
         <title>剑指Offer--根据前序遍历和中序遍历重建二叉树</title>
         <description>&lt;strong&gt;题目：&lt;/strong&gt;
 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{1,2,4,7,3,5,6,8}，则重建二叉树并返回。
@@ -617,116 +700,6 @@ Hibernate总的来说共有三种查询方式：HQL、QBC和SQL三种
         
         
         <category>Algorithm</category>
-        
-      </item>
-    
-      <item>
-        <title>MySQL索引背后的数据结构及算法原理(转载)</title>
-        <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#摘要&quot; id=&quot;markdown-toc-摘要&quot;&gt;摘要&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#数据结构及算法基础&quot; id=&quot;markdown-toc-数据结构及算法基础&quot;&gt;数据结构及算法基础&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#索引的本质&quot; id=&quot;markdown-toc-索引的本质&quot;&gt;索引的本质&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#b-tree和btree&quot; id=&quot;markdown-toc-b-tree和btree&quot;&gt;B-Tree和B+Tree&lt;/a&gt;        &lt;ul&gt;
-          &lt;li&gt;&lt;a href=&quot;#b-tree&quot; id=&quot;markdown-toc-b-tree&quot;&gt;B-Tree&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-来自:&lt;a href=&quot;http://blog.codinglabs.org/articles/theory-of-mysql-index.html&quot;&gt;MySQL索引背后的数据结构及算法原理&lt;/a&gt;
-
-&lt;h1 id=&quot;摘要&quot;&gt;摘要&lt;/h1&gt;
-
-本文以MySQL数据库为研究对象，讨论与数据库索引相关的一些话题。特别需要说明的是，MySQL支持诸多存储引擎，而各种存储引擎对索引的支持也各不相同，因此MySQL数据库支持多种索引类型，如BTree索引，哈希索引，全文索引等等。为了避免混乱，本文将只关注于BTree索引，因为这是平常使用MySQL时主要打交道的索引，至于哈希索引和全文索引本文暂不讨论。
-
-文章主要内容分为三个部分。
-
-第一部分主要从数据结构及算法理论层面讨论MySQL数据库索引的数理基础。
-
-第二部分结合MySQL数据库中MyISAM和InnoDB数据存储引擎中索引的架构实现讨论聚集索引、非聚集索引及覆盖索引等话题。
-
-第三部分根据上面的理论基础，讨论MySQL中高性能使用索引的策略。
-
-&lt;h1 id=&quot;数据结构及算法基础&quot;&gt;数据结构及算法基础&lt;/h1&gt;
-
-&lt;h2 id=&quot;索引的本质&quot;&gt;索引的本质&lt;/h2&gt;
-
-MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是数据结构。
-
-我们知道，数据库查询是数据库的最主要功能之一。我们都希望查询数据的速度能尽可能的快，因此数据库系统的设计者会从查询算法的角度进行优化。最基本的查询算法当然是&lt;a href=&quot;http://en.wikipedia.org/wiki/Linear_search&quot;&gt;顺序查找&lt;/a&gt;（linear search），这种复杂度为O(n)的算法在数据量很大时显然是糟糕的，好在计算机科学的发展提供了很多更优秀的查找算法，例如&lt;a href=&quot;http://en.wikipedia.org/wiki/Binary_search_algorithm&quot;&gt;二分查找&lt;/a&gt;（binary search）、&lt;a href=&quot;http://en.wikipedia.org/wiki/Binary_search_tree&quot;&gt;二叉树查找&lt;/a&gt;（binary tree search）等。如果稍微分析一下会发现，每种查找算法都只能应用于特定的数据结构之上，例如二分查找要求被检索数据有序，而二叉树查找只能应用于&lt;a href=&quot;http://en.wikipedia.org/wiki/Binary_search_tree&quot;&gt;二叉查找树&lt;/a&gt;上，但是数据本身的组织结构不可能完全满足各种数据结构（例如，理论上不可能同时将两列都按顺序进行组织），所以，在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据，这样就可以在这些数据结构上实现高级查找算法。这种数据结构，就是索引。
-
-看一个例子：
-
-&lt;img src=&quot;http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/1.png&quot; alt=&quot;img&quot; /&gt;
-
-图1
-
-图1展示了一种可能的索引方式。左边是数据表，一共有两列七条记录，最左边的是数据记录的物理地址（注意逻辑上相邻的记录在磁盘上也并不是一定物理相邻的）。为了加快Col2的查找，可以维护一个右边所示的二叉查找树，每个节点分别包含索引键值和一个指向对应数据记录物理地址的指针，这样就可以运用二叉查找在O(log2n)O(log2n)的复杂度内获取到相应数据。
-
-虽然这是一个货真价实的索引，但是实际的数据库系统几乎没有使用二叉查找树或其进化品种&lt;a href=&quot;http://en.wikipedia.org/wiki/Red-black_tree&quot;&gt;红黑树&lt;/a&gt;（red-black tree）实现的，原因会在下文介绍。
-
-&lt;h2 id=&quot;b-tree和btree&quot;&gt;B-Tree和B+Tree&lt;/h2&gt;
-
-目前大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构，在本文的下一节会结合存储器原理及计算机存取原理讨论为什么B-Tree和B+Tree在被如此广泛用于索引，这一节先单纯从数据结构角度描述它们。
-
-&lt;h3 id=&quot;b-tree&quot;&gt;B-Tree&lt;/h3&gt;
-
-为了描述B-Tree，首先定义一条数据记录为一个二元组[key, data]，key为记录的键值，对于不同数据记录，key是互不相同的；data为数据记录除key外的数据。那么B-Tree是满足下列条件的数据结构：
-
-d为大于1的一个正整数，称为B-Tree的度。
-
-h为一个正整数，称为B-Tree的高度。
-
-每个非叶子节点由n-1个key和n个指针组成，其中d&amp;lt;=n&amp;lt;=2d。
-
-每个叶子节点最少包含一个key和两个指针，最多包含2d-1个key和2d个指针，叶节点的指针均为null 。
-
-所有叶节点具有相同的深度，等于树高h。
-
-key和指针互相间隔，节点两端是指针。
-
-一个节点中的key从左到右非递减排列。
-
-所有节点组成树结构。
-
-每个指针要么为null，要么指向另外一个节点。
-
-如果某个指针在节点node最左边且不为null，则其指向节点的所有key小于v(key1)v(key1)，其中v(key1)v(key1)为node的第一个key的值。
-
-如果某个指针在节点node最右边且不为null，则其指向节点的所有key大于v(keym)v(keym)，其中v(keym)v(keym)为node的最后一个key的值。
-
-如果某个指针在节点node的左右相邻key分别是keyikeyi和keyi+1keyi+1且不为null，则其指向节点的所有key小于v(keyi+1)v(keyi+1)且大于v(keyi)v(keyi)。
-
-图2是一个d=2的B-Tree示意图。
-
-&lt;img src=&quot;http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/2.png&quot; alt=&quot;img&quot; /&gt;
-
-图2
-
-由于B-Tree的特性，在B-Tree中按key检索数据的算法非常直观：首先从根节点进行二分查找，如果找到则返回对应节点的data，否则对相应区间的指针指向的节点递归进行查找，直到找到节点或找到null指针，前者查找成功，后者查找失败。B-Tree上查找算法的伪代码如下：
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;BTree_Search(node, key) {    if(node == null) return null;    foreach(node.key)    {        if(node.key[i] == key) return node.data[i];            if(node.key[i] &amp;gt; key) return BTree_Search(point[i]-&amp;gt;node);    }    return BTree_Search(point[i+1]-&amp;gt;node);}data = BTree_Search(root, my_key);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-关于B-Tree有一系列有趣的性质，例如一个度为d的B-Tree，设其索引N个key，则其树高h的上限为
-
-logd((N+1)/2)logd((N+1)/2)
-
-，检索一个key，其查找节点个数的渐进复杂度为
-
-O(logdN)O(logdN)
-
-。从这点可以看出，B-Tree是一个非常有效率的索引数据结构。
-
-</description>
-        <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/09/30/MySQL/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/MySQL/</guid>
-        
-        <category>Algorithm</category>
-        
-        
-        <category>Mysql</category>
         
       </item>
     
@@ -1366,8 +1339,8 @@ AVL的详细定义:&lt;a href=&quot;https://blog.csdn.net/javazejian/article/det
 
 </description>
         <pubDate>Thu, 27 Sep 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/09/27/find-minimum-number-Copy-Copy/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/27/find-minimum-number-Copy-Copy/</guid>
+        <link>https://Chankin026.github.io/2018/09/27/find-minimum-number/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/27/find-minimum-number/</guid>
         
         <category>dfs</category>
         
