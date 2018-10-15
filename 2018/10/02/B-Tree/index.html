@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>B树、B+树、B*树结构的理解</title>
+    <meta name="description" content="  前言：来源(搬运修改总结):从 B 树、B+ 树、B* 树谈到 R 树【经典数据结构】B树与B+树B树和B+树的总结对于B树，B+树的理解B+树、B*树前言：">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="/css/awesome.min.css ">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/10/02/B-Tree/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?82a92032c29be4b2b72ac18628047724";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-127191064-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+</head>
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <!-- <a href="/" class="brand">chankin's Blog</a> -->
+        <small>每一步成长都想与你分享</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li><!--home-->
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/booklist/">
+                        
+                            <i class="fa fa-bookmark"></i>Booklist
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/movies/">
+                        
+                            <i class="fa fa-film"></i>Movies
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/About/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>B树、B+树、B*树结构的理解</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-10-02
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>chankin
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#DataStructure" title="Category: DataStructure" rel="category">DataStructure</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Tree" title="Tag: Tree" rel="tag">Tree</a-->
+        <a href="/tag/#Tree" title="Tag: Tree" rel="tag">Tree</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#前言" id="markdown-toc-前言">前言：</a></li>
+  <li><a href="#b-tree" id="markdown-toc-b-tree">B-Tree：</a>    <ul>
+      <li><a href="#定义" id="markdown-toc-定义">定义</a></li>
+      <li><a href="#组成" id="markdown-toc-组成">组成</a></li>
+      <li><a href="#11关于分支节点块包括根节点块" id="markdown-toc-11关于分支节点块包括根节点块">1.1关于分支节点块（包括根节点块）</a></li>
+      <li><a href="#12关于叶子节点" id="markdown-toc-12关于叶子节点">1.2关于叶子节点</a></li>
+    </ul>
+  </li>
+  <li><a href="#b-tree-1" id="markdown-toc-b-tree-1">B<sup>+</sup>-tree</a></li>
+  <li><a href="#b-tree-2" id="markdown-toc-b-tree-2">B<sup>*</sup>-Tree</a></li>
+  <li><a href="#应用" id="markdown-toc-应用">应用</a></li>
+  <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+</ul>
+<p>来源(搬运修改总结):<br />
+<a href="https://blog.csdn.net/v_JULY_v/article/details/6530142">从 B 树、B+ 树、B* 树谈到 R 树</a><br />
+<a href="https://www.cnblogs.com/vincently/p/4526560.html">【经典数据结构】B树与B+树</a><br />
+<a href="https://www.cnblogs.com/George1994/p/7008732.html">B树和B+树的总结</a><br />
+<a href="https://blog.csdn.net/zhangbo_0323/article/details/50156357">对于B树，B+树的理解</a><br />
+<a href="https://www.cnblogs.com/xqzt/archive/2012/12/28/5637129.html">B+树、B*树</a><br /></p>
+
+<h2 id="前言">前言：</h2>
+
+<p>平衡二叉排序树便于动态查找，因此用平衡二叉排序树来组织索引表是一种可行的选择。当用于大型数据库时，<strong>树的深度过大而造成磁盘I/O读写过于频繁，进而导致查询效率低下</strong>。</p>
+
+<p><strong>了解硬盘的读写原理(大牛)</strong>:<a href="https://blog.csdn.net/hguisu/article/details/7408047">https://blog.csdn.net/hguisu/article/details/7408047</a><br /><font size="3" color="red">磁盘读取数据是以盘块(block)为基本单位的</font>, 位于同一盘块中的所有数据都能被一次性全部读取出来。而磁盘IO代价主要花费在查找时间Ts上。因此我们应该尽量将相关信息存放在同一盘块，同一磁道中。或者至少放在同一柱面或相邻柱面上，以求在读<strong>写信息时尽量减少磁头来回移动的次数，避免过多的查找时间</strong>Ts<strong>。</strong></p>
+
+<p>大规模数据存储方面，大量数据存储在外存磁盘中，而在外存磁盘中读取/写入块(block)中某数据时，首先需要定位到磁盘中的某块，如何有效地查找磁盘中的数据，需要一种合理高效的外存数据结构: B-Tree。</p>
+<h2 id="b-tree">B-Tree：</h2>
+<h4 id="定义">定义</h4>
+<p>维基百科对B树的定义为“在计算机科学中，B树（B-tree）是一种树状数据结构，它能够存储数据、对其进行排序并允许以O(log N)的时间复杂度运行进行查找、顺序读取、插入和删除的数据结构。</p>
+
+<p>B树，概括来说是一个节点可以拥有多于2个子节点的二叉查找树。与平衡二叉查找树不同，B-树为系统最优化<strong>大块数据的读和写操作</strong>。</p>
+
+<p>B-tree算法减少定位记录时所经历的中间过程，从而加快存取速度。普遍运用在<strong>数据库</strong>和<strong>文件系统</strong>。</p>
+
+<p>B树的阶(英语对应order)定义是不统一的： <br />
+<i><font face="Georgia">Bayer &amp; McCreight (1972), Comer (1979), and others define the order of B-tree as the minimum number of keys in a non-root node. Folk &amp; Zoellick (1992) points out that terminology is ambiguous because the maximum number of keys is not clear. An order 3 B-tree might hold a maximum of 6 keys or a maximum of 7 keys. Knuth (1998, p. 483) avoids the problem by defining the order to be maximum number of children (which is one more than the maximum number of keys).</font></i><br />
+（wikipedia 中：http://en.wikipedia.org/wiki/B-tree，阐述了 B-tree 名字来源以及相关的开源地址）</p>
+
+<p>国内的数据结构教材一般是按照Knuth定义,<font size="3" color="red">即“阶”定义为一个节点的子节点数目的最大值</font>。</p>
+<h4 id="组成">组成</h4>
+<p>B-树索引结构有3个基本组成部分:</p>
+
+<p>​    <strong>根节点（Branch node）：</strong>一个B树索引只有一个根节点，它实际就是位于树的最顶端的分支节点。</p>
+
+<p>​    <strong>分支节点（Branch node）：</strong>包含的条目指向索引里其他的分支节点或者是叶子节点。</p>
+
+<p>​    <strong>叶子节点（Leaf node）：</strong>包含条目直接指向表里的数据行。</p>
+
+<p><strong>1. 用阶定义B树：</strong></p>
+
+<p>一个 m 阶的B树有一下特征：</p>
+
+<ol>
+  <li>根结点至少拥有两个分支节点（存在分支节点的情况下）；</li>
+  <li>除了根结点和叶子节点以外，其余每个分支结点至少拥有 ceil(m/2)个分支节点，最多拥有m个分支节点；</li>
+  <li>叶子结点处于同一层（可以用空指针表示，是查找失败到达的位置）；</li>
+  <li>有 n个子节点的分支结点则存在 n-1 个关键字，关键字按照递增顺序进行排列；</li>
+  <li>关键字数量n需要满足ceil(m/2)-1 &lt;= n &lt;= m-1（ceil(x)上限取值）。</li>
+</ol>
+
+<p>举个栗子:
+ M=4 阶的B树,其中，B表示分支节点，而L表示叶子节点。</p>
+
+<p><img src="/images/btree.png" alt="" /></p>
+
+<p>B树的插入及平衡化操作和2-3树很相似，这里就不介绍了。下面是往B树中依次插入<br />
+<strong>6 10 4 14 5 11 15 3 2 12 1 7 8 8 6 3 6 21 5 15 15 6 32 23 45 65 7 8 6 5 4</strong>的演示动画：
+<img src="/images/btreebuild.gif" alt="" /></p>
+
+<h4 id="11关于分支节点块包括根节点块">1.1关于分支节点块（包括根节点块）</h4>
+
+<p>1、 其所包含的索引条目都是按照顺序排列的（缺省是升序排列，也可以在创建索引时指定为降序排列）。</p>
+
+<p>2、 每个索引条目（也可以叫做每条记录）都具有两个字段。</p>
+
+<p>第一个字段表示当前该分支节点块下面所链接的索引块中所包含的最小键值；</p>
+
+<p>第二个字段为四个字节，表示所链接的索引块的地址，该地址指向下面一个索引块。</p>
+
+<p>3、 在一个分支节点块中所能容纳的记录行数由数据块大小以及索引键值的长度决定。</p>
+
+<p>比如从上图一可以看到，对于根节点块来说，包含三条记录，分别为（0 B1）、（500 B2）、（1000 B3），它们指向三个分支节点块。其中的0、500和1000分别表示这三个分支节点块所链接的键值的最小值。而B1、B2和B3则表示所指向的三个分支节点块的地址。</p>
+
+<h4 id="12关于叶子节点">1.2关于叶子节点</h4>
+
+<p>1、 B树索引的所有叶子块一定位于同一层上，这是由B树的数据结构定义的。</p>
+
+<p>Oracle 设计的<font size="3" color="red">B树索引结构保证了B树索引从根到叶子都有相等的分支节点，保证了B树索引的平衡，这样就不会因为基表的数据插入后删除操作造成B树索引变得不平衡，从而影响索引的性能</font>。因此，从根块到达任何一个叶子块的遍历代价都是相同的； 索引高度是指从根块到达叶子块时所遍历的数据块的个数，通常，大多数的B树索引的高度都是2到3，也就意味着，即使表中有上百万条记录，从索引中定位一个键字只需要2或3次I/O,索引越高，性能越差；</p>
+
+<p>2、 叶子节点所包含的索引条目与分支节点一样，都是按照顺序排列的（缺省是升序排列，也可以在创建索引时指定为降序排列）</p>
+
+<p>3、 每个索引条目（也可以 叫做每条记录）也具有两个字段。第一个字段表示索引的键值，对于单列索引来说是一个值；而对于多列索引来说则是多个值组合在一起的。第二个字段表示键值所对应的记录行的ROWID: 记录行在表里的物理地址。ROWID 是唯一的Oracle 指针，指向该行的物理位置，使用ROWID 是Oracle 数据库中访问行最快的方法。参照<a href="http://www.cnblogs.com/xqzt/p/4449184.html">Oracle中的rowid</a></p>
+
+<p>4、 叶子节点其实是一个双向链表，每个叶子节点包含一个指向下一个和上一个叶子点的指针，这样在一定范围内便利索引以搜索需要的记录。
+<img src="/images/252128549213492.png" alt="" /></p>
+
+<h2 id="b-tree-1">B<sup>+</sup>-tree</h2>
+
+<p><strong>B<sup>+</sup>-树</strong>：是应文件系统所需而产生的一种 B-tree 的变形树。</p>
+
+<p><img src="/images/1356681465_1077.png" alt="" />
+<strong>B<sup><sup>+</sup>-</sup>树</strong>是对B树的一种变形树，它与B树的差异在于：</p>
+
+<ul>
+  <li>有n个子结点的结点必然有n个关键字；</li>
+  <li>非叶结点仅具有索引作用，跟记录有关的信息均存放在叶结点中。</li>
+  <li>树的所有叶结点构成一个有序链表，可以按照关键码排序的次序遍历全部记录。</li>
+</ul>
+
+<p>B和B+树的区别在于，B+树的非叶子结点只包含导航信息，不包含实际的值，所有的叶子结点和相连的节点使用链表相连，便于区间查找和遍历。</p>
+
+<ul>
+  <li>由于B+树在内部节点上不包含数据信息，因此在内存页中能够存放更多的key。 数据存放的更加紧密，具有更好的空间局部性。因此访问叶子节点上关联的数据也具有更好的缓存命中率。</li>
+  <li>B+树的叶子结点都是相链的，因此对整棵树的便利只需要一次线性遍历叶子结点即可。而且由于数据顺序排列并且相连，所以便于区间查找和搜索。而B树则需要进行每一层的递归遍历。相邻的元素可能在内存中不相邻，所以缓存命中性没有B+树好。</li>
+</ul>
+
+<font size="3" color="red">但是B树也有优点，其优点在于，由于B树的每一个节点都包含key和value，因此经常访问的元素可能离根节点更近，因此访问也更迅速。</font>
+<p><img src="/images/290050088914733.png" alt="" /></p>
+
+<p><strong>为什么说 B+-tree 比 B 树更适合实际应用中操作系统的文件索引和数据库索引？</strong></p>
+
+<p>由于B+树的数据都存储在叶子结点中，分支结点均为索引，方便扫库，只需要扫一遍叶子结点即可，但是B树因为其分支结点同样存储着数据，我们要找到具体的数据，需要进行一次中序遍历按序来扫，所以B+树更加适合在区间查询的情况，所以通常B+树用于数据库索引，而B树则常用于文件索引。</p>
+
+<h2 id="b-tree-2">B<sup>*</sup>-Tree</h2>
+<p>B<em>-tree是B+-tree的变体，在B+树非根和非叶子结点再增加指向兄弟的指针
+<img src="/images/1356681618_1207.jpg" alt="" /><br />
+优点: B</em>树分配新结点的概率比B+树要低，空间使用率更高</p>
+
+<h2 id="应用">应用</h2>
+<p>通过对每个节点存储个数的扩展，使得对连续的数据能够进行较快的定位和访问，能够有效减少查找时间，提高存储的空间局部性从而减少IO操作。他广泛用于文件系统及数据库中，如：</p>
+<ul>
+  <li>Windows：HPFS文件系统</li>
+  <li>Mac：HFS，HFS+文件系统</li>
+  <li>Linux：ResiserFS，XFS，Ext3FS，JFS文件系统</li>
+  <li>数据库：ORACLE，MYSQL，SQLSERVER等中</li>
+</ul>
+
+<p>希望本文对您了解B/B+ 树有所帮助。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>通过以上介绍，大致将B树，B+树，B<em>树总结如下：
+B树：有序数组+平衡多叉树；
+B+树：有序数组链表+平衡多叉树；
+B</em>树：一棵丰满的B+树。</p>
+
+<p>    在大规模数据存储的文件系统中，B~tree系列数据结构，起着很重要的作用，对于存储不同的数据，节点相关的信息也是有所不同，这里根据自己的理解，画的一个查找以职工号为关键字，职工号为38的记录的简单示意图。(这里假设每个物理块容纳3个索引，磁盘的I/O操作的基本单位是块（block),磁盘访问很费时，采用B+树有效的减少了访问磁盘的次数。）
+<img src="/images/8394323_1307440586P5aD.jpg" alt="" />
+对于像MySQL，DB2，Oracle等数据库中的索引结构得有较深入的了解才行，建议去找一些B 树相关的开源代码研究。</p>
+
+<p>    走进搜索引擎的作者梁斌老师针对B树、B+树给出了他的意见（为了真实性，特引用其原话，未作任何改动）： “B+树还有一个最大的好处，方便扫库，B树必须用中序遍历的方法按序扫库，而B+树直接从叶子结点挨个扫一遍就完了，B+树支持range-query非常方便，而B树不支持。这是数据库选用B+树的最主要原因。</p>
+
+<p>    比如要查 5-10之间的，B+树一把到5这个标记，再一把到10，然后串起来就行了，B树就非常麻烦。B树的好处，就是成功查询特别有利，因为树的高度总体要比B+树矮。不成功的情况下，B树也比B+树稍稍占一点点便宜。<br />
+    B树比如你的例子中查，17的话，一把就得到结果了，有很多基于频率的搜索是选用B树，越频繁query的结点越往根上走，前提是需要对query做统计，而且要对key做一些变化。<br />
+    另外B树也好B+树也好，根或者上面几层因为被反复query，所以这几块基本都在内存中，不会出现读磁盘IO，一般已启动的时候，就会主动换入内存。”非常感谢。<br />
+    </p>
+
+<font size="3" color="red">Bucket Li："mysql 底层存储是用B+树实现的，知道为什么么。内存中B+树是没有优势的，但是一到磁盘，B+树的威力就出来了"。</font>
+
+        </article>
+        <hr>
+
+       
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <h2 id="similar_posts">Similar Posts</h2>
+                        <ul>
+                        
+                        <li class="relatedPost">
+                            <a href="https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1/">剑指Offer--根据前序遍历和中序遍历重建二叉树
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="https://Chankin026.github.io/2018/09/29/Simple-implementation-of-AVL-tree/">AVL树的简单实现
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                        
+                        <li class="relatedPost">
+                            <a href="https://Chankin026.github.io/2018/09/27/Simple-implementation-of-Binary-tree/">二叉树的简单实现
+                            
+                            </a>
+                        </li>
+                        
+                        
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+            </ul>
+        
+
+        <style>
+.demo {
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+</style>
+<div class="post-recent">
+    <div class="demo" >
+        
+        <p><strong>上一篇</strong> <a href="/2018/10/01/Collections1/">整理一些学习过的数据结构和算法blog</a>
+        
+        
+        <p><strong>下一篇</strong> <a href="/2018/10/06/Java-NIO/" style="text-align:right;">Java NIO:浅析I/O模型(转载)</a></p>
+        
+    </div>
+</div>
+
+        <!-- <h2 id="comments">Comments</h2> -->
+        
+
+
+
+
+  
+    
+    <link rel="stylesheet" href="/css/gitalk.css">
+    <script src="/js/gitalk.min.js"></script>
+      <div id="gitalk-container"></div>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID: 'b39a231392131dd275eb', 
+            clientSecret: '0a82311de71e2e78c26857ae7efc782dc3b60816',
+            repo: 'blog-comments', 
+            owner: 'Chankin026', 
+            admin: ['Chankin026'], 
+            distractionFreeMode: 'true',
+            id: '/2018/10/02/B-Tree/',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <!--<li><a href="#comments">Comments</a></li>-->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p>
+            PV <span id="busuanzi_value_site_pv"></span>, 
+            UV <span id="busuanzi_value_site_uv"></span>
+            <!-- PV<span id="busuanzi_value_page_pv"></span> -->
+        </p>
+
+        <p class="contact">
+             Powered by Chankin 
+        </p>
+        <br/>
+        <!-- 备案号 -->
+        <!-- <p class="contact"> -->
+            <!-- <a href="http://www.miitbeian.gov.cn">粤ICP备17166463号</a>  -->
+        <!-- </p> -->
+         <!-- <p class="contact">
+            Contact me at: 
+            
+            <a href="https://github.com/Chankin026" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a> 
+             
+            
+            <a href="mailto:chanjian1261@gmail.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a> 
+              -->
+
+            <!--  
+             
+             
+               
+             -->
+        <!-- </p> -->
+        
+        <!-- <p class="power">
+            <span>
+                <a href="https://github.com/zchdjb"><i class="fa fa-github" aria-hidden="true"></i>GitHub</a>
+            </span>
+        </p> -->
+    </div>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

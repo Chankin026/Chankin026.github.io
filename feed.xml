@@ -5,8 +5,8 @@
     <description></description>
     <link>https://Chankin026.github.io/</link>
     <atom:link href="https://Chankin026.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Oct 2018 01:47:01 +0800</pubDate>
-    <lastBuildDate>Sun, 14 Oct 2018 01:47:01 +0800</lastBuildDate>
+    <pubDate>Mon, 15 Oct 2018 22:10:19 +0800</pubDate>
+    <lastBuildDate>Mon, 15 Oct 2018 22:10:19 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -199,57 +199,28 @@ Hibernate总的来说共有三种查询方式：HQL、QBC和SQL三种
       </item>
     
       <item>
-        <title>从Hexo到Jekyll</title>
+        <title>B树、B+树、B*树结构的理解</title>
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#quick-start&quot; id=&quot;markdown-toc-quick-start&quot;&gt;Quick Start&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#create-a-new-post&quot; id=&quot;markdown-toc-create-a-new-post&quot;&gt;Create a new post&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#run-server&quot; id=&quot;markdown-toc-run-server&quot;&gt;Run server&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#generate-static-files&quot; id=&quot;markdown-toc-generate-static-files&quot;&gt;Generate static files&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#deploy-to-remote-sites&quot; id=&quot;markdown-toc-deploy-to-remote-sites&quot;&gt;Deploy to remote sites&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#前言&quot; id=&quot;markdown-toc-前言&quot;&gt;前言：&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+来源(搬运修改总结):&lt;br /&gt;
+&lt;a href=&quot;https://blog.csdn.net/v_JULY_v/article/details/6530142&quot;&gt;从 B 树、B+ 树、B* 树谈到 R 树&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://www.cnblogs.com/vincently/p/4526560.html&quot;&gt;【经典数据结构】B树与B+树&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://www.cnblogs.com/George1994/p/7008732.html&quot;&gt;B树和B+树的总结&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://blog.csdn.net/zhangbo_0323/article/details/50156357&quot;&gt;对于B树，B+树的理解&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://www.cnblogs.com/xqzt/archive/2012/12/28/5637129.html&quot;&gt;B+树、B*树&lt;/a&gt;&lt;br /&gt;
 
-Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.
+&lt;h2 id=&quot;前言&quot;&gt;前言：&lt;/h2&gt;
 
-&lt;h2 id=&quot;quick-start&quot;&gt;Quick Start&lt;/h2&gt;
-
-&lt;h3 id=&quot;create-a-new-post&quot;&gt;Create a new post&lt;/h3&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;hexo new &lt;span class=&quot;s2&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot;&gt;Writing&lt;/a&gt;
-
-&lt;h3 id=&quot;run-server&quot;&gt;Run server&lt;/h3&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;hexo server
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot;&gt;Server&lt;/a&gt;
-
-&lt;h3 id=&quot;generate-static-files&quot;&gt;Generate static files&lt;/h3&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;hexo generate
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot;&gt;Generating&lt;/a&gt;
-
-&lt;h3 id=&quot;deploy-to-remote-sites&quot;&gt;Deploy to remote sites&lt;/h3&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;hexo deploy
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot;&gt;Deployment&lt;/a&gt;
 </description>
         <pubDate>Tue, 02 Oct 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/10/02/From-hexo-to-jekyll/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/10/02/From-hexo-to-jekyll/</guid>
+        <link>https://Chankin026.github.io/2018/10/02/B-Tree/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/10/02/B-Tree/</guid>
         
-        <category>blog</category>
+        <category>Tree</category>
         
         
-        <category>Tools</category>
+        <category>DataStructure</category>
         
       </item>
     
@@ -1025,8 +996,8 @@ More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot;&gt;Deploy
 
 </description>
         <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/09/30/find-minimum-number/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/find-minimum-number/</guid>
+        <link>https://Chankin026.github.io/2018/09/30/find-minimum-number-Copy/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/find-minimum-number-Copy/</guid>
         
         <category>dfs</category>
         
@@ -1061,7 +1032,7 @@ More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot;&gt;Deploy
         <link>https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1/</link>
         <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1/</guid>
         
-        <category>二叉树</category>
+        <category>Tree</category>
         
         
         <category>Algorithm</category>
@@ -1290,7 +1261,7 @@ AVL的详细定义:&lt;a href=&quot;https://blog.csdn.net/javazejian/article/det
         <link>https://Chankin026.github.io/2018/09/29/Simple-implementation-of-AVL-tree/</link>
         <guid isPermaLink="true">https://Chankin026.github.io/2018/09/29/Simple-implementation-of-AVL-tree/</guid>
         
-        <category>AVL树</category>
+        <category>Tree</category>
         
         
         <category>DataStructure</category>
@@ -1957,7 +1928,7 @@ sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY
         <link>https://Chankin026.github.io/2018/09/27/Simple-implementation-of-Binary-tree/</link>
         <guid isPermaLink="true">https://Chankin026.github.io/2018/09/27/Simple-implementation-of-Binary-tree/</guid>
         
-        <category>二叉树</category>
+        <category>Tree</category>
         
         
         <category>DataStructure</category>
