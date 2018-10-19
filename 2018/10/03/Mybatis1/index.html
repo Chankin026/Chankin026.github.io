@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>用GitHub搭建个人Maven仓库</title>
-    <meta name="description" content="Maven 是一个版本依赖工具，它有一个官方的中央仓库，很多开源项目的 jar 包版本都能够在上面找到，但是将项目发布 jar 到中央仓库是在太麻烦了，因此我想到了用自己的 Github 作为仓库，从 Github 仓库中拉取依赖包。">
+    <title>mybatis中mapper的namespace的作用</title>
+    <meta name="description" content="在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：假设定义了IArticleDAO接口public interface IArticleDAO{	...">
 
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="/css/awesome.min.css ">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="https://Chankin026.github.io/2018/07/18/personal-maven-with-github/">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/10/03/Mybatis1/">
     <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
 
 
@@ -144,15 +144,15 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>用GitHub搭建个人Maven仓库</h1>
+        <h1>mybatis中mapper的namespace的作用</h1>
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2018-07-18
+                <i class="fa fa-calendar"></i>2018-10-03
             </div>
 
             <div class="label-card">
-                <i class="fa fa-user"></i>zch
+                <i class="fa fa-user"></i>chankin
                 
             </div>
 
@@ -169,7 +169,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#Tools" title="Category: Tools" rel="category">Tools</a>
+        <a href="/category/#Mybatis" title="Category: Mybatis" rel="category">Mybatis</a>
     
   
 
@@ -186,12 +186,6 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#GitHub" title="Tag: GitHub" rel="tag">GitHub</a-->
-        <a href="/tag/#GitHub" title="Tag: GitHub" rel="tag">GitHub</a>&nbsp;
-    
-        <!--a href="/tag/#Maven" title="Tag: Maven" rel="tag">Maven</a-->
-        <a href="/tag/#Maven" title="Tag: Maven" rel="tag">Maven</a>
-    
   
 
 </span>
@@ -201,66 +195,24 @@
         </div>
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
-        <ul id="markdown-toc">
-  <li><a href="#搭建" id="markdown-toc-搭建">搭建</a></li>
-  <li><a href="#使用" id="markdown-toc-使用">使用</a></li>
-</ul>
-<p>Maven 是一个版本依赖工具，它有一个官方的中央仓库，很多开源项目的 jar 包版本都能够在上面找到，但是将项目发布 jar 到中央仓库是在太麻烦了，因此我想到了用自己的 Github 作为仓库，从 Github 仓库中拉取依赖包。</p>
+        <p>在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：</p>
 
-<h2 id="搭建">搭建</h2>
-
-<p>在 GitHub 创建一个名为 Maven 的仓库，Git 地址：git@github.com:objcoding/maven.git</p>
-
-<p>进入本地 Maven 仓库，将仓库初始化为一个 Git 仓库，并添加远程仓库地址：</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/.m2/repository
-git init
-git remote add origin git@github.com:liuhuanting/maven.git
+<p>假设定义了IArticleDAO接口</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IArticleDAO</span><span class="o">{</span>
+	<span class="n">List</span><span class="o">&lt;</span><span class="n">Article</span><span class="o">&gt;</span> <span class="nf">selectAllArticle</span><span class="o">();</span>
+<span class="o">}</span>
 </code></pre></div></div>
-
-<p>进入项目根目录中打包生成 .jar 文件，并部署到本地 Maven 仓库：</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /Users/zhangchenghui/Documents/WXPaySDKJava
-mvn package
-cd target
-
-mvn install:install-file -Dfile=WXPay-SDK-Java-0.0.5.jar -DgroupId=com.objcoding -DartifactId=WXPay-SDK-Java -Dversion=1.0.0 -Dpackaging=jar
+<p>对于映射文件如下：</p>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"IArticleDAO"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"selectAllArticle"</span> <span class="na">resultType=</span><span class="s">"article"</span><span class="nt">&gt;</span>
+	SELECT t.* FROM T_article t WHERE t.flag = '1' ORDER BY t.createtime DESC
+  <span class="nt">&lt;/select&gt;</span>
+ <span class="nt">&lt;/mapper&gt;</span>
 </code></pre></div></div>
+<p>接口中的方法与映射文件中的SQL语句的ID一一对应 。
+则在代码中可以直接使用IArticeDAO面向接口编程而不需要再编写实现类。</p>
 
-<p>将本地 Maven 仓库对应项目的文件提交到 GitHub：</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/.m2/repository
-git add -f com/objcoding/WXPay-SDK-Java/0.0.5
-git commit -m 'WXPay-SDK-Java 0.0.5'
-git push
-</code></pre></div></div>
-
-<p>这时会遇到本地 git 仓库和远程仓库没有关联的警告，输入一下命令可以解决：</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push --set-upstream origin master
-</code></pre></div></div>
-
-<h2 id="使用">使用</h2>
-
-<p>在项目 pom.xml 文件中加入如下内容：</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-&lt;repositories&gt;
-    &lt;repository&gt;
-      &lt;id&gt;objcoding-maven-master-repository&lt;/id&gt;
-      &lt;name&gt;objcoding-maven-master-repository&lt;/name&gt;
-      &lt;url&gt;https://raw.github.com/objcoding/maven/master/&lt;/url&gt;
-    &lt;/repository&gt;
-  &lt;/repositories&gt;
-
-&lt;dependency&gt;
-    &lt;groupId&gt;com.objcoding&lt;/groupId&gt;
-    &lt;artifactId&gt;WXPay-SDK-Java&lt;/artifactId&gt;
-    &lt;version&gt;0.0.5&lt;/version&gt;
-&lt;/dependency&gt;
-
-</code></pre></div></div>
-
+<p>ps:namespace和SqlSession也有关系,如果sqlSession中的方法参数错了,就会出现<code class="highlighter-rouge">Cause: java.lang.IllegalArgumentException: Mapped Statements collection does not contain value for xxx</code> 的错误</p>
 
         </article>
         <hr>
@@ -270,102 +222,56 @@ git push
             
             
                 
-                    
+            
+        
+            
+            
                 
-                    
+            
                 
             
         
             
             
                 
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
             
         
             
             
                 
-                    
-                
-                    
+            
                 
             
         
             
             
                 
-                    
-                
-                    
-                
             
-                
-                    
-                
-                    
+        
+            
+            
                 
             
         
             
             
                 
-                    
+            
+        
+            
+            
                 
-                    
+            
                 
             
         
             
             
                 
-                    
-                
-                    
-                
             
         
             
             
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
-                
-            
-                
-                    
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-                    
                 
             
         
@@ -382,10 +288,10 @@ git push
 <div class="post-recent">
     <div class="demo" >
         
-        <p><strong>上一篇</strong> <a href="/2018/06/12/mybatis-spring/">Mybatis-spring源码分析之注册Mapper Bean</a>
+        <p><strong>上一篇</strong> <a href="/2018/10/02/B-Tree/">B树、B+树、B*树结构的理解</a>
         
         
-        <p><strong>下一篇</strong> <a href="/2018/09/22/Simple-use-of-Typora/" style="text-align:right;">Typora的简单使用</a></p>
+        <p><strong>下一篇</strong> <a href="/2018/10/06/Java-NIO/" style="text-align:right;">Java NIO:浅析I/O模型(转载)</a></p>
         
     </div>
 </div>
@@ -409,7 +315,7 @@ git push
             owner: 'Chankin026', 
             admin: ['Chankin026'], 
             distractionFreeMode: 'true',
-            id: '/2018/07/18/personal-maven-with-github/',
+            id: '/2018/10/03/Mybatis1/',
           })
           gitalk.render('gitalk-container')
       </script>

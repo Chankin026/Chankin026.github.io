@@ -134,6 +134,8 @@
                 
                     
                 
+                    
+                
             </ul>
         </nav>
     </div>
@@ -290,7 +292,7 @@ insert into Score values('07' , '02' , 89);
 insert into Score values('07' , '03' , 98);
 </code></pre></div></div>
 
-<pre><code class="language-mysql">-- *  查询每门课程选修的同学信息
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   -- *  查询每门课程选修的同学信息
 SELECT a.*, b.c_id FROM student a RIGHT JOIN score b ON a.s_id = b.s_id WHERE b.c_id in( SELECT c.c_id FROM score c GROUP BY c.c_id HAVING count(*)) order by c_id;
 
 -- 1、查询"01"课程比"02"课程成绩高的学生的信息及课程分数  
@@ -672,8 +674,7 @@ sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY
 
     select * from student where MONTH(DATE_FORMAT(NOW(),'%Y%m%d'))+1 =MONTH(s_birth)
 
-</code></pre>
-
+</code></pre></div></div>
 
         </article>
         <hr>
@@ -700,35 +701,6 @@ sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY
         
             
             
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-            
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-            
-        
-            
-            
-                
-                    
-                
-            
         
             
             
@@ -749,6 +721,31 @@ sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY
             
         
             
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
             
                 
                     
@@ -775,7 +772,7 @@ sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY
 <div class="post-recent">
     <div class="demo" >
         
-        <p><strong>上一篇</strong> <a href="/2018/09/22/Simple-use-of-Typora/">Markdown的简单使用</a>
+        <p><strong>上一篇</strong> <a href="/2018/09/22/Simple-use-of-Typora/">Typora的简单使用</a>
         
         
         <p><strong>下一篇</strong> <a href="/2018/09/23/sticky-post-sticky-problem/" style="text-align:right;">解决Hexo-theme-indigo的置顶问题</a></p>

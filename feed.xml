@@ -5,8 +5,8 @@
     <description></description>
     <link>https://Chankin026.github.io/</link>
     <atom:link href="https://Chankin026.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Oct 2018 23:36:04 +0800</pubDate>
-    <lastBuildDate>Mon, 15 Oct 2018 23:36:04 +0800</lastBuildDate>
+    <pubDate>Fri, 19 Oct 2018 20:26:00 +0800</pubDate>
+    <lastBuildDate>Fri, 19 Oct 2018 20:26:00 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -195,6 +195,36 @@ Hibernate总的来说共有三种查询方式：HQL、QBC和SQL三种
         
         
         <category>IO</category>
+        
+      </item>
+    
+      <item>
+        <title>mybatis中mapper的namespace的作用</title>
+        <description>在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：
+
+假设定义了IArticleDAO接口
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IArticleDAO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Article&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;selectAllArticle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+对于映射文件如下：
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mapper&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;namespace=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IArticleDAO&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;select&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;selectAllArticle&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;resultType=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;article&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+	SELECT t.* FROM T_article t WHERE t.flag = '1' ORDER BY t.createtime DESC
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/select&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;/mapper&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+接口中的方法与映射文件中的SQL语句的ID一一对应 。
+则在代码中可以直接使用IArticeDAO面向接口编程而不需要再编写实现类。
+
+ps:namespace和SqlSession也有关系,如果sqlSession中的方法参数错了,就会出现&lt;code class=&quot;highlighter-rouge&quot;&gt;Cause: java.lang.IllegalArgumentException: Mapped Statements collection does not contain value for xxx&lt;/code&gt; 的错误
+</description>
+        <pubDate>Wed, 03 Oct 2018 00:00:00 +0800</pubDate>
+        <link>https://Chankin026.github.io/2018/10/03/Mybatis1/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/10/03/Mybatis1/</guid>
+        
+        
+        <category>Mybatis</category>
         
       </item>
     
@@ -693,8 +723,8 @@ MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取�
 
 </description>
         <pubDate>Sun, 30 Sep 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1/</guid>
+        <link>https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1-Copy/</link>
+        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/30/Sword-refers-to-Offer1-Copy/</guid>
         
         <category>Tree</category>
         
@@ -1524,43 +1554,6 @@ AVL的详细定义:&lt;a href=&quot;https://blog.csdn.net/javazejian/article/det
         
         
         <category>DataStructure</category>
-        
-      </item>
-    
-      <item>
-        <title>利用JSP发送邮件附件</title>
-        <description>简单实现一个发送邮件正文和附件的例子,其中利用Java Mail jar包和JAF的activation jar包.
-下面的例子实现了从163邮箱发送邮件到qq邮箱, 其中
-
-&lt;code class=&quot;highlighter-rouge&quot;&gt;message.setSubject( &quot;邮件主题&quot; )&lt;/code&gt;设置邮件主题&lt;br /&gt;
-
-&lt;code class=&quot;highlighter-rouge&quot;&gt;messageBodyPart.setText(&quot;邮件正文&quot;)&lt;/code&gt;设置邮件正文内容&lt;br /&gt;
-
-&lt;code class=&quot;highlighter-rouge&quot;&gt;String filename = &quot;C:\\apache-tomcat-7.0.90\\webapps\\ROOT\\file.txt&quot;&lt;/code&gt;设置 邮件附件绝对路径, 分隔符&lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt;需要转义
-
-当然如果想换个邮箱进行发送,只需改一下邮箱服务器&lt;code class=&quot;highlighter-rouge&quot;&gt;smtp.163.com&lt;/code&gt;,默认端口&lt;code class=&quot;highlighter-rouge&quot;&gt;25&lt;/code&gt;采用SMTP协议
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//SMTP邮件服务器
-properties.setProperty( &quot;mail.smtp.host&quot;, &quot;smtp.163.com&quot; );
- //SMTP邮件服务器默认端口
-properties.setProperty( &quot;mail.smtp.port&quot;, &quot;25&quot; );
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-常见的邮箱STMP服务器:https://blog.csdn.net/ning521513/article/details/79217203
-
-所需jar下载地址:  &lt;a href=&quot;https://maven.java.net/content/repositories/releases/com/sun/mail/javax.mail/1.6.0/javax.mail-1.6.0.jar&quot;&gt;Java Mail&lt;/a&gt;   &lt;a href=&quot;http://central.maven.org/maven2/javax/activation/activation/1.1/activation-1.1.jar&quot;&gt;Activation&lt;/a&gt;
-
-其他信息备注都写的很详细
-
-</description>
-        <pubDate>Thu, 27 Sep 2018 00:00:00 +0800</pubDate>
-        <link>https://Chankin026.github.io/2018/09/27/Send-email-attachments-using-JSP/</link>
-        <guid isPermaLink="true">https://Chankin026.github.io/2018/09/27/Send-email-attachments-using-JSP/</guid>
-        
-        <category>JSP</category>
-        
-        
-        <category>Tomcat</category>
         
       </item>
     
