@@ -195,7 +195,7 @@
         </div>
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
-        <p>在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：</p>
+        <p>在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你<strong>可以不用写接口实现类</strong>，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：</p>
 
 <p>假设定义了IArticleDAO接口</p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IArticleDAO</span><span class="o">{</span>
@@ -203,14 +203,21 @@
 <span class="o">}</span>
 </code></pre></div></div>
 <p>对于映射文件如下：</p>
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"IArticleDAO"</span><span class="nt">&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.xxx.dao.IArticleDAO"</span><span class="nt">&gt;</span> <span class="err">&lt;</span>
   <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"selectAllArticle"</span> <span class="na">resultType=</span><span class="s">"article"</span><span class="nt">&gt;</span>
 	SELECT t.* FROM T_article t WHERE t.flag = '1' ORDER BY t.createtime DESC
   <span class="nt">&lt;/select&gt;</span>
  <span class="nt">&lt;/mapper&gt;</span>
 </code></pre></div></div>
 <p>接口中的方法与映射文件中的SQL语句的ID一一对应 。
-则在代码中可以直接使用IArticeDAO面向接口编程而不需要再编写实现类。</p>
+则在代码中可以直接使用IArticeDAO面向接口编程而不需要再编写实现类,</p>
+
+<hr />
+
+<ul>
+  <li>重点:namaespace绑定接口,需要获取接口的映射对象(sqlSession.getMapper(xxx.class)),通过映射对象调用方法<code class="highlighter-rouge">selectAllArticle()</code>,方法名对应xml中的id</li>
+  <li><strong>命名空间绑定绑定pojo类</strong><code class="highlighter-rouge">&lt;mapper namespace="article"&gt; </code> ,并且没有articleDao接口和实现类,需要pojo类和xml在同一包下,才能实现query。例如<code class="highlighter-rouge">sqlSession.selectById("article.xxx",id)</code></li>
+</ul>
 
 <p>ps:namespace和SqlSession也有关系,如果sqlSession中的方法参数错了,就会出现<code class="highlighter-rouge">Cause: java.lang.IllegalArgumentException: Mapped Statements collection does not contain value for xxx</code> 的错误</p>
 

@@ -5,8 +5,8 @@
     <description></description>
     <link>https://Chankin026.github.io/</link>
     <atom:link href="https://Chankin026.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 19 Oct 2018 20:32:42 +0800</pubDate>
-    <lastBuildDate>Fri, 19 Oct 2018 20:32:42 +0800</lastBuildDate>
+    <pubDate>Sun, 28 Oct 2018 17:45:13 +0800</pubDate>
+    <lastBuildDate>Sun, 28 Oct 2018 17:45:13 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
     
       <item>
@@ -200,7 +200,7 @@ Hibernate总的来说共有三种查询方式：HQL、QBC和SQL三种
     
       <item>
         <title>mybatis中mapper的namespace的作用</title>
-        <description>在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：
+        <description>在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你&lt;strong&gt;可以不用写接口实现类&lt;/strong&gt;，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：
 
 假设定义了IArticleDAO接口
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;IArticleDAO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -208,16 +208,22 @@ Hibernate总的来说共有三种查询方式：HQL、QBC和SQL三种
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 对于映射文件如下：
-&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mapper&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;namespace=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IArticleDAO&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mapper&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;namespace=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.xxx.dao.IArticleDAO&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;select&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;selectAllArticle&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;resultType=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;article&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
 	SELECT t.* FROM T_article t WHERE t.flag = '1' ORDER BY t.createtime DESC
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/select&amp;gt;&lt;/span&gt;
  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/mapper&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 接口中的方法与映射文件中的SQL语句的ID一一对应 。
-则在代码中可以直接使用IArticeDAO面向接口编程而不需要再编写实现类。
+则在代码中可以直接使用IArticeDAO面向接口编程而不需要再编写实现类,
 
-ps:namespace和SqlSession也有关系,如果sqlSession中的方法参数错了,就会出现&lt;code class=&quot;highlighter-rouge&quot;&gt;Cause: java.lang.IllegalArgumentException: Mapped Statements collection does not contain value for xxx&lt;/code&gt; 的错误
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;重点:namaespace绑定接口,需要获取接口的映射对象(sqlSession.getMapper(xxx.class)),通过映射对象调用方法&lt;code class=&quot;highlighter-rouge&quot;&gt;selectAllArticle()&lt;/code&gt;,方法名对应xml中的id&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;命名空间绑定绑定pojo类&lt;/strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;mapper namespace=&quot;article&quot;&amp;gt; &lt;/code&gt; ,并且没有articleDao接口和实现类,需要pojo类和xml在同一包下,才能实现query。例如&lt;code class=&quot;highlighter-rouge&quot;&gt;sqlSession.selectById(&quot;article.xxx&quot;,id)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 </description>
         <pubDate>Wed, 03 Oct 2018 00:00:00 +0800</pubDate>
         <link>https://Chankin026.github.io/2018/10/03/Mybatis1/</link>
@@ -233,7 +239,7 @@ ps:namespace和SqlSession也有关系,如果sqlSession中的方法参数错了,�
         <description>&lt;ul id=&quot;markdown-toc&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;#前言&quot; id=&quot;markdown-toc-前言&quot;&gt;前言：&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-来源(搬运修改总结):&lt;br /&gt;
+原文地址(斗胆搬运修改总结):&lt;br /&gt;
 &lt;a href=&quot;https://blog.csdn.net/v_JULY_v/article/details/6530142&quot;&gt;从 B 树、B+ 树、B* 树谈到 R 树&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;https://www.cnblogs.com/vincently/p/4526560.html&quot;&gt;【经典数据结构】B树与B+树&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;https://www.cnblogs.com/George1994/p/7008732.html&quot;&gt;B树和B+树的总结&lt;/a&gt;&lt;br /&gt;
