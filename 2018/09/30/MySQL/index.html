@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/awesome.min.css ">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="https://Chankin026.github.io/2018/09/30/mysql/">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/09/30/Mysql/">
     <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
 
 
@@ -262,7 +262,7 @@
 
 <p>看一个例子：</p>
 
-<p><img src="http://img.blog.csdn.net/20140328183811312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/1.png" alt="img" /></p>
 
 <p>图1</p>
 
@@ -295,7 +295,7 @@
 
 <p>图2是一个d=2的B-Tree示意图。</p>
 
-<p><img src="http://img.blog.csdn.net/20140328183838656?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/2.png" alt="img" /></p>
 
 <p>图2</p>
 
@@ -328,7 +328,7 @@ data = BTree_Search(root, my_key);
 
 <p>图3是一个简单的B+Tree示意。</p>
 
-<p><img src="http://img.blog.csdn.net/20140328183904312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/3.png" alt="img" /></p>
 
 <p>图3</p>
 
@@ -340,7 +340,7 @@ data = BTree_Search(root, my_key);
 
 <p>一般在数据库系统或文件系统中使用的B+Tree结构都在经典B+Tree的基础上进行了优化，增加了顺序访问指针。</p>
 
-<p><img src="http://img.blog.csdn.net/20140328183935500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/4.png" alt="img" /></p>
 
 <p>图4</p>
 
@@ -358,7 +358,7 @@ data = BTree_Search(root, my_key);
 
 <p>目前计算机使用的主存基本都是随机读写存储器（RAM），现代RAM的结构和存取原理比较复杂，这里本文抛却具体差别，抽象出一个十分简单的存取模型来说明RAM的工作原理。</p>
 
-<p><img src="http://img.blog.csdn.net/20140328183954734?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/5.png" alt="img" /></p>
 
 <p>图5</p>
 
@@ -378,7 +378,7 @@ data = BTree_Search(root, my_key);
 
 <p>图6是磁盘的整体结构示意图。</p>
 
-<p><img src="http://img.blog.csdn.net/20140328184012093?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/6.png" alt="img" /></p>
 
 <p>图6</p>
 
@@ -386,7 +386,7 @@ data = BTree_Search(root, my_key);
 
 <p>图7是磁盘结构的示意图。</p>
 
-<p><img src="http://img.blog.csdn.net/20140328184119187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/7.png" alt="img" /></p>
 
 <p>图7</p>
 
@@ -432,13 +432,13 @@ data = BTree_Search(root, my_key);
 
 <p>MyISAM引擎使用B+Tree作为索引结构，叶结点的data域存放的是数据记录的地址。下面是MyISAM索引的原理图：</p>
 
-<p><img src="http://img.blog.csdn.net/20140328184146531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/8.png" alt="img" /></p>
 
 <p>图8</p>
 
 <p>这里设表一共有三列，假设我们以Col1为主键，则图8是一个MyISAM表的主索引（Primary key）示意。可以看出MyISAM的索引文件仅仅保存数据记录的地址。在MyISAM中，主索引和辅助索引（Secondary key）在结构上没有任何区别，只是主索引要求key是唯一的，而辅助索引的key可以重复。如果我们在Col2上建立一个辅助索引，则此索引的结构如下图所示：</p>
 
-<p><img src="http://img.blog.csdn.net/20140328184211609?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/9.png" alt="img" /></p>
 
 <p>图9</p>
 
@@ -452,7 +452,7 @@ data = BTree_Search(root, my_key);
 
 <p>第一个重大区别是InnoDB的数据文件本身就是索引文件。从上文知道，MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而在InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构，这棵树的叶结点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。</p>
 
-<p><img src="http://img.blog.csdn.net/20140328184229875?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/10.png" alt="img" /></p>
 
 <p>图10</p>
 
@@ -460,7 +460,7 @@ data = BTree_Search(root, my_key);
 
 <p>第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。换句话说，InnoDB的所有辅助索引都引用主键作为data域。例如，图11为定义在Col3上的一个辅助索引：</p>
 
-<p><img src="http://img.blog.csdn.net/20140328184248265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/11.png" alt="img" /></p>
 
 <p>图11</p>
 
@@ -478,7 +478,7 @@ data = BTree_Search(root, my_key);
 
 <p>为了讨论索引策略，需要一个数据量不算小的数据库作为示例。本文选用MySQL官方文档中提供的示例数据库之一：<a href="https://launchpad.net/test-db/employees-db-1/1.0.6">employees</a>。这个数据库关系复杂度适中，且数据量较大。下图是这个数据库的E-R关系图（引用自MySQL官方手册）：</p>
 
-<p><img src="http://img.blog.csdn.net/20140328184314937?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVfems=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img" /></p>
+<p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/12.png" alt="img" /></p>
 
 <p>图12</p>
 
@@ -876,25 +876,6 @@ SELECT count(DISTINCT(concat(first_name, last_name)))/count(*) AS Selectivity FR
             
                 
                     
-                        
-                        <h2 id="similar_posts">Similar Posts</h2>
-                        <ul>
-                        
-                        <li class="relatedPost">
-                            <a href="https://Chankin026.github.io/2018/09/30/mysql-Copy/">MySQL索引背后的数据结构及算法原理(转载)
-                            
-                            </a>
-                        </li>
-                        
-                        
-                    
-                
-            
-        
-            
-            
-                
-                    
                 
             
         
@@ -923,8 +904,13 @@ SELECT count(DISTINCT(concat(first_name, last_name)))/count(*) AS Selectivity FR
                 
             
         
+            
+            
+                
+                    
+                
+            
         
-            </ul>
         
 
         <style>
@@ -938,10 +924,10 @@ SELECT count(DISTINCT(concat(first_name, last_name)))/count(*) AS Selectivity FR
 <div class="post-recent">
     <div class="demo" >
         
-        <p><strong>上一篇</strong> <a href="/2018/09/30/mysql-Copy/">MySQL索引背后的数据结构及算法原理(转载)</a>
+        <p><strong>上一篇</strong> <a href="/2018/09/29/Simple-implementation-of-AVL-tree/">AVL树的简单实现</a>
         
         
-        <p><strong>下一篇</strong> <a href="/2018/10/01/Collections1/" style="text-align:right;">整理一些学习过的数据结构和算法blog</a></p>
+        <p><strong>下一篇</strong> <a href="/2018/09/30/Sword-refers-to-Offer1-Copy/" style="text-align:right;">剑指Offer--根据前序遍历和中序遍历重建二叉树</a></p>
         
     </div>
 </div>
@@ -965,7 +951,7 @@ SELECT count(DISTINCT(concat(first_name, last_name)))/count(*) AS Selectivity FR
             owner: 'Chankin026', 
             admin: ['Chankin026'], 
             distractionFreeMode: 'true',
-            id: '/2018/09/30/mysql/',
+            id: '/2018/09/30/Mysql/',
           })
           gitalk.render('gitalk-container')
       </script>
