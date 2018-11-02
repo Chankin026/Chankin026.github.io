@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>从Hexo到Jekyll</title>
-    <meta name="description" content="  Quick Start          Create a new post      Run server      Generate static files      Deploy to remote sites      Welcome to Hexo! This is your very first...">
+    <title>Linux修改分辨率</title>
+    <meta name="description" content="有桌面版的centOS只需要在设置-显示中当前页面的系统分辨率而对于命令行的centOS,可以通过输入`xrandr`输入xrandr查询,当前分辨率和可以使用的分辨率修改系统的分辨率:[chenjian@localhost ~]$ xrandrScreen 0: minimum 1 x 1, current 8...">
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="/css/awesome.min.css ">
     <link rel="stylesheet"  type="text/css" href="/css/cursor.css ">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2018/09/24/From-hexo-to-jekyll/">
+    <link rel="canonical" href="http://localhost:4000/2018/09/20/Linux/">
     <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="http://localhost:4000/feed.xml ">
 
 
@@ -144,11 +144,11 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>从Hexo到Jekyll</h1>
+        <h1>Linux修改分辨率</h1>
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2018-09-24
+                <i class="fa fa-calendar"></i>2018-09-20
             </div>
 
             <div class="label-card">
@@ -169,7 +169,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#Tools" title="Category: Tools" rel="category">Tools</a>
+        <a href="/category/#Linux" title="Category: Linux" rel="category">Linux</a>
     
   
 
@@ -186,8 +186,8 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#blog" title="Tag: blog" rel="tag">blog</a-->
-        <a href="/tag/#blog" title="Tag: blog" rel="tag">blog</a>
+        <!--a href="/tag/#centOS" title="Tag: centOS" rel="tag">centOS</a-->
+        <a href="/tag/#centOS" title="Tag: centOS" rel="tag">centOS</a>
     
   
 
@@ -198,47 +198,42 @@
         </div>
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
-        <ul id="markdown-toc">
-  <li><a href="#quick-start" id="markdown-toc-quick-start">Quick Start</a>    <ul>
-      <li><a href="#create-a-new-post" id="markdown-toc-create-a-new-post">Create a new post</a></li>
-      <li><a href="#run-server" id="markdown-toc-run-server">Run server</a></li>
-      <li><a href="#generate-static-files" id="markdown-toc-generate-static-files">Generate static files</a></li>
-      <li><a href="#deploy-to-remote-sites" id="markdown-toc-deploy-to-remote-sites">Deploy to remote sites</a></li>
-    </ul>
-  </li>
-</ul>
+        <p>有桌面版的centOS只需要在设置-显示中当前页面的系统分辨率<br />
+而对于命令行的centOS,可以通过输入
+`
+xrandr
+`
+输入xrandr查询,当前分辨率和可以使用的分辨率<br />
+修改系统的分辨率:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[chenjian@localhost ~]$ xrandr
+Screen 0: minimum 1 x 1, current 800 x 600, maximum 8192 x 8192
+Virtual1 connected primary 800x600+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
+   800x600       60.00*+  60.32  
+   1440x900      59.89  
+   1280x960      60.00  
+   1360x768      60.02  
+   1280x800      59.81  
+   1152x864      75.00  
+   1280x768      59.87  
+   1024x768      60.00  
+   640x480       59.94  
+Virtual2 disconnected (normal left inverted right x axis y axis)
+Virtual3 disconnected (normal left inverted right x axis y axis)
+Virtual4 disconnected (normal left inverted right x axis y axis)
+Virtual5 disconnected (normal left inverted right x axis y axis)
+Virtual6 disconnected (normal left inverted right x axis y axis)
+Virtual7 disconnected (normal left inverted right x axis y axis)
+Virtual8 disconnected (normal left inverted right x axis y axis)
+[chenjian@localhost ~]$ xrandr -s 1 
+[chenjian@localhost ~]$ 
 
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-
-<h2 id="quick-start">Quick Start</h2>
-
-<h3 id="create-a-new-post">Create a new post</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>hexo new <span class="s2">"My New Post"</span>
 </code></pre></div></div>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-
-<h3 id="run-server">Run server</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>hexo server
-</code></pre></div></div>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-
-<h3 id="generate-static-files">Generate static files</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>hexo generate
-</code></pre></div></div>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>hexo deploy
-</code></pre></div></div>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+<p>可以看到当前系统分辨率<code class="highlighter-rouge">800 x 600</code><br />
+通过以下命令设置指定分辨率
+`
+xrandr -s 0  //0代表是上面分辨率列表中的第一个分辨率
+xrandr -s 1  //1代表是上面分辨率列表中的第二个分辨率,以此类推
+`</p>
 
         </article>
         <hr>
@@ -340,10 +335,10 @@
 <div class="post-recent">
     <div class="demo" >
         
-        <p><strong>上一篇</strong> <a href="/2018/09/23/sticky-post-sticky-problem/">解决Hexo-theme-indigo的置顶问题</a>
+        <p><strong>上一篇</strong> <a href="/2018/07/18/personal-maven-with-github/">用GitHub搭建个人Maven仓库</a>
         
         
-        <p><strong>下一篇</strong> <a href="/2018/09/25/Parsing-Tomcat/" style="text-align:right;">解析Tomcat内部结构和请求过程</a></p>
+        <p><strong>下一篇</strong> <a href="/2018/09/22/Simple-use-of-Typora/" style="text-align:right;">Typora的简单使用</a></p>
         
     </div>
 </div>
@@ -367,7 +362,7 @@
             owner: 'Chankin026', 
             admin: ['Chankin026'], 
             distractionFreeMode: 'true',
-            id: '/2018/09/24/From-hexo-to-jekyll/',
+            id: '/2018/09/20/Linux/',
           })
           gitalk.render('gitalk-container')
       </script>
