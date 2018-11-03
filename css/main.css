@@ -30,6 +30,7 @@ html {
   height: 100%; }
 
 body {
+  cursor: url(/images/cursor.png) 7 7, auto;
   font-family: 'Helvetica Neue',Helvetica,Arial,'Microsoft YaHei',sans-serif;
   color: #333;
   background-image: url(/images/bg.jpg);
@@ -38,6 +39,7 @@ body {
   padding-bottom: 190px; }
 
 a {
+  cursor: url(/images/pointer.png) 7 7, pointer;
   text-decoration: none; }
 
 button {
