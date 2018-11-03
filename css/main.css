@@ -498,6 +498,7 @@ pre {
     background-color: #3a3c3e; }
 
 .highlight {
+  cursor: url(/images/cursor2.png) 7 7, auto;
   border-radius: 3px;
   background: #3a3c3e;
   /* Comment */
