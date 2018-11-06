@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>mybatis中mapper的namespace的作用</title>
-    <meta name="description" content="在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：假设定义了IArticleDAO接口public interface IArticleDAO{	...">
+    <title>解决Maven编译无法加载lib下jar包的问题及内置属性</title>
+    <meta name="description" content="java maven web项目中jar包是一分部基于jdk自带的程序包,一部分基于pom.xml中的Dependecies,另外一部分基于lib下的jar包。而maven在编译时经常出现无法编译lib下的jar包。解决方案是在pom.xml文件中加入：	&lt;plugin&gt;		&lt;artifactI...">
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="/css/awesome.min.css ">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="https://Chankin026.github.io/2018/10/03/Mybatis1/">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/09/28/maven/">
     <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
 
 
@@ -143,11 +143,11 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>mybatis中mapper的namespace的作用</h1>
+        <h1>解决Maven编译无法加载lib下jar包的问题及内置属性</h1>
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2018-10-03
+                <i class="fa fa-calendar"></i>2018-09-28
             </div>
 
             <div class="label-card">
@@ -168,7 +168,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#Mybatis" title="Category: Mybatis" rel="category">Mybatis</a>
+        <a href="/category/#Tools" title="Category: Tools" rel="category">Tools</a>
     
   
 
@@ -185,8 +185,8 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#Mybatis" title="Tag: Mybatis" rel="tag">Mybatis</a-->
-        <a href="/tag/#Mybatis" title="Tag: Mybatis" rel="tag">Mybatis</a>
+        <!--a href="/tag/#Maven" title="Tag: Maven" rel="tag">Maven</a-->
+        <a href="/tag/#Maven" title="Tag: Maven" rel="tag">Maven</a>
     
   
 
@@ -197,31 +197,49 @@
         </div>
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
-        <p>在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你<strong>可以不用写接口实现类</strong>，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：</p>
+        <p>java maven web项目中jar包是一分部基于jdk自带的程序包,一部分基于pom.xml中的Dependecies,另外一部分基于lib下的jar包。<br /></p>
 
-<p>假设定义了IArticleDAO接口</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IArticleDAO</span><span class="o">{</span>
-	<span class="n">List</span><span class="o">&lt;</span><span class="n">Article</span><span class="o">&gt;</span> <span class="nf">selectAllArticle</span><span class="o">();</span>
-<span class="o">}</span>
+<p>而maven在编译时经常出现无法编译lib下的jar包。<br /></p>
+
+<p><img src="/images/ex1.png" alt="" /></p>
+
+<p>解决方案是在pom.xml文件中加入：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nt">&lt;plugin&gt;</span>
+		<span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+		<span class="nt">&lt;version&gt;</span>3.7.0<span class="nt">&lt;/version&gt;</span>
+		<span class="nt">&lt;configuration&gt;</span>
+			<span class="nt">&lt;source&gt;</span>1.8<span class="nt">&lt;/source&gt;</span>
+			<span class="nt">&lt;target&gt;</span>1.8<span class="nt">&lt;/target&gt;</span>
+			<span class="nt">&lt;encoding&gt;</span>UTF-8<span class="nt">&lt;/encoding&gt;</span>
+			<span class="nt">&lt;compilerArguments&gt;</span>
+				<span class="c">&lt;!-- &lt;extdirs&gt;${basedir}/WebRoot/WEB-INF/lib&lt;/extdirs&gt; --&gt;</span>
+				<span class="nt">&lt;extdirs&gt;</span>${project.basedir}/src/main/webapp/WEB-INF/lib<span class="nt">&lt;/extdirs&gt;</span>
+			<span class="nt">&lt;/compilerArguments&gt;</span>
+		<span class="nt">&lt;/configuration&gt;</span>
+	<span class="nt">&lt;/plugin&gt;</span>
 </code></pre></div></div>
-<p>对于映射文件如下：</p>
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.xxx.dao.IArticleDAO"</span><span class="nt">&gt;</span> <span class="err">&lt;</span>
-  <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"selectAllArticle"</span> <span class="na">resultType=</span><span class="s">"article"</span><span class="nt">&gt;</span>
-	SELECT t.* FROM T_article t WHERE t.flag = '1' ORDER BY t.createtime DESC
-  <span class="nt">&lt;/select&gt;</span>
- <span class="nt">&lt;/mapper&gt;</span>
-</code></pre></div></div>
-<p>接口中的方法与映射文件中的SQL语句的ID一一对应 。
-则在代码中可以直接使用IArticeDAO面向接口编程而不需要再编写实现类,</p>
+<p><strong>内置属性</strong>(Maven预定义,可以直接使用):</p>
+
+<p><code class="highlighter-rouge">${basedir}</code>表示项目根目录,即包含pom.xml文件的目录;</p>
+
+<p><code class="highlighter-rouge">${version}</code>表示项目版本;</p>
+
+<p><code class="highlighter-rouge">${project.basedir}</code>同<code class="highlighter-rouge">${basedir}</code>;</p>
+
+<p><code class="highlighter-rouge">${project.baseUri}表</code>示项目文件地址;</p>
+
+<p><code class="highlighter-rouge">${maven.build.timestamp}</code>表示项目构件开始时间;</p>
+
+<p><code class="highlighter-rouge">${maven.build.timestamp.format}</code>表示属性<code class="highlighter-rouge">${maven.build.timestamp}</code>的展示格式,默认值为<code class="highlighter-rouge">yyyyMMdd-HHmm</code>,可自定义其格式,其类型可参考java.text.SimpleDateFormat。 <br /></p>
 
 <hr />
 
-<ul>
-  <li>重点:namaespace绑定接口,需要获取接口的映射对象(sqlSession.getMapper(xxx.class)),通过映射对象调用方法<code class="highlighter-rouge">selectAllArticle()</code>,方法名对应xml中的id</li>
-  <li><strong>命名空间绑定绑定pojo类</strong><code class="highlighter-rouge">&lt;mapper namespace="article"&gt; </code> ,并且没有articleDao接口和实现类,需要pojo类和xml在同一包下,才能实现query。例如<code class="highlighter-rouge">sqlSession.selectById("article.xxx",id)</code></li>
-</ul>
+<p>参考地址:</p>
 
-<p>ps:namespace和SqlSession也有关系,如果sqlSession中的方法参数错了,就会出现<code class="highlighter-rouge">Cause: java.lang.IllegalArgumentException: Mapped Statements collection does not contain value for xxx</code> 的错误。</p>
+<p>https://maven.apache.org/plugins/maven-compiler-plugin/examples/pass-compiler-arguments.html</p>
+
+<p>https://www.cnblogs.com/king1302217/p/5829672.html</p>
 
         </article>
         <hr>
@@ -259,12 +277,12 @@
                     
                 
             
+        
+            
+            
                 
                     
                 
-            
-        
-            
             
                 
                     
@@ -323,10 +341,10 @@
 <div class="post-recent">
     <div class="demo" >
         
-        <p><strong>上一篇</strong> <a href="/2018/10/02/B-Tree/">B树、B+树、B*树结构的理解</a>
+        <p><strong>上一篇</strong> <a href="/2018/09/27/find-minimum-number/">寻找两座城市之间的最小飞行次数的问题</a>
         
         
-        <p><strong>下一篇</strong> <a href="/2018/10/06/Java-NIO/" style="text-align:right;">Java NIO:浅析I/O模型(转载)</a></p>
+        <p><strong>下一篇</strong> <a href="/2018/09/29/Simple-implementation-of-AVL-tree/" style="text-align:right;">AVL树的简单实现</a></p>
         
     </div>
 </div>
@@ -350,7 +368,7 @@
             owner: 'Chankin026', 
             admin: ['Chankin026'], 
             distractionFreeMode: 'true',
-            id: '/2018/10/03/Mybatis1/',
+            id: '/2018/09/28/maven/',
           })
           gitalk.render('gitalk-container')
       </script>

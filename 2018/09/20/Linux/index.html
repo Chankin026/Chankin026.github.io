@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Linux修改分辨率</title>
-    <meta name="description" content="有桌面版的centOS只需要在设置-显示中当前页面的系统分辨率而对于命令行的centOS,可以通过输入`xrandr`输入xrandr查询,当前分辨率和可以使用的分辨率修改系统的分辨率:[chenjian@localhost ~]$ xrandrScreen 0: minimum 1 x 1, current 8...">
+    <meta name="description" content="有桌面版的centOS只需要在设置-显示中当前页面的系统分辨率 而对于命令行的centOS,可以通过输入  xrandr输入xrandr查询,当前分辨率和可以使用的分辨率 修改系统的分辨率: [chenjian@localhost ~]$ xrandrScreen 0: minimum 1 x 1, curren...">
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="/css/awesome.min.css ">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2018/09/20/Linux/">
-    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/09/20/Linux/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
 
 
     <script>
@@ -197,13 +197,11 @@
         </div>
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
-        <p>有桌面版的centOS只需要在设置-显示中当前页面的系统分辨率<br />
-而对于命令行的centOS,可以通过输入
-`
-xrandr
-`
-输入xrandr查询,当前分辨率和可以使用的分辨率<br />
-修改系统的分辨率:</p>
+        <p>有桌面版的centOS只需要在设置-显示中当前页面的系统分辨率 <br />
+而对于命令行的centOS,可以通过输入  <br />
+<code class="highlighter-rouge">xrandr</code>
+输入xrandr查询,当前分辨率和可以使用的分辨率 <br />
+修改系统的分辨率: <br /></p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[chenjian@localhost ~]$ xrandr
 Screen 0: minimum 1 x 1, current 800 x 600, maximum 8192 x 8192
 Virtual1 connected primary 800x600+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
@@ -227,12 +225,11 @@ Virtual8 disconnected (normal left inverted right x axis y axis)
 [chenjian@localhost ~]$ 
 
 </code></pre></div></div>
-<p>可以看到当前系统分辨率<code class="highlighter-rouge">800 x 600</code><br />
-通过以下命令设置指定分辨率
-`
-xrandr -s 0  //0代表是上面分辨率列表中的第一个分辨率
+<p>可以看到当前系统分辨率<code class="highlighter-rouge">80 x 600</code>  <br />
+通过以下命令设置指定分辨率 <br /></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xrandr -s 0  //0代表是上面分辨率列表中的第一个分辨率
 xrandr -s 1  //1代表是上面分辨率列表中的第二个分辨率,以此类推
-`</p>
+</code></pre></div></div>
 
         </article>
         <hr>
@@ -309,12 +306,12 @@ xrandr -s 1  //1代表是上面分辨率列表中的第二个分辨率,以此类
                     
                 
             
+        
+            
+            
                 
                     
                 
-            
-        
-            
             
                 
                     

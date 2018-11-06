@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>mybatis中mapper的namespace的作用</title>
-    <meta name="description" content="在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：假设定义了IArticleDAO接口public interface IArticleDAO{	...">
+    <title>Ant风格URL匹配模式</title>
+    <meta name="description" content="  匹配模式  匹配顺序匹配模式springMVC支持Ant风格模式加载URLAnt 路径通配符支持?、* 和** ，注意通配符匹配不包括目录分隔符“/”：  ?：匹配一个字符，如 /hello? 将匹配 /hello1，但不匹配 /hello或 /hello/；  *：匹配零个或多个字符串，如 /hello* ...">
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="stylesheet" href="/css/awesome.min.css ">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="https://Chankin026.github.io/2018/10/03/Mybatis1/">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/09/23/AntUrl/">
     <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
 
 
@@ -143,11 +143,11 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>mybatis中mapper的namespace的作用</h1>
+        <h1>Ant风格URL匹配模式</h1>
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2018-10-03
+                <i class="fa fa-calendar"></i>2018-09-23
             </div>
 
             <div class="label-card">
@@ -168,7 +168,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#Mybatis" title="Category: Mybatis" rel="category">Mybatis</a>
+        <a href="/category/#SpringMVC" title="Category: SpringMVC" rel="category">SpringMVC</a>
     
   
 
@@ -185,8 +185,8 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#Mybatis" title="Tag: Mybatis" rel="tag">Mybatis</a-->
-        <a href="/tag/#Mybatis" title="Tag: Mybatis" rel="tag">Mybatis</a>
+        <!--a href="/tag/#URL" title="Tag: URL" rel="tag">URL</a-->
+        <a href="/tag/#URL" title="Tag: URL" rel="tag">URL</a>
     
   
 
@@ -197,31 +197,31 @@
         </div>
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
-        <p>在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你<strong>可以不用写接口实现类</strong>，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：</p>
-
-<p>假设定义了IArticleDAO接口</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IArticleDAO</span><span class="o">{</span>
-	<span class="n">List</span><span class="o">&lt;</span><span class="n">Article</span><span class="o">&gt;</span> <span class="nf">selectAllArticle</span><span class="o">();</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<p>对于映射文件如下：</p>
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.xxx.dao.IArticleDAO"</span><span class="nt">&gt;</span> <span class="err">&lt;</span>
-  <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"selectAllArticle"</span> <span class="na">resultType=</span><span class="s">"article"</span><span class="nt">&gt;</span>
-	SELECT t.* FROM T_article t WHERE t.flag = '1' ORDER BY t.createtime DESC
-  <span class="nt">&lt;/select&gt;</span>
- <span class="nt">&lt;/mapper&gt;</span>
-</code></pre></div></div>
-<p>接口中的方法与映射文件中的SQL语句的ID一一对应 。
-则在代码中可以直接使用IArticeDAO面向接口编程而不需要再编写实现类,</p>
-
-<hr />
+        <ul id="markdown-toc">
+  <li><a href="#匹配模式" id="markdown-toc-匹配模式">匹配模式</a></li>
+  <li><a href="#匹配顺序" id="markdown-toc-匹配顺序">匹配顺序</a></li>
+</ul>
+<h3 id="匹配模式">匹配模式</h3>
+<p>springMVC支持Ant风格模式加载URL
+Ant 路径通配符支持<code class="highlighter-rouge">?、* 和** </code>，<strong>注意通配符匹配不包括目录分隔符“/”</strong>：</p>
 
 <ul>
-  <li>重点:namaespace绑定接口,需要获取接口的映射对象(sqlSession.getMapper(xxx.class)),通过映射对象调用方法<code class="highlighter-rouge">selectAllArticle()</code>,方法名对应xml中的id</li>
-  <li><strong>命名空间绑定绑定pojo类</strong><code class="highlighter-rouge">&lt;mapper namespace="article"&gt; </code> ,并且没有articleDao接口和实现类,需要pojo类和xml在同一包下,才能实现query。例如<code class="highlighter-rouge">sqlSession.selectById("article.xxx",id)</code></li>
+  <li>?：匹配一个字符，如 /hello? 将匹配 /hello1，但不匹配 /hello或 /hello/；</li>
+  <li>*：匹配零个或多个字符串，如 /hello* 将匹配 /hello、/hello123，但不匹配 /hello/1；</li>
+  <li>**：匹配路径中的零个或多个路径，如 /hello/** 将匹配 /hello/a 或 /hello/a/b。</li>
 </ul>
 
-<p>ps:namespace和SqlSession也有关系,如果sqlSession中的方法参数错了,就会出现<code class="highlighter-rouge">Cause: java.lang.IllegalArgumentException: Mapped Statements collection does not contain value for xxx</code> 的错误。</p>
+<h3 id="匹配顺序">匹配顺序</h3>
+
+<p>URL 权限采取第一次匹配优先的 方式，即从头开始
+使用第一个匹配的 url 模式对应的拦截器链。
+• 如：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/aa/**=filter1
+/aa/bb=filter2
+/**=filter3
+</code></pre></div></div>
+<p>如果请求的url是“/aa/bb”，因为按照声明顺序进行匹配，那么将使用 filter1 进行拦截。</p>
 
         </article>
         <hr>
@@ -259,6 +259,20 @@
                     
                 
             
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
                 
                     
                 
@@ -290,20 +304,6 @@
                 
                     
                 
-            
-        
-            
-            
-                
-                    
-                
-            
-                
-                    
-                
-            
-        
-            
             
                 
                     
@@ -323,10 +323,10 @@
 <div class="post-recent">
     <div class="demo" >
         
-        <p><strong>上一篇</strong> <a href="/2018/10/02/B-Tree/">B树、B+树、B*树结构的理解</a>
+        <p><strong>上一篇</strong> <a href="/2018/09/22/Simple-use-of-Typora/">Typora的简单使用</a>
         
         
-        <p><strong>下一篇</strong> <a href="/2018/10/06/Java-NIO/" style="text-align:right;">Java NIO:浅析I/O模型(转载)</a></p>
+        <p><strong>下一篇</strong> <a href="/2018/09/23/Sql-statement-practice-51-questions/" style="text-align:right;">sql语句练习51题</a></p>
         
     </div>
 </div>
@@ -350,7 +350,7 @@
             owner: 'Chankin026', 
             admin: ['Chankin026'], 
             distractionFreeMode: 'true',
-            id: '/2018/10/03/Mybatis1/',
+            id: '/2018/09/23/AntUrl/',
           })
           gitalk.render('gitalk-container')
       </script>
