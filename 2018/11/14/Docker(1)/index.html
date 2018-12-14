@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Docker的入门</title>
+    <meta name="description" content="  了解Docker概念：  理解Docker原理：  简单的运用Docker  使用镜像          拉取镜像      运行镜像      了解Docker概念：可能是把Docker的概念讲的最清楚的一篇文章理解Docker原理：10张图带你深入理解Docker容器和镜像–大神级别文章,清晰地阐述了其存...">
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="/css/awesome.min.css ">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2018/11/14/Docker(1)/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="http://localhost:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?82a92032c29be4b2b72ac18628047724";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-127191064-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+</head>
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <!-- <a href="/" class="brand">chankin's Blog</a> -->
+        <small>每一步成长都想与你分享</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li><!--home-->
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/booklist/">
+                        
+                            <i class="fa fa-bookmark"></i>Booklist
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/movies/">
+                        
+                            <i class="fa fa-film"></i>Movies
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/About/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Docker的入门</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-11-14
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>chankin
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Docker" title="Category: Docker" rel="category">Docker</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Docker" title="Tag: Docker" rel="tag">Docker</a-->
+        <a href="/tag/#Docker" title="Tag: Docker" rel="tag">Docker</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#了解docker概念" id="markdown-toc-了解docker概念">了解Docker概念：</a></li>
+  <li><a href="#理解docker原理" id="markdown-toc-理解docker原理">理解Docker原理：</a></li>
+  <li><a href="#简单的运用docker" id="markdown-toc-简单的运用docker">简单的运用Docker</a></li>
+  <li><a href="#使用镜像" id="markdown-toc-使用镜像">使用镜像</a>    <ul>
+      <li><a href="#拉取镜像" id="markdown-toc-拉取镜像">拉取镜像</a></li>
+      <li><a href="#运行镜像" id="markdown-toc-运行镜像">运行镜像</a></li>
+    </ul>
+  </li>
+  <li><a href="#操作容器" id="markdown-toc-操作容器">操作容器</a>    <ul>
+      <li><a href="#查看容器状态" id="markdown-toc-查看容器状态">查看容器状态</a></li>
+      <li><a href="#查看容器信息" id="markdown-toc-查看容器信息">查看容器信息</a></li>
+      <li><a href="#终止容器" id="markdown-toc-终止容器">终止容器</a></li>
+      <li><a href="#进出容器" id="markdown-toc-进出容器">进出容器</a></li>
+      <li><a href="#退出容器" id="markdown-toc-退出容器">退出容器</a></li>
+    </ul>
+  </li>
+  <li><a href="#mysql安装" id="markdown-toc-mysql安装">MySql安装</a>    <ul>
+      <li><a href="#常用命令" id="markdown-toc-常用命令">常用命令</a></li>
+      <li><a href="#参考目录" id="markdown-toc-参考目录">参考目录</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="了解docker概念">了解Docker概念：</h2>
+
+<p><a href="http://dockone.io/article/6051">可能是把Docker的概念讲的最清楚的一篇文章</a></p>
+
+<h2 id="理解docker原理">理解Docker原理：</h2>
+
+<p><strong><a href="http://dockone.io/article/783">10张图带你深入理解Docker容器和镜像</a></strong>
+–大神级别文章,清晰地阐述了其存储原理及命令</p>
+
+<p><strong><a href="http://guide.daocloud.io/dcs/allen-docker-9153965.html">Allen 谈 Docker 系列：</a></strong></p>
+
+<ul>
+  <li><a href="http://guide.daocloud.io/dcs/docker-9153976.html">一图看尽 docker 容器文件系统</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-logs-9153967.html">docker logs 实现剖析</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-exec-9153970.html">docker exec 与容器日志</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-9153973.html">Docker 容器日志的那些事儿</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-9153979.html">深刻理解 Docker 镜像大小</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-9153982.html">Docker 镜像内有啥，存哪？</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-json-9153985.html">深入理解 Docker 镜像 json 文件</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-build-cache-9153988.html">docker build 的 cache 机制</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-commit-9153991.html">docker commit 的来龙去脉</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-root-9153994.html">Docker 容器的 root 安全吗？</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-9153997.html">存储类 Docker 容器的明文密码问题</a></li>
+  <li><a href="http://guide.daocloud.io/dcs/docker-9154000.html">Docker 容器明文密码问题解决之道</a></li>
+</ul>
+
+<h2 id="简单的运用docker">简单的运用Docker</h2>
+
+<p>安装：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nb">install </span>docker
+</code></pre></div></div>
+
+<p>安装好后启动docker：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start docker <span class="c">#启动docker stop restart 停止 重启</span>
+docker ‐v  
+systemctl <span class="nb">enable </span>docker <span class="c">#开机启动</span>
+</code></pre></div></div>
+
+<h2 id="使用镜像">使用镜像</h2>
+
+<h3 id="拉取镜像">拉取镜像</h3>
+
+<p>在docker hub上已经有很多现成的镜像了，只需要执行docker pull命令就可以拉取到本地：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker search tomcat <span class="c">#搜索镜像 </span>
+docker pull tomcat   <span class="c"># 命令：docker pull 镜像名：[标签(版本)]  </span>
+</code></pre></div></div>
+
+<p>就这样，简单的一条命令就把tomcat运行环境的镜像pull到本地了，这里没有选取tomcat的版本，默认是latest。</p>
+
+<p>查看本地镜像列表：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images <span class="c">#本地镜像列表</span>
+</code></pre></div></div>
+
+<p><img src="https://raw.githubusercontent.com/objcoding/objcoding.github.io/master/images/docker.png" alt="images" /></p>
+
+<h3 id="运行镜像">运行镜像</h3>
+
+<p>拉取镜像后，那么我们试着运行一下镜像：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--name</span> mytomcat <span class="nt">-d</span> <span class="nt">-p</span> 8888:8080  tomcat   
+<span class="c"># --name 指定名称</span>
+<span class="c"># 最后一个参数运行的镜像名</span>
+<span class="c">#-d 后台运行 -p ‐p: 将主机的端口8888映射到容器的一个端口8080  </span>
+
+</code></pre></div></div>
+
+<p>常用的一些参数如下：</p>
+
+<ul>
+  <li>
+    <p>-a stdin: 指定标准输入输出内容类型，可选 STDIN/STDOUT/STDERR 三项；</p>
+  </li>
+  <li>
+    <p>-d: 后台运行容器，并返回容器ID；</p>
+  </li>
+  <li>
+    <p>-i: 以交互模式运行容器，通常与 -t 同时使用；</p>
+  </li>
+  <li>
+    <p>-t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；</p>
+  </li>
+  <li>
+    <p>–name=”nginx-lb”: 为容器指定一个名称；</p>
+  </li>
+  <li>
+    <p>–dns 8.8.8.8: 指定容器使用的DNS服务器，默认和宿主一致；</p>
+  </li>
+  <li>
+    <p>–dns-search example.com: 指定容器DNS搜索域名，默认和宿主一致；</p>
+  </li>
+  <li>
+    <p>-h “mars”: 指定容器的hostname；</p>
+  </li>
+  <li>
+    <p>-e username=”ritchie”: 设置环境变量；</p>
+  </li>
+  <li>
+    <p>–env-file=[]: 从指定文件读入环境变量；</p>
+  </li>
+  <li>
+    <p>–cpuset=”0-2” or –cpuset=”0,1,2”: 绑定容器到指定CPU运行；</p>
+  </li>
+  <li>
+    <p>-m :设置容器使用内存最大值；</p>
+  </li>
+  <li>
+    <p>–net=”bridge”: 指定容器的网络连接类型，支持 bridge/host/none/container: 四种类型；</p>
+  </li>
+  <li>
+    <p>–link=[]: 添加链接到另一个容器；</p>
+  </li>
+  <li>
+    <p>–expose=[]: 开放一个端口或一组端口；</p>
+  </li>
+</ul>
+
+<p>运行后可以通过浏览器访问 <code class="highlighter-rouge">主机ip：8888</code>看到tomcat初始页面(如果容器启动访问不了,可能是防火墙的原因)。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service firewalld status  <span class="c"># 防火墙状态</span>
+service firewalld stop	  <span class="c"># 关闭防火墙</span>
+</code></pre></div></div>
+
+<h2 id="操作容器">操作容器</h2>
+
+<h3 id="查看容器状态">查看容器状态</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps <span class="c">#查看当前运行的容器及容器id,</span>
+docker ps <span class="nt">-a</span> <span class="c">#查看所有容器 包括未启动的 </span>
+
+docker logs &lt;容器名字或id&gt;    <span class="c">#查看容器运行日志</span>
+</code></pre></div></div>
+<p><img src="https://raw.githubusercontent.com/objcoding/objcoding.github.io/master/images/docker3.png" alt="container list" /></p>
+
+<h3 id="查看容器信息">查看容器信息</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker docker inspect &lt;容器名称或ID&gt;
+</code></pre></div></div>
+
+<h3 id="终止容器">终止容器</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker stop &lt;容器名字或id&gt;
+</code></pre></div></div>
+
+<p>但这种方式并没有彻底把容器销毁，下次可以用docker start启动，并恢复之前的状态，如果想彻底删除容器，可以使用</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">rm</span> &lt;容器名字或id&gt;
+</code></pre></div></div>
+
+<h3 id="进出容器">进出容器</h3>
+
+<p>进入容器有多种方法，这里推荐使用docker attach和docker exec命令</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-it</span> &lt;容器名称&gt; bash  <span class="c">#相当于进入一个linux,可以使用命令</span>
+</code></pre></div></div>
+
+<p>进入容器内，开启终端。</p>
+
+<h3 id="退出容器">退出容器</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exit</span>/ctrl+d <span class="c">#退出容器且关闭</span>
+</code></pre></div></div>
+
+<h2 id="mysql安装">MySql安装</h2>
+
+<p>拉取mysql镜像：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull mysql:5.7
+</code></pre></div></div>
+
+<p>创建mysql容器三种方法：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 第一种 指定root密码 映射端口可以实现外网访问</span>
+docker run ‐p 3306:3306 ‐‐name 容器名称 ‐e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>我是密码 ‐d &lt;镜像名称:版本&gt;
+
+<span class="c"># 第二种 </span>
+<span class="nb">mkdir</span> <span class="nt">-p</span> /conf/mysql <span class="c">#创建目录</span>
+vi /conf/mysql/my.cnf <span class="c">#自定义mysql配置文件</span>
+<span class="c"># 保存配置略</span>
+docker run ‐p 3306:3306 ‐‐name 容器名称 <span class="nt">-v</span> /conf/mysql/:/etc/mysql/mysql.conf.d ‐e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>我是密码 ‐d &lt;镜像名称:版本&gt;
+<span class="c"># -v 将宿主机的配置文件目录/conf/mysql/ 挂载到容器中mysql配置目录/etc/mysql/mysql.conf.d下</span>
+<span class="c"># -e 指定参数mysql参数</span>
+
+<span class="c"># 第三种 不用挂在配置文件,直接指定mysql参数</span>
+docker run <span class="nt">--name</span> 容器名称 <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>我是密码 <span class="nt">-d</span> &lt;镜像名称:版本&gt; <span class="nt">--character-set-server</span><span class="o">=</span>utf8mb4 <span class="nt">--collation-server</span><span class="o">=</span>utf8mb4_unicode_ci
+</code></pre></div></div>
+
+<p>访问mysql容器同理</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-it</span> &lt;容器名称&gt; bash
+mysql <span class="nt">-u</span> root <span class="nt">-p</span> 
+<span class="c">#可以实现sql操作</span>
+</code></pre></div></div>
+
+<h3 id="常用命令">常用命令</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker rmi &lt;镜像id&gt;  <span class="c"># 删除镜像</span>
+docker <span class="nb">rm</span> &lt;容器id/名称&gt; <span class="c">#删除容器 </span>
+
+<span class="c">#commit命令将容器的可读写层转换为一个只读层，这样就把一个容器转换成了不可变的镜像。</span>
+docker commit <span class="nt">-m</span><span class="o">=</span><span class="s2">"提交信息"</span> <span class="nt">--author</span><span class="o">=</span><span class="s2">"chankin"</span> &lt;container-id&gt; 镜像名:版本  
+ 
+<span class="c">#将主机复制到docker容器内</span>
+docker <span class="nb">cp </span>foo.txt &lt;容器id/名称&gt;:/foo.txt  <span class="c">#文件</span>
+docker <span class="nb">cp </span>src/. &lt;容器id/名称&gt;r:/target <span class="c">#将文件夹包含的多个文件复制到文件夹</span>
+<span class="c">#将文件从Docker内复制到主机</span>
+docker <span class="nb">cp</span> &lt;容器Id&gt;:/file/path/within/container /host/path/target  
+</code></pre></div></div>
+<hr />
+
+<p>由于国外docker hub访问速度很慢,这里使用阿里云Docker镜像仓库进行加速拉取(国外vps例外),这里使用CentOS为例：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo mkdir</span> <span class="nt">-p</span> /etc/docker
+
+<span class="nb">sudo tee</span> /etc/docker/daemon.json <span class="o">&lt;&lt;-</span><span class="sh">'</span><span class="no">EOF</span><span class="sh">'
+{
+  "registry-mirrors": ["https://bc6f8059.mirror.aliyuncs.com"]
+}
+</span><span class="no">EOF
+
+</span>systemctl daemon-reload  <span class="c"># 重新加载配置文件</span>
+systemctl restart docker <span class="c"># 重启docker</span>
+<span class="o">=======================================</span>
+<span class="c"># 启用阿里云加速后镜像拉取有点变化  几个例子</span>
+docker pull docker.io/tomcat:8.5 <span class="c"># dockerhub官方镜像</span>
+docker pull registry.cn-hangzhou.aliyuncs.com/carfield-tomcat/tomcat8:8.5 <span class="c">#拉取阿里云自定义镜像</span>
+
+
+</code></pre></div></div>
+
+<h3 id="参考目录">参考目录</h3>
+
+<ul>
+  <li><a href="https://www.cnblogs.com/ivictor/p/4834864.html">关于Docker目录挂载的总结</a></li>
+  <li><a href="https://docs.docker.com/samples/library/mysql/">Docker官方文档</a></li>
+  <li><a href="https://www.cnblogs.com/hanyifeng/p/6116067.html">Docker 定制容器镜像的2种方法</a></li>
+  <li><a href="https://www.cnblogs.com/Bourbon-tian/p/6867796.html">docker入门——构建镜像</a></li>
+</ul>
+
+        </article>
+        <hr>
+
+       
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <style>
+.demo {
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+</style>
+<div class="post-recent">
+    <div class="demo" >
+        
+        <p><strong>上一篇</strong> <a href="/2018/11/03/RSA/">RSA非对称加密的简单理解</a>
+        
+        
+    </div>
+</div>
+
+        <!-- <h2 id="comments">Comments</h2> -->
+        
+
+
+
+
+  
+    
+    <link rel="stylesheet" href="/css/gitalk.css">
+    <script src="/js/gitalk.min.js"></script>
+      <div id="gitalk-container"></div>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID: 'b39a231392131dd275eb', 
+            clientSecret: '0a82311de71e2e78c26857ae7efc782dc3b60816',
+            repo: 'blog-comments', 
+            owner: 'Chankin026', 
+            admin: ['Chankin026'], 
+            distractionFreeMode: 'true',
+            id: '/2018/11/14/Docker(1)/',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <!--<li><a href="#comments">Comments</a></li>-->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p>
+            PV <span id="busuanzi_value_site_pv"></span>, 
+            UV <span id="busuanzi_value_site_uv"></span>
+            <!-- PV<span id="busuanzi_value_page_pv"></span> -->
+        </p>
+
+        <p class="contact">
+             Powered by Chankin 
+        </p>
+        <br/>
+        <!-- 备案号 -->
+        <!-- <p class="contact"> -->
+            <!-- <a href="http://www.miitbeian.gov.cn">粤ICP备17166463号</a>  -->
+        <!-- </p> -->
+         <!-- <p class="contact">
+            Contact me at: 
+            
+            <a href="https://github.com/Chankin026" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a> 
+             
+            
+            <a href="mailto:chanjian1261@gmail.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a> 
+              -->
+
+            <!--  
+             
+             
+               
+             -->
+        <!-- </p> -->
+        
+        <!-- <p class="power">
+            <span>
+                <a href="https://github.com/zchdjb"><i class="fa fa-github" aria-hidden="true"></i>GitHub</a>
+            </span>
+        </p> -->
+    </div>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>
