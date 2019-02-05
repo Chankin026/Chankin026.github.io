@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>mysql主从复制的理解和实现</title>
+    <meta name="description" content="  Mysql的复制概念          Mysql的binary—log      Mysql复制所解决的问题      主从复制原理      主从复制的优点      缺点        MySQL主从同步的实现          配置master      配置slave      测试        ...">
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+<!--     <link rel="stylesheet" href="/css/awesome.min.css "> -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2018/11/20/Mysql-replication/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="http://localhost:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?82a92032c29be4b2b72ac18628047724";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-127191064-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+</head>
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <!-- <a href="/" class="brand">chankin's Blog</a> -->
+        <small>每一步成长都想与你分享</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li><!--home-->
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/booklist/">
+                        
+                            <i class="fa fa-bookmark"></i>Booklist
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/movies/">
+                        
+                            <i class="fa fa-film"></i>Movies
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/About/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>mysql主从复制的理解和实现</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2018-11-20
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>chankin
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Mysql" title="Category: Mysql" rel="category">Mysql</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Mysql" title="Tag: Mysql" rel="tag">Mysql</a-->
+        <a href="/tag/#Mysql" title="Tag: Mysql" rel="tag">Mysql</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#mysql的复制概念" id="markdown-toc-mysql的复制概念">Mysql的复制概念</a>    <ul>
+      <li><a href="#mysql的binarylog" id="markdown-toc-mysql的binarylog">Mysql的binary—log</a></li>
+      <li><a href="#mysql复制所解决的问题" id="markdown-toc-mysql复制所解决的问题">Mysql复制所解决的问题</a></li>
+      <li><a href="#主从复制原理" id="markdown-toc-主从复制原理">主从复制原理</a></li>
+      <li><a href="#主从复制的优点" id="markdown-toc-主从复制的优点">主从复制的优点</a></li>
+      <li><a href="#缺点" id="markdown-toc-缺点">缺点</a></li>
+    </ul>
+  </li>
+  <li><a href="#mysql主从同步的实现" id="markdown-toc-mysql主从同步的实现">MySQL主从同步的实现</a>    <ul>
+      <li><a href="#配置master" id="markdown-toc-配置master">配置master</a></li>
+      <li><a href="#配置slave" id="markdown-toc-配置slave">配置slave</a></li>
+      <li><a href="#测试" id="markdown-toc-测试">测试</a></li>
+    </ul>
+  </li>
+  <li><a href="#深入了解" id="markdown-toc-深入了解">深入了解</a></li>
+  <li><a href="#参考地址" id="markdown-toc-参考地址">参考地址</a></li>
+</ul>
+<h3 id="mysql的复制概念">Mysql的复制概念</h3>
+
+<p><img src="/images/mysql1.png" alt="1546356512911" /></p>
+
+<p>Mysql内置的复制功能是构建大型高可用高性能应用的基础。 允许将来自一个MySQL数据库（master）的数据复制到一个或多个MySQL数据库服务器( slave ), 它可以进行<strong>异步的复制</strong>,并不需要永久的连接。</p>
+
+<p>通过配置，可以复制所有的数据库，某个数据库和表。 而实现复制功能的关键在于开启mysql的二进制日志log-bin。</p>
+
+<h4 id="mysql的binarylog">Mysql的binary—log</h4>
+
+<p>MySQL的二进制日志binlog可以说是MySQL最重要的日志，它记录了数据库的DDL和DML语句（除了查询语句），以事件形式记录，还包含语句所执行的消耗的时间，MySQL的二进制日志是事务安全型的。</p>
+
+<p>​	<em>DDL主要用于</em>create、alter、drop等*</p>
+
+<p>​	<em>DML主要用于select、insert、update和delete数据</em></p>
+
+<p>binlog日志包括两类文件：
+1）二进制日志索引文件（文件名后缀为.index）用于记录所有的二进制文件
+2）二进制日志文件（文件名后缀为.00000*）记录数据库所有的DDL和DML(除了select)语句事件。</p>
+
+<p><img src="/images/mysql2.png" alt="binary-log" /></p>
+
+<h4 id="mysql复制所解决的问题">Mysql复制所解决的问题</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1. 数据分布 (Data distribution )
+    2. 负载均衡(load balancing)
+    3. 数据备份(Backups) ，保证数据安全
+    4. 高可用性和容错行(High availability and failover)
+    5. 实现读写分离，缓解数据库压力
+</code></pre></div></div>
+
+<h4 id="主从复制原理">主从复制原理</h4>
+
+<ol>
+  <li>
+    <p>master服务器将数据改变记录到binlog日志</p>
+  </li>
+  <li>
+    <p>salve服务器在一定时间间隔内探测master的binlog日志是否改变。</p>
+
+    <p>1）如果改变,则I/O线程请求master二进制事件。</p>
+
+    <p>2）同时master为每个I/O线程启动一个dump线程，用于向其发送二进制事件。</p>
+
+    <p>3）slave将事件保存至本地的中继日志(relay log) 中。</p>
+
+    <p>4）slave将启动SQL线程从中继日志(relay log) 读取二进制日志，在slave上回放。使得其数据和master保持一致。</p>
+  </li>
+  <li>
+    <p>最后I/O线程和SQL线程将进入睡眠状态，等待下一次探测。</p>
+  </li>
+</ol>
+
+<p><img src="/images/mysql3.png" alt="过程" /></p>
+
+<p>Mysql复制的流程图如下：</p>
+
+<p><img src="/images/mysql4.png" alt="流程" /></p>
+
+<h4 id="主从复制的优点">主从复制的优点</h4>
+<ol>
+  <li>在从服务器实现查询，降低主服务器压力;（主库写，从库读，降压）</li>
+  <li>从主服务器中进行数据备份，避免备份期间影响主服务器服务;（确保数据安全）</li>
+  <li>当主服务器出现问题时，可以切换到从服务器。（提升性能）</li>
+</ol>
+
+<h4 id="缺点">缺点</h4>
+
+<p>复制是异步且串行化的, 复制在slave上是串行化的，也就是说master上的并行更新操作不能在slave上并行操作。</p>
+
+<h3 id="mysql主从同步的实现">MySQL主从同步的实现</h3>
+
+<p>我这里是windows加centos, 需要ping 互通 以及开放端口号</p>
+
+<p>首先,尽量保持两个服务器上的mysql版本一致</p>
+
+<p>将windos中配置为master服务器,CentOS为slave服务器</p>
+
+<h4 id="配置master">配置master</h4>
+
+<p>需修改my.ini</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>mysqld]
+<span class="c"># 添加生成记录文件位置</span>
+log-bin<span class="o">=</span>mysql-bin
+<span class="c"># 设置为master服务器</span>
+server-id<span class="o">=</span>1
+</code></pre></div></div>
+
+<p>重启mysql服务</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>net stop/start mysql
+</code></pre></div></div>
+
+<p>登录mysql</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">show</span> <span class="n">master</span> <span class="n">status</span><span class="p">;</span> <span class="o">#</span> <span class="err">记录</span><span class="n">file</span><span class="err">和</span><span class="n">Postion</span><span class="err">值</span>
+</code></pre></div></div>
+
+<p><img src="/images/mysql5.png" alt="记录" /></p>
+
+<p>创建并授权用户，后两个slave分别是用户名和密码</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="err">这里</span><span class="n">ip</span><span class="err">为</span><span class="n">slaveip</span><span class="err">地址</span> <span class="n">ip</span> <span class="n">addr</span><span class="err">查询</span>
+<span class="k">grant</span> <span class="n">replication</span> <span class="n">slave</span> <span class="k">on</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">to</span> <span class="s1">'chankin'</span><span class="o">@</span><span class="s1">'192.168.2.108'</span> <span class="n">identified</span> <span class="k">by</span> <span class="s1">'chankin'</span><span class="p">;</span>
+<span class="o">#</span> <span class="err">权限生效</span>
+<span class="n">flush</span> <span class="k">privileges</span><span class="p">;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h4 id="配置slave">配置slave</h4>
+
+<p>修改vim /etc/my.cnf 配置文件</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 添加生成记录文件位置</span>
+log-bin<span class="o">=</span>mysql-bin
+<span class="c"># 设置为从服务器</span>
+server-id<span class="o">=</span>2
+</code></pre></div></div>
+
+<p>重启mysql服务</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl restart mysql
+</code></pre></div></div>
+
+<p>配置同步参数，登陆mysql，输入如下信息：</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">CHANGE</span> <span class="n">MASTER</span> <span class="k">TO</span>
+	 <span class="o">&gt;</span> <span class="n">MASTER_HOST</span><span class="o">=</span><span class="s1">'192.168.2.100'</span><span class="p">,</span>             <span class="o">#</span> <span class="n">master</span> <span class="n">ip</span>
+	 <span class="o">&gt;</span> <span class="n">MASTER_USER</span><span class="o">=</span><span class="s1">'chankin'</span><span class="p">,</span>	                 <span class="o">#</span> <span class="err">同步账户名</span>
+	 <span class="o">&gt;</span> <span class="n">MASTER_PASSWORD</span><span class="o">=</span><span class="s1">'chankin1'</span><span class="p">,</span>				 <span class="o">#</span> <span class="err">同步密码</span>
+	 <span class="o">&gt;</span> <span class="n">MASTER_LOG_FILE</span><span class="o">=</span><span class="s1">'mysql-bin.000002'</span><span class="p">,</span>      <span class="o">#</span> <span class="err">从</span><span class="n">master</span><span class="err">服务器同步的日志文件</span>
+	 <span class="o">&gt;</span> <span class="n">MASTER_LOG_POS</span><span class="o">=</span><span class="mi">762</span><span class="p">;</span>						 <span class="o">#</span> <span class="err">日志的开始位置。</span>
+</code></pre></div></div>
+
+<p>启动slave并查看</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">start</span> <span class="n">slave</span><span class="p">;</span> <span class="o">#</span> <span class="err">启动从服务器复制功能</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">slave</span> <span class="n">status</span> <span class="err">\</span><span class="k">G</span>  <span class="o">#</span> <span class="err">查看从服务器状态</span>
+</code></pre></div></div>
+
+<p><img src="/images/mysql6.png" alt="status" /></p>
+
+<p>Slave_IO_Running: connecting 说明没有配置成功</p>
+
+<p>检查 发现密码错了,停止slave服务重新配置同步参数</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">stop</span> <span class="n">slave</span><span class="p">;</span>  <span class="o">#</span> <span class="err">停止复制</span>
+
+  <span class="o">#</span> <span class="err">省略</span>
+  
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="n">slave</span> <span class="n">status</span> <span class="err">\</span><span class="k">G</span>  <span class="o">#</span> <span class="err">再次检查</span>
+
+</code></pre></div></div>
+
+<p><img src="/images/mysql7.png" alt="status" /></p>
+
+<p><strong>Slave_IO_Running: Yes 和 Slave_SQL_Running: Yes</strong> 说明 主从同步配置成了。</p>
+
+<h4 id="测试">测试</h4>
+
+<p>在master服务器上创建数据库-表  , 插入数据</p>
+
+<p>slave上select就可查到了</p>
+
+<p>具体略</p>
+
+<h3 id="深入了解">深入了解</h3>
+
+<p><a href="https://www.cnblogs.com/kevingrace/p/6256603.html">Mysql主从同步(1)-主从/主主环境部署梳理</a></p>
+
+<h3 id="参考地址">参考地址</h3>
+
+<p>​	<a href="https://www.cnblogs.com/kylinlin/p/5258719.html">Mysql主从同步（复制）</a></p>
+
+<p>​	<a href="https://www.cnblogs.com/kevingrace/p/5907254.html">Mysql之binlog日志说明及利用binlog日志恢复数据操作记录</a></p>
+
+<p>​	<a href="https://www.cnblogs.com/chhuang/p/4182868.html">集群CLUSTER种类介绍</a></p>
+
+        </article>
+        <hr>
+
+       
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+        
+
+        <style>
+.demo {
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+</style>
+<div class="post-recent">
+    <div class="demo" >
+        
+        <p><strong>上一篇</strong> <a href="/2018/11/14/Docker(1)/">Docker的入门</a>
+        
+        
+    </div>
+</div>
+
+        <!-- <h2 id="comments">Comments</h2> -->
+        
+
+
+
+
+  
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.5.0/gitalk.min.css">
+    <script src="https://cdn.staticfile.org/gitalk/1.5.0/gitalk.min.js"></script>
+      <div id="gitalk-container"></div>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID: 'b39a231392131dd275eb', 
+            clientSecret: '0a82311de71e2e78c26857ae7efc782dc3b60816',
+            repo: 'Chankin026.github.io', 
+            owner: 'Chankin026', 
+            admin: ['Chankin026'], 
+            distractionFreeMode: 'true',
+            id: '/2018/11/20/Mysql-replication/',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <li><a href="#similar_posts">Similar Posts</a></li>
+                    <!--<li><a href="#comments">Comments</a></li>-->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p>
+            PV <span id="busuanzi_value_site_pv"></span>, 
+            UV <span id="busuanzi_value_site_uv"></span>
+            <!-- PV<span id="busuanzi_value_page_pv"></span> -->
+        </p>
+
+        <p class="contact">
+             Powered by Chankin 
+        </p>
+        <br/>
+        <!-- 备案号 -->
+        <!-- <p class="contact"> -->
+            <!-- <a href="http://www.miitbeian.gov.cn">粤ICP备17166463号</a>  -->
+        <!-- </p> -->
+         <!-- <p class="contact">
+            Contact me at: 
+            
+            <a href="https://github.com/Chankin026" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a> 
+             
+            
+            <a href="mailto:chanjian1261@gmail.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a> 
+              -->
+
+            <!--  
+             
+             
+               
+             -->
+        <!-- </p> -->
+        
+        <!-- <p class="power">
+            <span>
+                <a href="https://github.com/zchdjb"><i class="fa fa-github" aria-hidden="true"></i>GitHub</a>
+            </span>
+        </p> -->
+    </div>
+</footer>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

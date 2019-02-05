@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>RSA非对称加密的简单理解</title>
-    <meta name="description" content="RSA是一种公开密钥算法。通常是通讯双方各成一对RSA公秘钥,公钥和私钥都可以用于加密和解密。其中私钥用户保存(不公开),公钥对外公开，任何人都可以获取。假设A给B发送文本RSA签名加密过程如下：  B传递自己的公钥给A;  A对明文进行Hash运算得到信息摘要,用自己的私钥对摘要进行加密,形成数字签名, 同时使...">
+    <title>CAP 定理的含义[转载]</title>
+    <meta name="description" content="  CAP 定理的含义          一、分布式系统的三个指标      二、Partition tolerance      三、Consistency      四、Availability      五、Consistency 和 Availability 的矛盾      在学习redis 的时候不是...">
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
 <!--     <link rel="stylesheet" href="/css/awesome.min.css "> -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2018/11/03/RSA/">
+    <link rel="canonical" href="http://localhost:4000/2018/10/20/CAP/">
     <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="http://localhost:4000/feed.xml ">
 
 
@@ -146,15 +146,15 @@
 
         <div class="page clearfix" post>
     <div class="left">
-        <h1>RSA非对称加密的简单理解</h1>
+        <h1>CAP 定理的含义[转载]</h1>
         <div class="label">
 
             <div class="label-card">
-                <i class="fa fa-calendar"></i>2018-11-03
+                <i class="fa fa-calendar"></i>2018-10-20
             </div>
 
             <div class="label-card">
-                <i class="fa fa-user"></i>chankin
+                <i class="fa fa-user"></i>阮一峰
                 
             </div>
 
@@ -171,7 +171,7 @@
   <i class="fa fa-th-list"></i>
   
     
-        <a href="/category/#Algorithm" title="Category: Algorithm" rel="category">Algorithm</a>
+        <a href="/category/#Distributed" title="Category: Distributed" rel="category">Distributed</a>
     
   
 
@@ -188,8 +188,11 @@
   <i class="fa fa-tags"></i>
   
     
-        <!--a href="/tag/#RSA" title="Tag: RSA" rel="tag">RSA</a-->
-        <a href="/tag/#RSA" title="Tag: RSA" rel="tag">RSA</a>
+        <!--a href="/tag/#CAP" title="Tag: CAP" rel="tag">CAP</a-->
+        <a href="/tag/#CAP" title="Tag: CAP" rel="tag">CAP</a>&nbsp;
+    
+        <!--a href="/tag/#%E5%88%86%E5%B8%83%E5%BC%8F" title="Tag: 分布式" rel="tag">分布式</a-->
+        <a href="/tag/#分布式" title="Tag: 分布式" rel="tag">分布式</a>
     
   
 
@@ -200,40 +203,110 @@
         </div>
         <hr>
         <article itemscope itemtype="http://schema.org/BlogPosting">
-        <p>RSA是一种公开密钥算法。通常是通讯双方各成一对RSA公秘钥,公钥和私钥都可以用于加密和解密。其中私钥用户保存(不公开),公钥对外公开，任何人都可以获取。</p>
+        <ul id="markdown-toc">
+  <li><a href="#cap-定理的含义" id="markdown-toc-cap-定理的含义">CAP 定理的含义</a>    <ul>
+      <li><a href="#一分布式系统的三个指标" id="markdown-toc-一分布式系统的三个指标">一、分布式系统的三个指标</a></li>
+      <li><a href="#二partition-tolerance" id="markdown-toc-二partition-tolerance">二、Partition tolerance</a></li>
+      <li><a href="#三consistency" id="markdown-toc-三consistency">三、Consistency</a></li>
+      <li><a href="#四availability" id="markdown-toc-四availability">四、Availability</a></li>
+      <li><a href="#五consistency-和-availability-的矛盾" id="markdown-toc-五consistency-和-availability-的矛盾">五、Consistency 和 Availability 的矛盾</a></li>
+    </ul>
+  </li>
+</ul>
 
-<p>假设A给B发送文本
-RSA签名加密过程如下：</p>
+<p>在学习redis 的时候不是很了解cap这个概念,从网上找到了阮一峰老师的文章,就转载过来了。  当然 阮老师 还有很多其他扫盲的文章,建议都看看</p>
 
-<ol>
-  <li>B传递自己的公钥给A;</li>
-  <li>A对明文进行Hash运算得到信息摘要,用自己的私钥对摘要进行加密,形成数字签名, 同时使用B发送给A的公钥对明文加密,形成密文;</li>
-  <li>将密文和数字签名发送给B;</li>
-  <li>B收到 A发过来的签名和密文, 获得A的公钥对数字签名进行解签, 进行Hash运算得到信息摘要;</li>
-  <li>再用自己的私钥对进行解密,得到明文,对明文进行Hash运算得到信息摘要;</li>
-  <li>将两个摘要进行对比,两者一致则说明文本没有被篡改过。</li>
-</ol>
+<h1 id="cap-定理的含义">CAP 定理的含义</h1>
 
-<p>数字签名的作用：</p>
+<p>原文地址：http://www.ruanyifeng.com/blog/2018/07/cap.html</p>
 
-<p>证明消息发送源头,防止别人假冒和对消息进行篡改。</p>
+<p>作者： <a href="http://www.ruanyifeng.com/">阮一峰</a></p>
 
-<p>Hash运算：</p>
+<p>日期： <a href="http://www.ruanyifeng.com/blog/2018/07/">2018年7月16日</a></p>
 
-<p><em>数字摘要技术（Digital Digest）也称作为安全HASH编码法（SHA：Secure Hash Algorithm）。</em></p>
+<p>分布式系统（distributed system）正变得越来越重要，大型网站几乎都是分布式的。</p>
 
-<p>他是一种摘要算法不是加密算法, 摘要算法是单向的, 明文可以通过摘要算法得到摘要结果。反之则不能通过摘要结果还原成明文，所以不可逆。</p>
+<p>分布式系统的最大难点，就是各个节点的状态如何同步。CAP 定理是这方面的基本定理，也是理解分布式系统的起点。</p>
 
-<p><strong>总结：公钥加密、私钥解密、私钥签名、公钥验签。</strong></p>
+<p>本文介绍该定理。它其实很好懂，而且是显而易见的。下面的内容主要参考了 Michael Whittaker 的<a href="https://mwhittaker.github.io/blog/an_illustrated_proof_of_the_cap_theorem/">文章</a>。</p>
 
-<hr />
+<h2 id="一分布式系统的三个指标">一、分布式系统的三个指标</h2>
 
-<p>参考地址:</p>
+<p><img src="https://www.wangbase.com/blogimg/asset/201807/bg2018071607.jpg" alt="img" /></p>
 
-<p><a href="https://ihenu.iteye.com/blog/2221604">数字摘要和数字签名等概念</a></p>
+<p>1998年，加州大学的计算机科学家 Eric Brewer 提出，分布式系统有三个指标。</p>
 
-<p><a href="https://www.jianshu.com/p/e487551c41cc">加减密和数字签名</a></p>
+<blockquote>
+  <ul>
+    <li>Consistency</li>
+    <li>Availability</li>
+    <li>Partition tolerance</li>
+  </ul>
+</blockquote>
 
+<p>它们的第一个字母分别是 C、A、P。</p>
+
+<p>Eric Brewer 说，这三个指标不可能同时做到。这个结论就叫做 CAP 定理。</p>
+
+<h2 id="二partition-tolerance">二、Partition tolerance</h2>
+
+<p>先看 Partition tolerance，中文叫做”分区容错”。</p>
+
+<p>大多数分布式系统都分布在多个子网络。每个子网络就叫做一个区（partition）。分区容错的意思是，区间通信可能失败。比如，一台服务器放在中国，另一台服务器放在美国，这就是两个区，它们之间可能无法通信。</p>
+
+<p><img src="https://www.wangbase.com/blogimg/asset/201807/bg2018071601.png" alt="img" /></p>
+
+<p>上图中，G1 和 G2 是两台跨区的服务器。G1 向 G2 发送一条消息，G2 可能无法收到。系统设计的时候，必须考虑到这种情况。</p>
+
+<p>一般来说，分区容错无法避免，因此可以认为 CAP 的 P 总是成立。CAP 定理告诉我们，剩下的 C 和 A 无法同时做到。</p>
+
+<h2 id="三consistency">三、Consistency</h2>
+
+<p>Consistency 中文叫做”一致性”。意思是，写操作之后的读操作，必须返回该值。举例来说，某条记录是 v0，用户向 G1 发起一个写操作，将其改为 v1。</p>
+
+<p><img src="https://www.wangbase.com/blogimg/asset/201807/bg2018071602.png" alt="img" /></p>
+
+<p>接下来，用户的读操作就会得到 v1。这就叫一致性。</p>
+
+<p><img src="https://www.wangbase.com/blogimg/asset/201807/bg2018071603.png" alt="img" /></p>
+
+<p>问题是，用户有可能向 G2 发起读操作，由于 G2 的值没有发生变化，因此返回的是 v0。G1 和 G2 读操作的结果不一致，这就不满足一致性了。</p>
+
+<p><img src="https://www.wangbase.com/blogimg/asset/201807/bg2018071604.png" alt="img" /></p>
+
+<p>为了让 G2 也能变为 v1，就要在 G1 写操作的时候，让 G1 向 G2 发送一条消息，要求 G2 也改成 v1。</p>
+
+<p><img src="https://www.wangbase.com/blogimg/asset/201807/bg2018071605.png" alt="img" /></p>
+
+<p>这样的话，用户向 G2 发起读操作，也能得到 v1。</p>
+
+<p><img src="https://www.wangbase.com/blogimg/asset/201807/bg2018071606.png" alt="img" /></p>
+
+<h2 id="四availability">四、Availability</h2>
+
+<p>Availability 中文叫做”可用性”，意思是只要收到用户的请求，服务器就必须给出回应。</p>
+
+<p>用户可以选择向 G1 或 G2 发起读操作。不管是哪台服务器，只要收到请求，就必须告诉用户，到底是 v0 还是 v1，否则就不满足可用性。</p>
+
+<h2 id="五consistency-和-availability-的矛盾">五、Consistency 和 Availability 的矛盾</h2>
+
+<p>一致性和可用性，为什么不可能同时成立？答案很简单，因为可能通信失败（即出现分区容错）。</p>
+
+<p>如果保证 G2 的一致性，那么 G1 必须在写操作时，锁定 G2 的读操作和写操作。只有数据同步后，才能重新开放读写。锁定期间，G2 不能读写，没有可用性不。</p>
+
+<p>如果保证 G2 的可用性，那么势必不能锁定 G2，所以一致性不成立。</p>
+
+<p><strong>综上所述，G2 无法同时做到一致性和可用性。系统设计时只能选择一个目标。如果追求一致性，那么无法保证所有节点的可用性；如果追求所有节点的可用性，那就没法做到一致性。</strong></p>
+
+<p>[更新 2018.7.17]</p>
+
+<p>读者问，在什么场合，可用性高于一致性？</p>
+
+<p>举例来说，发布一张网页到 CDN，多个服务器有这张网页的副本。后来发现一个错误，需要更新网页，这时只能每个服务器都更新一遍。</p>
+
+<p>一般来说，网页的更新不是特别强调一致性。短时期内，一些用户拿到老版本，另一些用户拿到新版本，问题不会特别大。当然，所有人最终都会看到新版本。所以，这个场合就是可用性高于一致性。</p>
+
+<p>（完）</p>
 
         </article>
         <hr>
@@ -245,11 +318,6 @@ RSA签名加密过程如下：</p>
                 
                     
                 
-            
-        
-            
-            
-                
                     
                 
             
@@ -258,8 +326,6 @@ RSA签名加密过程如下：</p>
             
                 
                     
-                
-            
                 
                     
                 
@@ -270,21 +336,14 @@ RSA签名加密过程如下：</p>
                 
                     
                 
-            
-        
-            
-            
-                
-                    
-                
-            
-                
                     
                 
             
         
             
             
+                
+                    
                 
                     
                 
@@ -295,14 +354,11 @@ RSA签名加密过程如下：</p>
                 
                     
                 
-            
-        
-            
-            
-                
                     
                 
             
+                
+                    
                 
                     
                 
@@ -313,10 +369,47 @@ RSA签名加密过程如下：</p>
                 
                     
                 
+                    
+                
             
         
             
             
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
                 
                     
                 
@@ -335,10 +428,10 @@ RSA签名加密过程如下：</p>
 <div class="post-recent">
     <div class="demo" >
         
-        <p><strong>上一篇</strong> <a href="/2018/10/20/CAP/">CAP 定理的含义[转载]</a>
+        <p><strong>上一篇</strong> <a href="/2018/10/07/Hibernate-DetacheCriteria/">继承HibernateDaoSupport实现CRUD</a>
         
         
-        <p><strong>下一篇</strong> <a href="/2018/11/14/Docker(1)/" style="text-align:right;">Docker的入门</a></p>
+        <p><strong>下一篇</strong> <a href="/2018/11/03/RSA/" style="text-align:right;">RSA非对称加密的简单理解</a></p>
         
     </div>
 </div>
@@ -362,7 +455,7 @@ RSA签名加密过程如下：</p>
             owner: 'Chankin026', 
             admin: ['Chankin026'], 
             distractionFreeMode: 'true',
-            id: '/2018/11/03/RSA/',
+            id: '/2018/10/20/CAP/',
           })
           gitalk.render('gitalk-container')
       </script>

@@ -10,11 +10,12 @@
     <meta name="description" content="">
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
-    <link rel="stylesheet" href="/css/awesome.min.css ">
+<!--     <link rel="stylesheet" href="/css/awesome.min.css "> -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="https://Chankin026.github.io/">
-    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="http://localhost:4000/feed.xml ">
 
 
     <script>
@@ -135,6 +136,8 @@
                 
                     
                 
+                    
+                
             </ul>
         </nav>
     </div>
@@ -147,6 +150,10 @@
         <small></small>
         <hr>
         <ul>
+            
+            
+            
+            
             
             
             
@@ -260,6 +267,65 @@
             
               <li>
                 <h2>
+                  <a class="post-link" href="/2018/11/20/Mysql-replication/">mysql主从复制的理解和实现</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2018-11-20
+                    </div>
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>chankin
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Mysql" title="Category: Mysql" rel="category">Mysql</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#Mysql" title="Tag: Mysql" rel="tag">Mysql</a>
+    
+  
+
+</span>
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                      Mysql的复制概念          Mysql的binary—log      Mysql复制所解决的问题      主从复制原理      主从复制的优点      缺点        MySQL主从同步的实现          配置master      配置slave      测试        深入了解  参考地址Mysql的复制概念Mysql内置的复制功能是构建大型高可用...
+                </div>
+				<div class="read-all">
+                    <a  href="/2018/11/20/Mysql-replication/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
                   <a class="post-link" href="/2018/11/14/Docker(1)/">Docker的入门</a>
                 </h2>
                 <div class="label">
@@ -368,10 +434,71 @@
                     </div>
                 </div>
                 <div class="excerpt">
-                    参考地址:https://maven.apache.org/plugins/maven-compiler-plugin/examples/pass-compiler-arguments.htmlhttps://www.cnblogs.com/king1302217/p/5829672.html
+                    RSA是一种公开密钥算法。通常是通讯双方各成一对RSA公秘钥,公钥和私钥都可以用于加密和解密。其中私钥用户保存(不公开),公钥对外公开，任何人都可以获取。假设A给B发送文本RSA签名加密过程如下：  B传递自己的公钥给A;  A对明文进行Hash运算得到信息摘要,用自己的私钥对摘要进行加密,形成数字签名, 同时使用B发送给A的公钥对明文加密,形成密文;  将密文和数字签名发送给B;  B收到...
                 </div>
 				<div class="read-all">
                     <a  href="/2018/11/03/RSA/"><i class="fa fa-newspaper-o"></i>Read All</a>
+                </div>
+                <hr>
+              </li>
+            
+              <li>
+                <h2>
+                  <a class="post-link" href="/2018/10/20/CAP/">CAP 定理的含义[转载]</a>
+                </h2>
+                <div class="label">
+                    <div class="label-card">
+                        <i class="fa fa-calendar"></i>2018-10-20
+                    </div>
+                    <div class="label-card">
+                        <i class="fa fa-user"></i>阮一峰
+                        
+                    </div>
+                    <div class="label-card">
+                        
+                    </div>
+
+                    <div class="label-card">
+                    
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Distributed" title="Category: Distributed" rel="category">Distributed</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+                    </div>
+
+                    <div class="label-card">
+                    
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <a href="/tag/#CAP" title="Tag: CAP" rel="tag">CAP</a>&nbsp;
+    
+        <a href="/tag/#分布式" title="Tag: 分布式" rel="tag">分布式</a>
+    
+  
+
+</span>
+
+                    </div>
+                </div>
+                <div class="excerpt">
+                      CAP 定理的含义          一、分布式系统的三个指标      二、Partition tolerance      三、Consistency      四、Availability      五、Consistency 和 Availability 的矛盾      在学习redis 的时候不是很了解cap这个概念,从网上找到了阮一峰老师的文章,就转载过来了。  当然 阮老...
+                </div>
+				<div class="read-all">
+                    <a  href="/2018/10/20/CAP/"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
@@ -496,124 +623,6 @@
                 <hr>
               </li>
             
-              <li>
-                <h2>
-                  <a class="post-link" href="/2018/10/03/Mybatis1/">mybatis中mapper的namespace的作用</a>
-                </h2>
-                <div class="label">
-                    <div class="label-card">
-                        <i class="fa fa-calendar"></i>2018-10-03
-                    </div>
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>chankin
-                        
-                    </div>
-                    <div class="label-card">
-                        
-                    </div>
-
-                    <div class="label-card">
-                    
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#Mybatis" title="Category: Mybatis" rel="category">Mybatis</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-                    </div>
-
-                    <div class="label-card">
-                    
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <a href="/tag/#Mybatis" title="Tag: Mybatis" rel="tag">Mybatis</a>
-    
-  
-
-</span>
-
-                    </div>
-                </div>
-                <div class="excerpt">
-                    在mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句，如下：假设定义了IArticleDAO接口public interface IArticleDAO{	List&lt;Article&gt; selectAllArticle();}...
-                </div>
-				<div class="read-all">
-                    <a  href="/2018/10/03/Mybatis1/"><i class="fa fa-newspaper-o"></i>Read All</a>
-                </div>
-                <hr>
-              </li>
-            
-              <li>
-                <h2>
-                  <a class="post-link" href="/2018/10/02/B-Tree/">B树、B+树、B*树结构的理解</a>
-                </h2>
-                <div class="label">
-                    <div class="label-card">
-                        <i class="fa fa-calendar"></i>2018-10-02
-                    </div>
-                    <div class="label-card">
-                        <i class="fa fa-user"></i>chankin
-                        
-                    </div>
-                    <div class="label-card">
-                        
-                    </div>
-
-                    <div class="label-card">
-                    
-
-
-<!-- <span class="point">•</span> -->
-<span class="categories">
-  <i class="fa fa-th-list"></i>
-  
-    
-        <a href="/category/#DataStructure" title="Category: DataStructure" rel="category">DataStructure</a>
-    
-  
-
-  <!-- <span class="point">•</span> -->
-</span>
-
-
-                    </div>
-
-                    <div class="label-card">
-                    
-<!-- <span class="point">•</span> -->
-<span class="pageTag">
-  <i class="fa fa-tags"></i>
-  
-    
-        <a href="/tag/#Tree" title="Tag: Tree" rel="tag">Tree</a>
-    
-  
-
-</span>
-
-                    </div>
-                </div>
-                <div class="excerpt">
-                      前言：  B-Tree：          定义      组成      1.1关于分支节点块（包括根节点块）      1.2关于叶子节点        B+-tree  B*-Tree  应用  总结原文地址(搬运修改):从 B 树、B+ 树、B* 树谈到 R 树【经典数据结构】B树与B+树B树和B+树的总结对于B树，B+树的理解B+树、B*树前言：平衡二叉排序树便于动态查找，因此...
-                </div>
-				<div class="read-all">
-                    <a  href="/2018/10/02/B-Tree/"><i class="fa fa-newspaper-o"></i>Read All</a>
-                </div>
-                <hr>
-              </li>
-            
         </ul>
 
 
@@ -624,10 +633,10 @@
             <span class="previous disable"><i class="fa fa-angle-double-left"></i></span>
             <span class="previous disable"><i class="fa fa-angle-left"></i></span>
           
-          <span class="page_number ">1/4</span>
+          <span class="page_number ">1/5</span>
           
             <a href="/page2" class="next"><i class="fa fa-angle-right"></i></a>
-            <a href="/page4" class="next"><i class="fa fa-angle-double-right"></i></a>
+            <a href="/page5" class="next"><i class="fa fa-angle-double-right"></i></a>
           
         </div>
     </div>
@@ -641,9 +650,13 @@
                 </div>
                 <ul class="content-ul" recent>
                     
+                        <li><a href="/2018/11/20/Mysql-replication/">mysql主从复制的理解和实现</a></li>
+                    
                         <li><a href="/2018/11/14/Docker(1)/">Docker的入门</a></li>
                     
                         <li><a href="/2018/11/03/RSA/">RSA非对称加密的简单理解</a></li>
+                    
+                        <li><a href="/2018/10/20/CAP/">CAP 定理的含义[转载]</a></li>
                     
                         <li><a href="/2018/10/07/Hibernate-DetacheCriteria/">继承HibernateDaoSupport实现CRUD</a></li>
                     
@@ -656,10 +669,6 @@
                         <li><a href="/2018/10/01/Collections1/">整理一些学习过的数据结构和算法blog</a></li>
                     
                         <li><a href="/2018/09/30/Sword-refers-to-Offer1-Copy/">剑指Offer--根据前序遍历和中序遍历重建二叉树</a></li>
-                    
-                        <li><a href="/2018/09/30/Mysql-1/">MySQL索引背后的数据结构及算法原理(转载)</a></li>
-                    
-                        <li><a href="/2018/09/29/Simple-implementation-of-AVL-tree/">AVL树的简单实现</a></li>
                     
                 </ul>
             </div>
@@ -704,7 +713,7 @@
                             <span class="name">
                                 Mysql
                             </span>
-                            <span class="badge">3</span>
+                            <span class="badge">4</span>
                         </a>
                     </li>
                     
@@ -757,6 +766,15 @@
                         <a href="/category/#Hibernate" class="categories-list-item" cate="Hibernate">
                             <span class="name">
                                 Hibernate
+                            </span>
+                            <span class="badge">1</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="/category/#Distributed" class="categories-list-item" cate="Distributed">
+                            <span class="name">
+                                Distributed
                             </span>
                             <span class="badge">1</span>
                         </a>
@@ -947,6 +965,20 @@
                       
                       
                       
+                      <a href="/tag/#CAP" style="font-size: 9pt; color: #999;">CAP</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#分布式" style="font-size: 9pt; color: #999;">分布式</a>
+                    
+                      
+                      
+                      
+                      
+                      
                       <a href="/tag/#RSA" style="font-size: 9pt; color: #999;">RSA</a>
                     
                       
@@ -955,6 +987,13 @@
                       
                       
                       <a href="/tag/#Docker" style="font-size: 9pt; color: #999;">Docker</a>
+                    
+                      
+                      
+                      
+                      
+                      
+                      <a href="/tag/#Mysql" style="font-size: 9pt; color: #999;">Mysql</a>
                     
                 </div>
             </div>

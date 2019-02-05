@@ -10,11 +10,12 @@
     <meta name="description" content="  数据结构及算法基础          索引的本质      B-Tree和B+Tree                  B-Tree                    原文链接:MySQL索引背后的数据结构及算法原理文章主要内容分为三个部分。第一部分主要从数据结构及算法理论层面讨论MySQL数据库索引的...">
     <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
-    <link rel="stylesheet" href="/css/awesome.min.css ">
+<!--     <link rel="stylesheet" href="/css/awesome.min.css "> -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="https://Chankin026.github.io/2018/09/30/Mysql-1/">
-    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
+    <link rel="canonical" href="http://localhost:4000/2018/09/30/Mysql-1/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="http://localhost:4000/feed.xml ">
 
 
     <script>
@@ -121,6 +122,8 @@
                             <i class="fa fa-heart"></i>About
                         </a>
                     </li>
+                    
+                
                     
                 
                     
@@ -417,7 +420,7 @@ data = BTree_Search(root, my_key);
 
 <p>而红黑树结构，h明显要深得多。由于逻辑上很近的结点（父子结点）物理上可能离得很远，无法利用局部性原理。所以即使红黑树的I/O渐进复杂度也为O(h)，但是查找效率明显比B-Tree差得多。</p>
 
-<p>B+Tree更适合外存索引，是和内结点出度d有关。从上面分析可以看到，d越大索引的性能越好，而出度的上限取决于结点内key和data的大小：dmax=floor(pagesize/(keysize+datasize+pointsize))。</p>
+<p>==B+Tree更适合外存索引，是和内结点出度d有关。从上面分析可以看到，d越大索引的性能越好，==而出度的上限取决于结点内key和data的大小：dmax=floor(pagesize/(keysize+datasize+pointsize))。</p>
 
 <p>floor表示向下取整。由于B+Tree内结点去掉了data域，因此可以拥有更大的出度，拥有更好的性能。</p>
 
@@ -425,11 +428,11 @@ data = BTree_Search(root, my_key);
 
 <h2 id="mysql索引实现">MySQL索引实现</h2>
 
-<p>在MySQL中，索引属于存储引擎级别的概念，不同存储引擎对索引的实现方式是不同的，本文主要讨论MyISAM和InnoDB两个存储引擎(<a href="http://www.cnblogs.com/tgycoder/p/5410096.html">MySQL数据库MyISAM和InnoDB存储引擎的比较</a>)的索引实现方式。</p>
+<p>在MySQL中，索引属于存储引擎级别的概念，不同存储引擎对索引的实现方式是不同的，本文主要讨论MyISAM和InnoDB两个存储引擎==(<a href="http://www.cnblogs.com/tgycoder/p/5410096.html">MySQL数据库MyISAM和InnoDB存储引擎的比较</a>)==的索引实现方式。</p>
 
 <h3 id="myisam索引实现">MyISAM索引实现</h3>
 
-<p>MyISAM引擎使用B+Tree作为索引结构，叶结点的data域存放的是数据记录的地址。下面是MyISAM索引的原理图：</p>
+<p>==MyISAM引擎使用B+Tree作为索引结构，叶结点的data域存放的是数据记录的地址。==下面是MyISAM索引的原理图：</p>
 
 <p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/8.png" alt="img" /></p>
 
@@ -443,29 +446,29 @@ data = BTree_Search(root, my_key);
 
 <p>同样也是一颗B+Tree，data域保存数据记录的地址。因此，MyISAM中索引检索的算法为首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其data域的值，然后以data域的值为地址，读取相应数据记录。</p>
 
-<p>MyISAM的索引方式也叫做“非聚集”的，之所以这么称呼是为了与InnoDB的聚集索引区分。</p>
+<p>MyISAM的索引方式也叫做==“非聚集”==的，之所以这么称呼是为了与InnoDB的聚集索引区分。</p>
 
 <h3 id="innodb索引实现">InnoDB索引实现</h3>
 
 <p>虽然InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同。</p>
 
-<p>第一个重大区别是InnoDB的数据文件本身就是索引文件。从上文知道，MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而在InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构，这棵树的叶结点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。</p>
+<p>第一个重大区别==是InnoDB的数据文件本身就是索引文件==。从上文知道，==MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。==而在==InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构==，这棵树的==叶结点data域保存了完整的数据记录==。这个==索引的key是数据表的主键==，因此InnoDB表数据文件本身就是主索引。</p>
 
 <p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/10.png" alt="img" /></p>
 
 <p>图10</p>
 
-<p>图10是InnoDB主索引（同时也是数据文件）的示意图，可以看到叶结点包含了完整的数据记录。这种索引叫做聚集索引。因为InnoDB的数据文件本身要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。</p>
+<p>图10是InnoDB主索引（同时也是数据文件）的示意图，可以看到叶结点包含了完整的数据记录。这种索引叫做聚集索引。因为InnoDB的数据文件本身要按主键聚集，所以==I====nnoDB要求表必须有主键（MyISAM可以没有）==，如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。</p>
 
-<p>第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。换句话说，InnoDB的所有辅助索引都引用主键作为data域。例如，图11为定义在Col3上的一个辅助索引：</p>
+<p>第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。换句话说，==InnoDB的所有辅助索引都引用主键作为data域==。例如，图11为定义在Col3上的一个辅助索引：</p>
 
 <p><img src="http://blog.codinglabs.org/uploads/pictures/theory-of-mysql-index/11.png" alt="img" /></p>
 
 <p>图11</p>
 
-<p>这里以英文字符的ASCII码作为比较准则。聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。</p>
+<p>这里以英文字符的ASCII码作为比较准则。聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：==首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录==。(有点不理解。。。。)</p>
 
-<p>了解不同存储引擎的索引实现方式对于正确使用和优化索引都非常有帮助，例如知道了InnoDB的索引实现后，就很容易明白为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。再例如，用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一颗B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效，而使用自增字段作为主键则是一个很好的选择。</p>
+<p>了解不同存储引擎的索引实现方式对于正确使用和优化索引都非常有帮助，例如知道了<strong>==InnoDB的索引实现后，就很容易明白为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。==</strong>再例如，用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一颗B+Tree==，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效==，而使用自增字段作为主键则是一个很好的选择。</p>
 
 <p>下一章将具体讨论这些与索引有关的优化策略。</p>
 
@@ -873,13 +876,6 @@ SELECT count(DISTINCT(concat(first_name, last_name)))/count(*) AS Selectivity FR
                     
                 
             
-        
-            
-            
-                
-                    
-                
-            
                 
                     
                 
@@ -893,6 +889,17 @@ SELECT count(DISTINCT(concat(first_name, last_name)))/count(*) AS Selectivity FR
             
         
             
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
             
                 
                     
@@ -935,8 +942,8 @@ SELECT count(DISTINCT(concat(first_name, last_name)))/count(*) AS Selectivity FR
 
   
     
-    <link rel="stylesheet" href="/css/gitalk.css">
-    <script src="/js/gitalk.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.5.0/gitalk.min.css">
+    <script src="https://cdn.staticfile.org/gitalk/1.5.0/gitalk.min.js"></script>
       <div id="gitalk-container"></div>
       <script type="text/javascript">
           var gitalk = new Gitalk({
