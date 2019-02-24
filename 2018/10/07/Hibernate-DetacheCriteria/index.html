@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
     <link rel="stylesheet" href="/css/main.css ">
-    <link rel="canonical" href="http://localhost:4000/2018/10/07/Hibernate-DetacheCriteria/">
-    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="http://localhost:4000/feed.xml ">
+    <link rel="canonical" href="https://Chankin026.github.io/2018/10/07/Hibernate-DetacheCriteria/">
+    <link rel="alternate" type="application/rss+xml" title="chankin's Blog" href="https://Chankin026.github.io/feed.xml ">
 
 
     <script>
@@ -219,10 +219,11 @@
   <li><a href="#三参考链接" id="markdown-toc-三参考链接">三、参考链接</a></li>
 </ul>
 <h2 id="一获取hibernatetemplate">一、获取HibernateTemplate()</h2>
-<p>spring提供访问数据库的有三种方式： <strong>HibernateDaoSupport，HibernateTemplate，jdbcTemplate</strong></p>
 
-<p>Spring与Hibernate整合的过程中,Spring为Hibernate提供了工具类:HibernateDaoSupport,让Dao层实现类继承HibernateDaoSupport去获取HibernateTemplate模板
-主要提供了两个方法</p>
+<p>Spring有三种方式访问db的方式： <strong>HibernateDaoSupport，HibernateTemplate，jdbcTemplate</strong></p>
+
+<p>Spring与Hibernate整合的过程中,Spring的工具类:HibernateDaoSupport, 让Dao层实现类继承HibernateDaoSupport去获取HibernateTemplate模板
+其中主要提供了两个方法</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">setSessionFactory</span><span class="o">(</span><span class="n">SessionFactory</span> <span class="n">sessionFactory</span><span class="o">)</span>
 	<span class="kd">public</span> <span class="kd">final</span> <span class="n">HibernateTemplate</span> <span class="nf">getHibernateTemplate</span><span class="o">()</span>
@@ -230,41 +231,41 @@
 <p>其中setSessionFactory方法用来接收Spring的ApplicationContext的依赖注入，可接收配置在Spring的SessionFactory实例，<strong>getHibernateTemplate方法则用来更具获得SessionFactory产生Session</strong>，最后生成<code class="highlighter-rouge">HibernateTeplate</code>来完成数据库访问。</p>
 
 <p>Spring配置文件:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;!-- 引入外部属性sql相关信息=============================== --&gt;
-    &lt;context:property-placeholder location="classpath:jdbc.properties"/&gt;
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c">&lt;!-- 引入外部属性sql相关信息=============================== --&gt;</span>
+    <span class="nt">&lt;context:property-placeholder</span> <span class="na">location=</span><span class="s">"classpath:jdbc.properties"</span><span class="nt">/&gt;</span>
 
-    &lt;!--配置c3p0连接池--&gt;
-    &lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"&gt;
-        &lt;property name="driverClass" value="${jdbc.driverClass}"/&gt;
-        &lt;property name="jdbcUrl" value="${jdbc.url}"/&gt;
-        &lt;property name="user" value="${jdbc.username}"/&gt;
-        &lt;property name="password" value="${jdbc.password}"/&gt;
-    &lt;/bean&gt;
+    <span class="c">&lt;!--配置c3p0连接池--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"dataSource"</span> <span class="na">class=</span><span class="s">"com.mchange.v2.c3p0.ComboPooledDataSource"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"driverClass"</span> <span class="na">value=</span><span class="s">"${jdbc.driverClass}"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"jdbcUrl"</span> <span class="na">value=</span><span class="s">"${jdbc.url}"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"user"</span> <span class="na">value=</span><span class="s">"${jdbc.username}"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"${jdbc.password}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
 
-    &lt;!-- 引入hibernate的配置信息 --&gt;
-    &lt;bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"&gt;
-        &lt;!-- 注入连接池 --&gt;
-        &lt;property name="dataSource" ref="dataSource"/&gt;
-        &lt;!-- 配置Hibernate的相关属性 --&gt;
-        &lt;property name="hibernateProperties"&gt;
-            &lt;props&gt;
-                &lt;prop key="hibernate.dialect"&gt;org.hibernate.dialect.MySQLDialect&lt;/prop&gt;
-                &lt;prop key="hinernate.show_sql"&gt;true&lt;/prop&gt;
-                &lt;prop key="hinernate.format_sql"&gt;true&lt;/prop&gt;
-                &lt;prop key="hinernate.hbm2ddl.auto"&gt;update&lt;/prop&gt;
-            &lt;/props&gt;
-        &lt;/property&gt;
-        &lt;!-- 设置映射文件 --&gt;
-        &lt;property name="mappingResources"&gt;
-            &lt;list&gt;&lt;value&gt;com/spring/domain/Customer.hbm.xml&lt;/value&gt;&lt;/list&gt;
-        &lt;/property&gt;
-    &lt;/bean&gt;
+    <span class="c">&lt;!-- 引入hibernate的配置信息 --&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"sessionFactory"</span> <span class="na">class=</span><span class="s">"org.springframework.orm.hibernate5.LocalSessionFactoryBean"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- 注入连接池 --&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- 配置Hibernate的相关属性 --&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"hibernateProperties"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;props&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">"hibernate.dialect"</span><span class="nt">&gt;</span>org.hibernate.dialect.MySQLDialect<span class="nt">&lt;/prop&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">"hinernate.show_sql"</span><span class="nt">&gt;</span>true<span class="nt">&lt;/prop&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">"hinernate.format_sql"</span><span class="nt">&gt;</span>true<span class="nt">&lt;/prop&gt;</span>
+                <span class="nt">&lt;prop</span> <span class="na">key=</span><span class="s">"hinernate.hbm2ddl.auto"</span><span class="nt">&gt;</span>update<span class="nt">&lt;/prop&gt;</span>
+            <span class="nt">&lt;/props&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+        <span class="c">&lt;!-- 设置映射文件 --&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"mappingResources"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;list&gt;&lt;value&gt;</span>com/spring/domain/Customer.hbm.xml<span class="nt">&lt;/value&gt;&lt;/list&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
 
-    &lt;!-- 配置DAO --&gt;
-    &lt;bean id="customerDao" class="com.spring.dao.impl.CustomerDaoImpl"&gt;
-        &lt;!--注入SessionFactory创建Hibernate模板--&gt;
-        &lt;property name="sessionFactory" ref="sessionFactory"/&gt;
-    &lt;/bean&gt;
+    <span class="c">&lt;!-- 配置DAO --&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"customerDao"</span> <span class="na">class=</span><span class="s">"com.spring.dao.impl.CustomerDaoImpl"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--注入SessionFactory创建Hibernate模板--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"sessionFactory"</span> <span class="na">ref=</span><span class="s">"sessionFactory"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
 </code></pre></div></div>
 <p>Customer类:</p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
@@ -717,31 +718,6 @@
 
         <!-- <h2 id="comments">Comments</h2> -->
         
-
-
-
-
-  
-    
-    <link rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.5.0/gitalk.min.css">
-    <script src="https://cdn.staticfile.org/gitalk/1.5.0/gitalk.min.js"></script>
-      <div id="gitalk-container"></div>
-      <script type="text/javascript">
-          var gitalk = new Gitalk({
-            clientID: 'b39a231392131dd275eb', 
-            clientSecret: '0a82311de71e2e78c26857ae7efc782dc3b60816',
-            repo: 'Chankin026.github.io', 
-            owner: 'Chankin026', 
-            admin: ['Chankin026'], 
-            distractionFreeMode: 'true',
-            id: '/2018/10/07/Hibernate-DetacheCriteria/',
-          })
-          gitalk.render('gitalk-container')
-      </script>
-    
-
-
-
 
 
     </div>
